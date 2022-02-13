@@ -37,5 +37,5 @@ serverless <br>
 Jest (Unit Test) <br>
 Eslint (Code Quality Check) <br>
 
-<h3>Other Information <h3/>
-Access AWS  Cloudwatch/Logs/Log groups/select your lambda function/view the logs
+<h3>Other Information </h3>
+Access AWS  Cloudwatch/Logs/Log groups/select your lambda function/view the logs <br>
