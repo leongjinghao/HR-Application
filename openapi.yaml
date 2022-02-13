@@ -3,3 +3,48 @@ info:
   title: MAD Project Backend
   description: "MAD Backend API"
   version: "1.0.0"
+
+tags:
+- name: Onboarding
+  description: Process incoming request and forward to the appropriate API
+- name: Cognito
+  description: User pool related functions
+- name: Email
+  description: Send email notification using AWS SES
+- name: Data-Request
+  description: Data Request Portal related functions
+
+paths:
+  /jira/onboard/project:
+    post:
+      tags:
+        - Onboarding
+        - Ticket Controller
+      description: |
+        The following environment variables that requires an update in the .env file for the 'postProjOnboardTicket' lambda function
+          - TICKET_CONTROLLER_DOMAIN: base url of the Jira board containing the tickets
+          - TICKET_CONTROLLER_BOARD_KEY: the identifier of the Jira board
+          - ATLASSIAN_PRIVATE_TOKEN: the API token used for making API calls to Atlassian products
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/AddProjectOnboardInput"
+              required:
+                - onboardFormDataJSON
+      responses:
+        200:
+          description: Successfully created project onboarding ticket in the Jira board.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Project onboarding ticket created successfully...
+        400:
+          description: Failed to create project onboarding ticket in the Jira board.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Failed to create ticket...

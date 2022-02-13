@@ -1,4 +1,6 @@
-service: Backend
+service: ${self:custom.CloudNamingIdentifier}-backend
+
+useDotenv: true
 
 plugins:
   - serverless-bundle
@@ -12,11 +14,15 @@ provider:
   region: ap-southeast-1
 
 functions:
-  hello:
-    handler: src/handlers/hello.handler
+  createAuction:
+    handler: src/handlers/createAuction.handler
     events:
       - http:
-          method: GET
-          path: /hello
+          method: POST
+          path: /auction
 
-
+custom:
+   developer: ${env:DEVELOPER, ''}
+   CloudNamingIdentifier:
+    "${env:PROJECT_CODE}-${self:custom.developer}${env:APP_NAME}"
+   MainTableName: dynamodb-${env:PROJECT_CODE}-main

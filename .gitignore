@@ -25,3 +25,6 @@ output.json
 
 # Webpack directories
 .webpack
+
+# others
+.env
