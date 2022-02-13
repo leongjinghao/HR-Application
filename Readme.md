@@ -26,11 +26,11 @@ Default Region Name : ap-southeast-1 <br>
 Default output format : yaml <br>
 
 
-Other Commands :
+<h3> Other Commands :</h3>
 sls deploy  - to upload the code into AWS  
 sls info    - to view aws information
 
-<h2>Library used </h2>
+<h3>Library used </h3>
     
 serverless <br>
 Jest (Unit Test) <br>
