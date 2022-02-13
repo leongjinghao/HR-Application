@@ -29,7 +29,8 @@ Default output format : yaml <br>
 Other Commands :
 sls deploy 
 
-<h2>Library used <h2/>
+<h2>Library used </h2>
+    
 serverless <br>
 Jest (Unit Test) <br>
 Eslint (Code Quality Check) <br>
