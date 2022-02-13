@@ -1,13 +1,14 @@
-Backend
+<h1>Backend</h1>
 
-Configuration 
+<h2>Configuration</h2> 
 
-Install : https://aws.amazon.com/cli/
-npm install -g serverless
-npm install
+<b>Install : https://aws.amazon.com/cli/ <br>
+npm install -g serverless <br>
+npm install <br>
+aws configure : <br></b>
 
-aws configure :
-AWS Access Key ID [] : Given Access Key
-AWS Secret Access Key [] : Given Secret Access Key
-Default Region Name : ap-southeast-1
-Default output format : yaml
+Example Value to input for aws configure :<br>
+AWS Access Key ID [] : Given Access Key <br>
+AWS Secret Access Key [] : Given Secret Access Key <br>
+Default Region Name : ap-southeast-1 <br>
+Default output format : yaml <br>
