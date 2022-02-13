@@ -26,5 +26,16 @@ Default Region Name : ap-southeast-1 <br>
 Default output format : yaml <br>
 
 
-Other Commands :
-sls deploy 
+<h3> Other Commands :</h3>
+sls deploy  - to upload the code into AWS <br>
+sls info    - to view aws information <br>
+sls remove  - remove stack from AWS <br>
+
+<h3>Library used </h3>
+    
+serverless <br>
+Jest (Unit Test) <br>
+Eslint (Code Quality Check) <br>
+
+<h3>Other Information </h3>
+Access AWS  Cloudwatch/Logs/Log groups/select your lambda function/view the logs <br>
