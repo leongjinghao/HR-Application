@@ -30,6 +30,6 @@ Other Commands :
 sls deploy 
 
 <h2>Library used <h2/>
-serverless
-Jest (Unit Test)
-Eslint (Code Quality Check)
+serverless <br>
+Jest (Unit Test) <br>
+Eslint (Code Quality Check) <br>
