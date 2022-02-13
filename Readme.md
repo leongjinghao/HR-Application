@@ -16,3 +16,13 @@ AWS Access Key ID [] : Given Access Key <br>
 AWS Secret Access Key [] : Given Secret Access Key <br>
 Default Region Name : ap-southeast-1 <br>
 Default output format : yaml <br>
+
+using node - version 14.15.4
+
+*If needed to downgrade node version can use nvm from https://github.com/coreybutler/nvm-windows/releases
+
+EG: node nvm install 14.15.4
+    node nvm use 14.15.4
+
+Other Commands :
+sls deploy 
