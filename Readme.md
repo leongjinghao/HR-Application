@@ -25,9 +25,10 @@ AWS Secret Access Key [] : Given Secret Access Key <br>
 Default Region Name : ap-southeast-1 <br>
 Default output format : yaml <br>
 
+Duplciate env.sample to .env and rename DEVELOPER it with your name
 
 <h3> Other Commands :</h3>
-sls deploy  - to upload the code into AWS <br>
+sls deploy  - to upload the code into AWS, it will create a stack in the AWS Cloudformation <br>
 sls info    - to view aws information <br>
 sls remove  - remove stack from AWS <br>
 
