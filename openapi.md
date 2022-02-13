@@ -1,18 +1,26 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   title: MAD Project Backend
   description: "MAD Backend API"
   version: "1.0.0"
 
 tags:
-- name: Onboarding
-  description: Process incoming request and forward to the appropriate API
-- name: Cognito
-  description: User pool related functions
-- name: Email
-  description: Send email notification using AWS SES
-- name: Data-Request
-  description: Data Request Portal related functions
+- name: Account
+  description: To be fill in
+- name: Attendance
+  description: To be fill in
+- name: Calendar
+  description: To be fill in
+- name: Home
+  description: To be fill in
+- name: Launch
+  description: To be fill in
+- name: Leave
+  description: To be fill in
+- name: NFC
+  description: To be fill in
+- name: Virtual Business Card
+  description: To be fill in
 
 paths:
   /jira/onboard/project:
