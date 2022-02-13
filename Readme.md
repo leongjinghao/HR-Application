@@ -27,7 +27,8 @@ Default output format : yaml <br>
 
 
 Other Commands :
-sls deploy 
+sls deploy  - to upload the code into AWS  
+sls info    - to view aws information
 
 <h2>Library used </h2>
     
