@@ -28,3 +28,8 @@ Default output format : yaml <br>
 
 Other Commands :
 sls deploy 
+
+<h2>Library used <h2/>
+serverless
+Jest (Unit Test)
+Eslint (Code Quality Check)
