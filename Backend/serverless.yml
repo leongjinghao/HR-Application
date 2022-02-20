@@ -5,6 +5,7 @@ useDotenv: true
 plugins:
   - serverless-bundle
   - serverless-pseudo-parameters
+  - serverless-plugin-typescript
 
 provider:
   name: aws
@@ -14,15 +15,23 @@ provider:
   region: ap-southeast-1
 
 functions:
-  createAuction:
-    handler: src/handlers/createAuction.handler
+  createUserLeave:
+    handler: src/handlers/leave/create/createUserLeave.handler
+    role: AdminRole
     events:
       - http:
           method: POST
-          path: /auction
+          path: /createUserLeave
+
+resources:
+  Resources:
+    AdminRole: ${file(resources/iamRole/AdminRole.yml):AdminRole}
 
 custom:
    developer: ${env:DEVELOPER, ''}
    CloudNamingIdentifier:
-    "${env:PROJECT_CODE}-${self:custom.developer}${env:APP_NAME}"
-   MainTableName: dynamodb-${env:PROJECT_CODE}-main
+    "${env:PROJECT_CODE}-${self:custom.developer}-${env:APP_NAME}"
+   CloudNamingIdentifierInfra: "${env:PROJECT_CODE}-${self:custom.developer}"
+   MainTableName: "mainTable"
+   PolicyPrefix: iampolicy-${self:custom.CloudNamingIdentifierInfra}
+   IAMRolePrefix: iamrole-${self:custom.CloudNamingIdentifierInfra}
