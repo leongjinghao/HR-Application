@@ -11,4 +11,4 @@ AdminRole:
               - lambda.amazonaws.com
           Action: sts:AssumeRole
     Policies:
-      - ${file(resources/iamRole/inlinePolicies/MainTableIAM.yml):MainTablePolicy}
+        - ${file(resources/iamRole/inlinePolicies/MainTableIAM.yml):MainTablePolicy}

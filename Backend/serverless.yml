@@ -4,9 +4,7 @@ useDotenv: true
 
 plugins:
   - serverless-bundle
-  - serverless-pseudo-parameters
-  - serverless-plugin-typescript
-
+  
 provider:
   name: aws
   runtime: nodejs14.x
@@ -20,8 +18,8 @@ functions:
     role: AdminRole
     events:
       - http:
-          method: POST
-          path: /createUserLeave
+         method: POST
+         path: /createUserLeave
 
 resources:
   Resources:

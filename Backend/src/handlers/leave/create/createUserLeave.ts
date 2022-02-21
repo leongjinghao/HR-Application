@@ -9,7 +9,7 @@ import { LambdaResponse } from '../../common/responses';
 async function createUserLeave(): Promise<LambdaResponse> {
 
   // Promise return params
-  let apiResponse: LambdaResponse =
+  const apiResponse: LambdaResponse =
   {
     statusCode: 200,
     body: '',

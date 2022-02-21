@@ -1,5 +1,5 @@
 MainTablePolicy:
-  PolicyName: ${self:custom.PolicyPrefix}-main-table
+  PolicyName: ${self:custom.PolicyPrefix}-mainTable
   PolicyDocument:
     Version: "2012-10-17"
     Statement:
@@ -10,6 +10,6 @@ MainTablePolicy:
           - dynamodb:Scan
           - dynamodb:UpdateItem
         Resource:
-          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.MainTableName}
-          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.MainTableName}/index/*
-          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.MainTableName}/*
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.MainTableName}
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.MainTableName}/index/*
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.MainTableName}/*
