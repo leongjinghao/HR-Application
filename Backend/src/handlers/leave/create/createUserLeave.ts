@@ -18,12 +18,20 @@ async function createUserLeave(event): Promise<LambdaResponse> {
   }
 
   try {
-    const result = await createLeave(event.userId,event.startEndDate,event.leaveType,event.approver,event.remarks,event.status)
+    const result = await createLeave(
+      event.userId,
+      event.startEndDate,
+      event.leaveType,
+      event.approver,
+      event.remarks,
+      event.status
+      )
     apiResponse.body = result.message
+    log2CloudWatch("createUserLeave.ts","createUserLeave",result.message)
   }
-  catch(err)
-  {
+  catch (err) {
     apiResponse.body = err
+    error2CloudWatch("createUserLeave.ts","createUserLeave",err)
   }
   
   return apiResponse;
