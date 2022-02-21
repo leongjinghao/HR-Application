@@ -30,6 +30,6 @@ custom:
    CloudNamingIdentifier:
     "${env:PROJECT_CODE}-${self:custom.developer}-${env:APP_NAME}"
    CloudNamingIdentifierInfra: "${env:PROJECT_CODE}-${self:custom.developer}"
-   MainTableName: "mainTable"
+   MainTableName: "${env:TABLE}"
    PolicyPrefix: iampolicy-${self:custom.CloudNamingIdentifierInfra}
    IAMRolePrefix: iamrole-${self:custom.CloudNamingIdentifierInfra}

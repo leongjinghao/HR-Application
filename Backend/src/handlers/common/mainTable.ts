@@ -1,5 +1,5 @@
-import AWS from 'aws-sdk';
-
+import AWS from 'aws-sdk'
+import { log2CloudWatch , error2CloudWatch } from './cloudWatch'
 export interface resultMessageResponseType {
     /** Whether the request is successful */
     result: boolean,
@@ -45,20 +45,21 @@ type createLeaveType = (
           'Remarks': { S: remarks },
           'Status': { S: status },
         },
-        ReturnConsumedCapacity: 'TOTAL',
-        TableName: `${process.env.TABLE}`
+        TableName: 'mainTable'
       }
     
       let message = '';     
       try {
         await dynamodb.putItem(params).promise();
         message = `User leave successfully created.`;
+        log2CloudWatch("mainTable.ts","createLeave",message)
         return {
           'result': true,
           message
         };
       } catch (err) {
         message = `User leave had failed to be created.`;
+        error2CloudWatch("mainTable.ts","createLeave",err)
         return {
           'result': false,
           message

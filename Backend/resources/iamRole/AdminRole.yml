@@ -12,3 +12,4 @@ AdminRole:
           Action: sts:AssumeRole
     Policies:
         - ${file(resources/iamRole/inlinePolicies/MainTableIAM.yml):MainTablePolicy}
+        - ${file(resources/iamRole/inlinePolicies/CloudWatchLogsIAM.yml):CloudWatchLogsPolicy}

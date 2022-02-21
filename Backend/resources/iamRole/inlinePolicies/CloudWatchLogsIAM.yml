@@ -3,13 +3,13 @@ CloudWatchLogsPolicy:
   PolicyName: ${self:custom.PolicyPrefix}-LogPolicy
   PolicyDocument:
     Version: "2012-10-17"
-    iamRoleStatement:
+    Statement:
       Action:
         - logs:CreateLogGroup
         - logs:CreateLogStream
         - logs:PutLogEvents
       Effect: Allow
       Resource: 
-        arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/*
+        - arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/*
 
 
