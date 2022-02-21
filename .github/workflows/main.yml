@@ -1,11 +1,11 @@
-name: CI
+name: CI/CD
 
 on: [push]
 
 jobs:
-  build:
-    
+  test:
     runs-on: ubuntu-lastest
-    
     steps:
-    - uses: ./gradlew build
+    - name: eslint-check
+      run:  eslint . --ext .ts
+  
