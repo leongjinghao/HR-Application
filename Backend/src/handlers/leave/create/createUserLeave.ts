@@ -7,7 +7,7 @@ import { log2CloudWatch , error2CloudWatch } from '../../common/cloudWatch'
  * @param event - User Leave Details
  * @returns APIGatewayProxyResult
  */
-async function createUserLeave(event): Promise<LambdaResponse> {                                                                                                                                                                                              
+async function createUserLeave(event): Promise<LambdaResponse> {
   event = JSON.parse(event.body);
 
   // Promise return params
