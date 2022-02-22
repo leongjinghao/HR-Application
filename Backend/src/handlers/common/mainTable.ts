@@ -1,11 +1,6 @@
 import AWS from 'aws-sdk'
-import { log2CloudWatch , error2CloudWatch } from './cloudWatch'
-export interface resultMessageResponseType {
-    /** Whether the request is successful */
-    result: boolean,
-    /** Response information */
-    message: string
-  }
+import { log2CloudWatch , error2CloudWatch } from '../utility/cloudWatch'
+import { resultMessageResponseTypeDatabase } from '../utility/dataType'
 
 type createLeaveType = (
     userId : string,
@@ -14,7 +9,7 @@ type createLeaveType = (
     approver : string,
     remarks: string,
     status: string,
-  ) => Promise <resultMessageResponseType>
+  ) => Promise <resultMessageResponseTypeDatabase>
   
   /**
    * Accesses the main table and insert user leave.

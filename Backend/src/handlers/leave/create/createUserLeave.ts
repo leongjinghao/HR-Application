@@ -1,6 +1,6 @@
 import { createLeave } from '../../common/mainTable';
-import { LambdaResponse } from '../../common/responses';
-import { log2CloudWatch , error2CloudWatch } from '../../common/cloudWatch'
+import { LambdaResponse } from '../../utility/responses';
+import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
 
 /**
  * Create User Leave
@@ -8,7 +8,6 @@ import { log2CloudWatch , error2CloudWatch } from '../../common/cloudWatch'
  * @returns APIGatewayProxyResult
  */
 async function createUserLeave(event): Promise<LambdaResponse> {
-  event = JSON.parse(event.body);
 
   // Promise return params
   const apiResponse: LambdaResponse =
@@ -18,6 +17,7 @@ async function createUserLeave(event): Promise<LambdaResponse> {
   }
 
   try {
+    event = JSON.parse(event.body);
     const result = await createLeave(
       event.userId,
       event.startEndDate,
@@ -30,6 +30,7 @@ async function createUserLeave(event): Promise<LambdaResponse> {
     log2CloudWatch("createUserLeave.ts","createUserLeave",result.message)
   }
   catch (err) {
+    apiResponse.statusCode = 500;
     apiResponse.body = err
     error2CloudWatch("createUserLeave.ts","createUserLeave",err)
   }
