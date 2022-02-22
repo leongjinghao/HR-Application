@@ -8,6 +8,10 @@ console.error = jest.fn;
 
 let matchResponse: LambdaResponse;
 
+beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
 describe('/create/createUserLeave createUserLeave.ts test', () => {
     test('Create User Leave successfully', async () => {
         matchResponse = { statusCode: 200, body: 'User leave successfully created.' };
