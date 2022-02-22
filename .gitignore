@@ -28,3 +28,4 @@ output.json
 
 # others
 .env
+**/coverage
