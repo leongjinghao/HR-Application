@@ -15,9 +15,7 @@ jobs:
         cache-dependency-path: 'Backend/package-lock.json'
     - run: npm ci
       working-directory: 'Backend'
-    - name: Code Quality - Eslint
     - run: npm run eslint --if-present
       working-directory: 'Backend'
-    - name: Unit Test - Jest
     - run: npm jest
       working-directory: 'Backend'
