@@ -1,0 +1,29 @@
+<resources>
+    <string name="cardbg">cardBG</string>
+    <string name="companylogo">companyLogo</string>
+    <string name="BlueFlush"><font color="#0D5299">Blue </font><font color="#35C85D">Flush</font></string>
+
+    <string name="cardButtonHint">Tap and Hold to edit card</string>
+
+    <!--    Button Strings-->
+    <string name="checkInButton">Check-In/Out</string>
+    <string name="calendarButton">Calendar</string>
+    <string name="leaveButton">Leave</string>
+    <string name="NFCButton">NFC Scan</string>
+    <string name="accountButton">Account</string>
+    <string name="approveButton">Leave Appr</string>
+
+    <string name="arrowIcon">Arrow Icon</string>
+
+    <!-- Name Card Texts -->
+    <string name="employeeNameTextView">Employee Name</string>
+    <string name="departmentNameTextView">Department Name</string>
+    <string name="websiteTextView">www.blueflush.com</string>
+    <string name="websiteIconDescr">websiteIcon</string>
+    <string name="emailTextView">MAD@email.com</string>
+    <string name="emailIconDescr">emailIcon</string>
+    <string name="smartPhoneTextView">+65 9369 9999</string>
+    <string name="smartPhoneIconDescr">smartPhoneIcon</string>
+    <string name="officePhoneTextView">+65 6123 4567</string>
+    <string name="officePhoneIconDescr">officePhoneIcon</string>
+</resources>
