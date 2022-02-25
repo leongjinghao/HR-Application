@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
 import android.os.PersistableBundle
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -71,7 +72,9 @@ class LoginActivity : AppCompatActivity()  {
 
     //Create toast with message
     private fun authMsg(message:String){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -89,7 +92,8 @@ class LoginActivity : AppCompatActivity()  {
         val fingerprintLoginButton = findViewById<Button>(R.id.buttonFingerprintLogin)
 
         recoverClickableText.setOnClickListener {
-            // TODO create intent to recover page
+            val intent = Intent(this, ForgetPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         loginButton.setOnClickListener {

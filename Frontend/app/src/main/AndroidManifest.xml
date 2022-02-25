@@ -27,6 +27,12 @@
             android:name=".HomePageMainActivity"
             android:label="Home Page">
         </activity>
+
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:label="Recover Password">
+        </activity>
+
     </application>
 
 </manifest>
