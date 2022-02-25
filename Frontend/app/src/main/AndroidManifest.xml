@@ -30,7 +30,8 @@
 
         <activity
             android:name=".ForgetPasswordActivity"
-            android:label="Recover Password">
+            android:label="Recover Password"
+            android:parentActivityName=".LoginActivity">
         </activity>
 
     </application>

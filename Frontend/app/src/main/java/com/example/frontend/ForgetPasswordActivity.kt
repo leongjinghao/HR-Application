@@ -18,6 +18,8 @@ class ForgetPasswordActivity : AppCompatActivity()  {
         binding = ActivityForgetpasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         binding.buttonRecover.setOnClickListener{
             if(validateEmail(binding.editTextEmail)){
                 //TODO Send password reset email logic
