@@ -98,8 +98,17 @@ class LoginActivity : AppCompatActivity()  {
 
         loginButton.setOnClickListener {
             // TODO implement authentication logic
+            // place holder authentication, to be replaced by actual implementation
+            if (usernameEditText.text.toString() == "admin" &&
+                passwordEditText.text.toString() == "password") {
 
-            // TODO create intent to Home page
+                // TODO create intent to Home page
+                val homeIntent = Intent(this, HomePageMainActivity::class.java)
+                startActivity(homeIntent)
+            }
+            else {
+                authMsg("Invalid Credentials")
+            }
         }
 
         //Note: Have to manually add a fingerprint to the emulator
