@@ -1,5 +1,6 @@
 package com.example.frontend
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +48,9 @@ class HomePageMainActivity : AppCompatActivity() {
 
         //Set on Click Long Listeners for name card butoton
         nameCardButton.setOnLongClickListener {
-            Toast.makeText(this, "Moving to Edit Card Page", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Moving to Edit Card Page", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, EditBusinessCardActivity::class.java)
+            startActivity(intent)
             true
         }
 

@@ -1,0 +1,15 @@
+<resources>
+    <string name="QRDescription">QR Code Image</string>
+    <string name="scanQRButton">Scan a QR Code</string>
+    <string name="nameIcon">Name Input Icon</string>
+    <string name="nameHintPlaceholder">Enter Name</string>
+    <string name="departmentIcon">Department Input Icon</string>
+    <string name="departmentHint">Enter Department</string>
+    <string name="smartPhoneIcon">Number Input Icon</string>
+    <string name="smartPhoneHint">Enter Phone Number</string>
+    <string name="emailIcon">Email Input Icon</string>
+    <string name="emailHint">Enter Email</string>
+    <string name="websiteIcon">Website Input Icon</string>
+    <string name="websiteHint">Enter Website</string>
+    <string name="saveButton">Save Details</string>
+</resources>
