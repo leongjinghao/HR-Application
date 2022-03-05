@@ -20,7 +20,7 @@
     <string name="recover">Recover</string>
     <string name="current_location">Current Location:</string>
     <string name="check_in"><b>Check In</b></string>
-    <string name="workschedule_today"><b>Today's Work Schedule:</b></string>
+    <string name="workschedule_today"><b>Today\'s Work Schedule:</b></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
