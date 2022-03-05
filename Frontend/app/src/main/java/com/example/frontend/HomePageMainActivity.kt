@@ -56,7 +56,9 @@ class HomePageMainActivity : AppCompatActivity() {
 
         //Set all OnClick Listeners
         checkInButton.setOnClickListener {
-            Toast.makeText(this, "Moving to Check In Page", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Moving to Check In Page", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, CheckInOutActivity::class.java)
+            startActivity(intent)
         }
 
         calendarButton.setOnClickListener {

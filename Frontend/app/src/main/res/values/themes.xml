@@ -22,4 +22,9 @@
     <style name="Theme.Frontend.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Frontend.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TabStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>
