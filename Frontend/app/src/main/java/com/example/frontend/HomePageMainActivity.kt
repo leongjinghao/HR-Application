@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import com.example.frontend.databinding.ActivityMainBinding
 import org.w3c.dom.Text
@@ -22,6 +23,7 @@ class HomePageMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage_layout)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //Disable night mode
 
         //Get all Text
         val employeeNameTextView = findViewById<TextView>(R.id.nameTextView)

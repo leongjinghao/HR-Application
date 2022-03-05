@@ -20,7 +20,7 @@
         tools:ignore="ImageContrastCheck" />
 
     <Button
-        android:id="@+id/scanQRButton2"
+        android:id="@+id/scanQRButton"
         android:layout_width="225dp"
         android:layout_height="54dp"
         android:layout_marginStart="93dp"
@@ -222,7 +222,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:hint="@string/websiteHint"
                         android:importantForAutofill="no"
-                        android:inputType="textPersonName"
+                        android:inputType="textWebEditText"
                         android:textColorHint="#78909C"
                         app:layout_constraintStart_toEndOf="@+id/imageView18"
                         app:layout_constraintTop_toTopOf="parent" />
