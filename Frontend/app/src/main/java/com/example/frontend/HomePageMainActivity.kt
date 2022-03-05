@@ -1,5 +1,6 @@
 package com.example.frontend
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +54,9 @@ class HomePageMainActivity : AppCompatActivity() {
 
         //Set all OnClick Listeners
         checkInButton.setOnClickListener {
-            Toast.makeText(this, "Moving to Check In Page", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Moving to Check In Page", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, CheckInOutActivity::class.java)
+            startActivity(intent)
         }
 
         calendarButton.setOnClickListener {
