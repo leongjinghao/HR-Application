@@ -16,4 +16,5 @@
     <color name="CompanyBlue">#0D5299</color>
     <color name="CompanyFlush">#35C85D</color>
     <color name="cardBG">#F3FBFD</color>
+    <color name="historyBG">#C2EDCE</color>
 </resources>

@@ -1,11 +1,16 @@
 package com.example.frontend
 
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.example.frontend.adapters.HistoryAdapter
 import com.example.frontend.databinding.ActivityCheckinoutBinding
 import com.example.frontend.tabfragments.CheckInOutFragment
 import com.example.frontend.tabfragments.HistoryFragment
-import com.example.frontend.tabfragments.tabadapter.ViewPagerAdapter
+import com.example.frontend.adapters.ViewPagerAdapter
+import com.example.frontend.viewmodels.HistoryViewModel
 
 class CheckInOutActivity: AppCompatActivity() {
 
@@ -18,12 +23,17 @@ class CheckInOutActivity: AppCompatActivity() {
         loadTabs()
     }
 
+    //Function to initialize the tabs
     private fun loadTabs(){
         val adapter = ViewPagerAdapter(supportFragmentManager)
+        //Add the Check In/Out fragment to the adapter
         adapter.addFragment(CheckInOutFragment(),"Check In/Out")
+        //Add the History fragment to the adapter
         adapter.addFragment(HistoryFragment(), "History")
         binding.viewPagerCheckInOut.adapter=adapter
+        //Display fragments using ViewPager
         binding.tabsCheckInOut.setupWithViewPager(binding.viewPagerCheckInOut)
+        //Add icons to the tabs
         binding.tabsCheckInOut.getTabAt(0)!!.setIcon(R.drawable.ic_baseline_login_24)
         binding.tabsCheckInOut.getTabAt(1)!!.setIcon(R.drawable.ic_baseline_history_24)
     }
