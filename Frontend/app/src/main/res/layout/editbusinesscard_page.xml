@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/constraintayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -121,6 +121,44 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/officeNoCardView"
+                android:layout_width="405dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/officeNoIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="@string/officePhoneIconDescr"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/phoneicon" />
+
+                    <EditText
+                        android:id="@+id/editTextPhone"
+                        android:layout_width="301dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="24dp"
+                        android:ems="10"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:hint="@string/officeNoHint"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"
+                        android:textColorHint="#78909C"
+                        app:layout_constraintStart_toEndOf="@+id/officeNoIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/smartPhoneCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,17 +222,17 @@
                         android:ems="10"
                         android:fontFamily="@font/montserrat_bold"
                         android:hint="@string/emailHint"
+                        android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         app:layout_constraintStart_toEndOf="@+id/emaiIAddrIcon"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="TextContrastCheck"
-                        android:importantForAutofill="no" />
+                        tools:ignore="TextContrastCheck" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+                android:id="@+id/websiteCardView"
                 android:layout_width="405dp"
                 android:layout_height="52dp"
                 android:layout_marginTop="20dp">
@@ -204,7 +242,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView18"
+                        android:id="@+id/websiteIconView"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
@@ -224,7 +262,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textWebEditText"
                         android:textColorHint="#78909C"
-                        app:layout_constraintStart_toEndOf="@+id/imageView18"
+                        app:layout_constraintStart_toEndOf="@+id/websiteIconView"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

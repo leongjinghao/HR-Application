@@ -2,21 +2,13 @@ package com.example.frontend
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
-import com.example.frontend.databinding.ActivityMainBinding
-import org.w3c.dom.Text
+
 
 class HomePageMainActivity : AppCompatActivity() {
 
@@ -32,6 +24,7 @@ class HomePageMainActivity : AppCompatActivity() {
         val smartPhoneTextView = findViewById<TextView>(R.id.smartPhoneTextView)
         val websiteTextView = findViewById<TextView>(R.id.websiteTextView)
         val emailTextView = findViewById<TextView>(R.id.emailTextView)
+        val informationText = findViewById<TextView>(R.id.informationText)
 
         //Get all Buttons and Interactables
         val checkInButton = findViewById<ImageButton>(R.id.checkInButton)
@@ -41,10 +34,21 @@ class HomePageMainActivity : AppCompatActivity() {
         val accountButton = findViewById<ImageButton>(R.id.accountButton)
         val leaveApprButton = findViewById<ImageButton>(R.id.leaveApprButton)
         val nameCardButton = findViewById<CardView>(R.id.nameCardView)
+        val informationButton = findViewById<ImageButton>(R.id.informationButton)
+
+        informationText.text = ""
+        var toggled : Int = 0
 
 
         //TO-DO:
-        //1) get employee details from database and set the name card details
+        //1) get employee details from edit card page
+//        employeeNameTextView.text = intent.getStringExtra("nameString")
+//        departmentNameTextView.text = intent.getStringExtra("departmentString")
+//        officeNoTextView.text = intent.getStringExtra("officeNoString")
+//        smartPhoneTextView.text = intent.getStringExtra("phoneNumberString")
+//        emailTextView.text = intent.getStringExtra("emailString")
+//        websiteTextView.text = intent.getStringExtra("websiteString")
+
         //2) Feedback for name card interaction
         //3) Once other pages are completed, update button interaction
 
@@ -83,10 +87,16 @@ class HomePageMainActivity : AppCompatActivity() {
             Toast.makeText(this, "Moving to Leave Approve Page", Toast.LENGTH_LONG).show()
         }
 
-
-
-
-
+        informationButton.setOnClickListener {
+            if (toggled == 0){
+                informationText.text = getString(R.string.cardButtonHint)
+                toggled = 1
+            }
+            else if (toggled == 1) {
+                informationText.text = ""
+                toggled = 0
+            }
+        }
 
     }
 

@@ -12,4 +12,6 @@
     <string name="websiteIcon">Website Input Icon</string>
     <string name="websiteHint">Enter Website</string>
     <string name="saveButton">Save Details</string>
+    <string name="officeNoHint">Enter Office Number</string>
+    <string name ="officeNoIcon">Office Number Icon</string>
 </resources>

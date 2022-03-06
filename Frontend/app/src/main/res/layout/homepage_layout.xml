@@ -2,35 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/constraintayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ColorScheme5">
-
-    <TextView
-        android:id="@+id/cardButtonHint"
-        android:layout_width="238dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="84dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/cardButtonHint"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameCardView" />
-
-    <ImageView
-        android:id="@+id/arrowImageView"
-        android:layout_width="36dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="3dp"
-        android:contentDescription="@string/arrowIcon"
-        app:layout_constraintEnd_toStartOf="@+id/cardButtonHint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameCardView"
-        app:srcCompat="@drawable/arrowicon" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/nameCardView"
@@ -48,149 +23,160 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/compantyLogoImageView"
-            android:layout_width="118dp"
-            android:layout_height="104dp"
-            android:contentDescription="@string/companylogo"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            app:srcCompat="@drawable/blueflushicon" />
-
-        <TextView
-            android:id="@+id/companyNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:paddingLeft="18dp"
-            android:paddingTop="90dp"
-            android:paddingRight="18dp"
-            android:text="@string/BlueFlush"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/nameTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold_italic"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:text="@string/employeeNameTextView"
-            android:textAlignment="textEnd"
-            android:textSize="20sp"
-            tools:ignore="RtlSymmetry" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/departmentTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_light_italic"
-            android:paddingTop="35dp"
-            android:paddingEnd="20dp"
-            android:text="@string/departmentNameTextView"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-            tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/companyLogoImageView"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/companylogo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/blueflushicon" />
 
-        <TextView
-            android:id="@+id/websiteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="221dp"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:paddingTop="193dp"
-            android:paddingEnd="20dp"
-            android:text="@string/websiteTextView"
-            android:textAlignment="textEnd"
-            android:textSize="12sp"
-            tools:ignore="RtlSymmetry" />
+            <TextView
+                android:id="@+id/companyNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:text="@string/BlueFlush"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/companyLogoImageView"
+                tools:ignore="TextContrastCheck" />
 
-        <ImageView
-            android:id="@+id/websiteIcon"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:contentDescription="@string/websiteIconDescr"
-            android:paddingStart="50dp"
-            android:paddingTop="190dp"
-            android:paddingEnd="30dp"
-            app:srcCompat="@drawable/websiteicon"
-            tools:ignore="RtlSymmetry" />
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="17dp"
+                android:fontFamily="@font/montserrat_bold_italic"
+                android:text="@string/employeeNameTextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/emailTextView"
-            android:layout_width="366dp"
-            android:layout_height="188dp"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:paddingTop="167dp"
-            android:paddingEnd="40dp"
-            android:text="@string/emailTextView"
-            android:textAlignment="textEnd"
-            android:textSize="12sp"
-            tools:ignore="RtlSymmetry" />
+            <TextView
+                android:id="@+id/departmentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/montserrat_light_italic"
+                android:text="@string/departmentNameTextView"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
-        <ImageView
-            android:id="@+id/emailIcon"
-            android:layout_width="match_parent"
-            android:layout_height="186dp"
-            android:contentDescription="@string/emailIconDescr"
-            android:paddingStart="50dp"
-            android:paddingTop="167dp"
-            android:paddingEnd="30dp"
-            app:srcCompat="@drawable/emailicon" />
+            <TextView
+                android:id="@+id/websiteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/websiteTextView"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/smartPhoneTextView"
-            android:layout_width="match_parent"
-            android:layout_height="163dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:paddingTop="140dp"
-            android:paddingEnd="40dp"
-            android:text="@string/smartPhoneTextView"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/websiteIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/websiteIconDescr"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/websiteTextView"
+                app:srcCompat="@drawable/websiteicon" />
 
-        <ImageView
-            android:id="@+id/smartPhoneIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:contentDescription="@string/smartPhoneIconDescr"
-            android:paddingStart="145dp"
-            android:paddingTop="140dp"
-            android:paddingEnd="30dp"
-            app:srcCompat="@drawable/handphoneicon" />
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="51dp"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/emailTextView"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/websiteTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/officeNoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="138dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:paddingTop="115dp"
-            android:paddingEnd="40dp"
-            android:text="@string/officePhoneTextView"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/emailIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="11dp"
+                android:contentDescription="@string/emailIconDescr"
+                app:layout_constraintBottom_toTopOf="@+id/websiteIcon"
+                app:layout_constraintEnd_toStartOf="@+id/emailTextView"
+                app:srcCompat="@drawable/emailicon" />
 
-        <ImageView
-            android:id="@+id/officePhoneIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="135dp"
-            android:contentDescription="@string/officePhoneIconDescr"
-            android:paddingStart="50dp"
-            android:paddingTop="115dp"
-            android:paddingEnd="30dp"
-            app:srcCompat="@drawable/phoneicon" />
+            <TextView
+                android:id="@+id/smartPhoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/smartPhoneTextView"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <ImageView
+                android:id="@+id/smartPhoneIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="11dp"
+                android:contentDescription="@string/smartPhoneIconDescr"
+                app:layout_constraintBottom_toTopOf="@+id/emailIcon"
+                app:layout_constraintEnd_toStartOf="@+id/smartPhoneTextView"
+                app:srcCompat="@drawable/handphoneicon" />
 
+            <TextView
+                android:id="@+id/officeNoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="58dp"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/officePhoneTextView"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/smartPhoneTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/officePhoneIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="11dp"
+                app:layout_constraintBottom_toTopOf="@+id/smartPhoneIcon"
+                app:layout_constraintEnd_toStartOf="@+id/officeNoTextView"
+                app:srcCompat="@drawable/phoneicon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <ScrollView
-        android:layout_width="392dp"
-        android:layout_height="401dp"
-        android:layout_marginTop="13dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="397dp"
+        android:layout_height="340dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardButtonHint">
+        app:layout_constraintTop_toBottomOf="@+id/informationText">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -202,41 +188,42 @@
                 android:layout_height="match_parent"
                 app:cardBackgroundColor="@color/ColorScheme5">
 
-                <ImageButton
-                    android:id="@+id/checkInButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="37dp"
-                    android:layout_marginBottom="25dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/checkInButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toTopOf="@+id/LeaveButton"
-                    app:layout_constraintEnd_toStartOf="@+id/calendarButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/checkinicon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/calendarButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="220dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="25dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/calendarButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toTopOf="@+id/NFCButton"
-                    app:layout_constraintStart_toEndOf="@+id/checkInButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/calendaricon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    <ImageButton
+                        android:id="@+id/checkInButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="35dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/checkInButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toStartOf="@+id/calendarButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/checkinicon"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <ImageButton
+                        android:id="@+id/calendarButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/calendarButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/calendaricon"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -245,78 +232,117 @@
                 android:layout_height="183dp"
                 app:cardBackgroundColor="@color/ColorScheme5">
 
-                <ImageButton
-                    android:id="@+id/leaveButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="37dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/leaveButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toStartOf="@+id/NFCButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkInButton"
-                    app:srcCompat="@drawable/leaveicon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/NFCButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="220dp"
-                    android:layout_marginTop="25dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/NFCButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toEndOf="@+id/LeaveButton"
-                    app:layout_constraintTop_toBottomOf="@+id/calendarButton"
-                    app:srcCompat="@drawable/nfcicon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    <ImageButton
+                        android:id="@+id/leaveButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="35dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/leaveButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toStartOf="@+id/NFCButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/leaveicon"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <ImageButton
+                        android:id="@+id/NFCButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/NFCButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/nfcicon"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardBackgroundColor="@color/ColorScheme5">
+                android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/accountButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="27dp"
-                    android:layout_marginEnd="37dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/accountButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toStartOf="@+id/leaveApprButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/LeaveButton"
-                    app:srcCompat="@drawable/accounticon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/leaveApprButton"
-                    android:layout_width="133dp"
-                    android:layout_height="133dp"
-                    android:layout_marginStart="220dp"
-                    android:layout_marginTop="27dp"
-                    android:backgroundTint="@color/ColorScheme3"
-                    android:contentDescription="@string/approveButton"
-                    android:elevation="5dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toEndOf="@+id/accountButton"
-                    app:layout_constraintTop_toBottomOf="@+id/NFCButton"
-                    app:srcCompat="@drawable/leaveappricon"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    <ImageButton
+                        android:id="@+id/accountButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="35dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/accountButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toStartOf="@+id/leaveApprButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/accounticon"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <ImageButton
+                        android:id="@+id/leaveApprButton"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/ColorScheme3"
+                        android:contentDescription="@string/approveButton"
+                        android:elevation="5dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/leaveappricon"
+                        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/informationButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="179dp"
+        android:layout_marginEnd="179dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/informationButtonDescr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameCardView"
+        app:srcCompat="@drawable/informationicon"
+        tools:ignore="RedundantDescriptionCheck" />
+
+    <TextView
+        android:id="@+id/informationText"
+        android:layout_width="342dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginEnd="35dp"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="@string/cardButtonHint"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/informationButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

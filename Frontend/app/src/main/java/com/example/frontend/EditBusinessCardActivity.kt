@@ -1,5 +1,6 @@
 package com.example.frontend
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,13 +14,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.graphics.createBitmap
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
-import com.google.zxing.common.BitMatrix
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.qrcode.QRCodeWriter
-import com.journeyapps.barcodescanner.CaptureActivity
 
 class EditBusinessCardActivity : AppCompatActivity() {
     //Set variables
@@ -27,11 +25,11 @@ class EditBusinessCardActivity : AppCompatActivity() {
     private lateinit var nameData : EditText
     private lateinit var departmentData : EditText
     private lateinit var phoneNumbData : EditText
+    private lateinit var officeNumbData : EditText
     private lateinit var emailData : EditText
     private lateinit var websiteData : EditText
     private lateinit var saveData : Button
     private lateinit var qrScan : Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +41,7 @@ class EditBusinessCardActivity : AppCompatActivity() {
         nameData = findViewById(R.id.editNameTextView)
         departmentData = findViewById(R.id.editDepartmentTextView)
         phoneNumbData = findViewById(R.id.editPhoneNumbTextView)
+        officeNumbData = findViewById(R.id.editTextPhone)
         emailData = findViewById(R.id.editEmailTextView)
         websiteData = findViewById(R.id.editWebsiteTextView)
         saveData = findViewById(R.id.saveButton)
@@ -53,20 +52,26 @@ class EditBusinessCardActivity : AppCompatActivity() {
             val intentIntegrator = IntentIntegrator(this)
             intentIntegrator.setDesiredBarcodeFormats(listOf(IntentIntegrator.QR_CODE))
             intentIntegrator.setOrientationLocked(true) //Lock Orientation
-            intentIntegrator.setCaptureActivity(CaptureActivityPortrait::class.java)
+            intentIntegrator.captureActivity = CaptureActivityPortrait::class.java
             intentIntegrator.setBeepEnabled(false)
             intentIntegrator.initiateScan()
-
         }
 
         //QR Code Generator Button
         saveData.setOnClickListener {
+            val nameString = nameData.text.toString()
+            val departmentString = departmentData.text.toString()
+            val phoneNumberString = phoneNumbData.text.toString()
+            val officeNumberString = officeNumbData.text.toString()
+            val emailString = emailData.text.toString()
+            val websiteString = websiteData.text.toString()
             //Combine text data into 1 string for encoding into QR Code
-            val encodeString = nameData.text.toString() + ":" +
-                                departmentData.text.toString() + ":" +
-                                phoneNumbData.text.toString() + ":" +
-                                emailData.text.toString() + ":" +
-                                websiteData.text.toString()
+            val encodeString = nameString + ":" +
+                                departmentString + ":" +
+                                phoneNumberString + ":" +
+                                officeNumberString + ":" +
+                                emailString + ":" +
+                                websiteString
             //Remove white space
             encodeString.trim()
             //Check if empty
@@ -74,6 +79,7 @@ class EditBusinessCardActivity : AppCompatActivity() {
                 Toast.makeText(this, "Input is empty", Toast.LENGTH_LONG).show()
             }
             else {
+                //Generate QR Code
                 val writer = QRCodeWriter()
                 try {
                     val bitMatrix = writer.encode(encodeString, BarcodeFormat.QR_CODE, 512, 512)
@@ -94,9 +100,11 @@ class EditBusinessCardActivity : AppCompatActivity() {
         }
     }
 
+    //QR Code Result Activity
+    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result = IntentIntegrator.parseActivityResult(resultCode, data) //Save QR Content to q variable
-        val stringResult = result.contents //Save QR Contents to a string
+        val result = IntentIntegrator.parseActivityResult(resultCode, data) //Save QR Content to a variable
+        val stringResult = result.contents //Save QR result Contents to a string
         val delim = ":" //Used as identifier to split string
         val dataArr = stringResult.split(delim).toTypedArray() //Retrieve individual data and store them in array
         if (result != null) {
@@ -105,11 +113,19 @@ class EditBusinessCardActivity : AppCompatActivity() {
                 .setPositiveButton("Yes", DialogInterface.OnClickListener { //If Yes is selected
                         dialogInterface, i ->
                     val intent = Intent(ContactsContract.Intents.Insert.ACTION)
-                    intent.setType(ContactsContract.RawContacts.CONTENT_TYPE) //Initialize Intent to contact app
+                    intent.type = ContactsContract.RawContacts.CONTENT_TYPE //Initialize Intent to contact app
                     intent.putExtra(ContactsContract.Intents.Insert.NAME, dataArr[0]) //Name
                     intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, dataArr[1]) //Department/Job Title
-                    intent.putExtra(ContactsContract.Intents.Insert.PHONE, dataArr[2]) // Phone Number
-                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL, dataArr[3]) // Email
+                    intent.putExtra(ContactsContract.Intents.Insert.COMPANY, "Blue Flush") // Company Name
+                    intent.putExtra(ContactsContract.Intents.Insert.PHONE, dataArr[2]) // Mobile Number
+                    intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
+                        ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) // Set Phone Type
+                    intent.putExtra(ContactsContract.Intents.Insert.SECONDARY_PHONE, dataArr[3]) // Office Number
+                    intent.putExtra(ContactsContract.Intents.Insert.SECONDARY_PHONE_TYPE,
+                        ContactsContract.CommonDataKinds.Phone.TYPE_WORK) //Set Phone type
+                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL, dataArr[4]) // Email
+                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE,
+                        ContactsContract.CommonDataKinds.Email.TYPE_WORK) // Set Email type
                     startActivity(intent)
                 })
                 .setNegativeButton("No", DialogInterface.OnClickListener { //If No is selected

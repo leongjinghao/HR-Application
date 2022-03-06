@@ -3,7 +3,7 @@
     <string name="companylogo">companyLogo</string>
     <string name="BlueFlush"><font color="#0D5299">Blue </font><font color="#35C85D">Flush</font></string>
 
-    <string name="cardButtonHint">Tap and Hold to edit card</string>
+    <string name="cardButtonHint">Tap and Hold card to edit and scan</string>
 
     <!--    Button Strings-->
     <string name="checkInButton">Check-In/Out</string>
@@ -12,6 +12,7 @@
     <string name="NFCButton">NFC Scan</string>
     <string name="accountButton">Account</string>
     <string name="approveButton">Leave Appr</string>
+    <string name="informationButtonDescr">Information Button</string>
 
     <string name="arrowIcon">Arrow Icon</string>
 
