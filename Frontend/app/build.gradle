@@ -52,4 +52,15 @@ dependencies {
     //QR Code Zxing dependencies
     implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'com.google.zxing:core:3.4.1'
+
+    //Room components dependencies
+    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation 'androidx.room:room-common:2.4.2'
+
+    // LiveData dependencies
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    // RecyclerView dependencies
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }
