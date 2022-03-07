@@ -5,7 +5,8 @@
     android:id="@+id/constraintayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ColorScheme5">
+    android:background="@color/ColorScheme5"
+    android:backgroundTint="@color/ColorScheme5">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/nameCardView"
@@ -161,6 +162,7 @@
                 android:layout_height="18dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="11dp"
+                android:contentDescription="@string/officePhoneIconDescr"
                 app:layout_constraintBottom_toTopOf="@+id/smartPhoneIcon"
                 app:layout_constraintEnd_toStartOf="@+id/officeNoTextView"
                 app:srcCompat="@drawable/phoneicon" />

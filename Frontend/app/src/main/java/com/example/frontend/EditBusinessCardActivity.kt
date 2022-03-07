@@ -47,6 +47,17 @@ class EditBusinessCardActivity : AppCompatActivity() {
         saveData = findViewById(R.id.saveButton)
         qrScan = findViewById(R.id.scanQRButton)
 
+        val bitmap : Bitmap? = ImageSaver(applicationContext).
+                                setFileName("myImage.png").
+                                setDirectoryName("images").
+                                load()
+        if (bitmap != null)
+            QRCode.setImageBitmap(bitmap)
+        else
+            QRCode.setImageResource(R.drawable.blueflushicon)
+
+
+
         //QR Code Scanner Button
         qrScan.setOnClickListener {
             val intentIntegrator = IntentIntegrator(this)
@@ -93,6 +104,10 @@ class EditBusinessCardActivity : AppCompatActivity() {
                         }
                     }
                     QRCode.setImageBitmap(bmp)
+                    ImageSaver(applicationContext).
+                        setFileName("myImage.png").
+                        setDirectoryName("images").
+                        save(bmp)
                 }catch (e: WriterException){
                     e.printStackTrace()
                 }
@@ -135,4 +150,5 @@ class EditBusinessCardActivity : AppCompatActivity() {
                 .show()
         }
     }
+
 }

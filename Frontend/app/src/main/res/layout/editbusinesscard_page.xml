@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/ColorScheme5"
+    android:backgroundTint="@color/ColorScheme5">
 
     <ImageView
         android:id="@+id/qrCodeImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
+        android:background="@color/ColorScheme5"
+        android:backgroundTint="@color/ColorScheme5"
         android:contentDescription="@string/QRDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -50,7 +54,8 @@
                 android:id="@+id/nameCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="18dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -87,7 +92,8 @@
                 android:id="@+id/departmentCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -124,7 +130,8 @@
                 android:id="@+id/officeNoCardView"
                 android:layout_width="405dp"
                 android:layout_height="52dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -162,7 +169,8 @@
                 android:id="@+id/smartPhoneCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -198,7 +206,8 @@
                 android:id="@+id/emailCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -235,7 +244,8 @@
                 android:id="@+id/websiteCardView"
                 android:layout_width="405dp"
                 android:layout_height="52dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/ColorScheme5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
