@@ -44,6 +44,12 @@
         </activity>
 
         <activity
+            android:name=".CheckInDetailActivity"
+            android:label="Check In"
+            android:parentActivityName=".CheckInOutActivity">
+        </activity>
+
+        <activity
             android:name=".EditBusinessCardActivity"
             android:label="Edit Business Card">
         </activity>
@@ -56,5 +62,8 @@
         </activity>
 
     </application>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>
