@@ -1,4 +1,3 @@
-#logs statement
 CloudWatchLogsPolicy:
   PolicyName: ${self:custom.PolicyPrefix}-LogPolicy
   PolicyDocument:
@@ -10,6 +9,6 @@ CloudWatchLogsPolicy:
         - logs:PutLogEvents
       Effect: Allow
       Resource: 
-        - arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/*
+        - "*"
 
 

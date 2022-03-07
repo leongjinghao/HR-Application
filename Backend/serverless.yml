@@ -27,6 +27,13 @@ functions:
       - http:
          method: GET
          path: /retrieve/retrieveUserLeaves
+  sesSendEmail:
+    handler: src/handlers/utility/sesSendEmail.handler
+    role: AdminRole
+    events:
+      - http:
+         method: POST
+         path: /utility/sesSendEmail
 
 resources:
   Resources:

@@ -14,7 +14,7 @@ beforeEach(() => {
     ddbMock.reset()
   })
 
-describe('/common/mainTable mainTable.ts test', () => {
+describe('/common/mainTable mainTable.unit.ts', () => {
     test('mainTable Successfully insert data into MainTable', async () => {
             //ddbMock.on(PutCommand).resolves(new Promise(test))
             const matchResponse : resultMessageResponseTypeDatabase = {
