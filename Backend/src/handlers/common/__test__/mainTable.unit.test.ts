@@ -9,7 +9,7 @@ beforeEach(() => {
     jest.clearAllMocks();
   });
 
-describe('/common/mainTable mainTable.ts test', () => {
+/*describe('/common/mainTable mainTable.ts test', () => {
     test('Create User Leave successfully', async () => {
         const matchResponse : resultMessageResponseTypeDatabase = { 
             result: true, 
@@ -25,4 +25,4 @@ describe('/common/mainTable mainTable.ts test', () => {
         expect(response.result).toStrictEqual(matchResponse.result)
         expect(response.message).toStrictEqual(matchResponse.message)
     });
-});
+}); */

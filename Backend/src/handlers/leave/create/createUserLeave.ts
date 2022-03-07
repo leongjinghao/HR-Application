@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createLeave } from '../../common/mainTable';
 import { LambdaResponse } from '../../utility/responses';
 import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
@@ -15,7 +16,6 @@ async function createUserLeave(event): Promise<LambdaResponse> {
     statusCode: 200,
     body: '',
   }
-
   try {
     event = JSON.parse(event.body);
     const result = await createLeave(
