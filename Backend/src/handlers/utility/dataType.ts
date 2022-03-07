@@ -1,4 +1,4 @@
-import APIGatewayEventRequestContext from 'aws-sdk';
+import APIGatewayEventRequestContext from 'aws-sdk'
 
 export interface APIGatewayProxyEvent {
   body: string | null;
@@ -24,8 +24,8 @@ export interface resultMessageResponseTypeDatabase {
 }
 
 /**
- * APIGatewayProxyEvent Attributes  
- * @param eventData Event data which passed from the front end 
+ * APIGatewayProxyEvent Attributes
+ * @param eventData Event data which passed from the front end
  * @returns APIGatewayProxyEvent
  */
 export const mockData = async (
@@ -45,5 +45,5 @@ export const mockData = async (
     requestContext: APIGatewayEventRequestContext,
     resource: '',
   }
-  return mockEvent;
+  return mockEvent
 }

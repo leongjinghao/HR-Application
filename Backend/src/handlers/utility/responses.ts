@@ -1,4 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyResult } from 'aws-lambda'
 
 export interface LambdaResponse extends APIGatewayProxyResult {
   statusCode: 200 | 400 | 401 | 500;

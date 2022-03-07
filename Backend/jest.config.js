@@ -6,4 +6,4 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   coverageReporters: ['html', 'text', 'text-summary'],
-};
+}

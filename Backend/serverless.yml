@@ -19,7 +19,14 @@ functions:
     events:
       - http:
          method: POST
-         path: /createUserLeave
+         path: /create/createUserLeave
+  retrieveUserLeaves:
+    handler: src/handlers/leave/retrieve/retrieveUserLeaves.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrieveUserLeaves
 
 resources:
   Resources:

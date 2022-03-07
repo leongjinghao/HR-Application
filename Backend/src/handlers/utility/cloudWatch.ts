@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const genPrintFormat = (fileName: string, funcName: string, message: string) => {
-  return `${fileName} - ${funcName} -> ${message}`;
+  return `${fileName} - ${funcName} -> ${message}`
 }
 
 /**
@@ -14,7 +14,7 @@ export const log2CloudWatch = (
   funcName: string,
   message: string,
 ) => {
-  console.log(genPrintFormat(fileName, funcName, message));
+  console.log(genPrintFormat(fileName, funcName, message))
 }
 
 /**
@@ -28,5 +28,5 @@ export const error2CloudWatch = (
   funcName: string,
   message: string,
 ) => {
-  console.error(genPrintFormat(fileName, funcName, message));
+  console.error(genPrintFormat(fileName, funcName, message))
 }

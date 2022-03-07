@@ -11,11 +11,19 @@
     ],
     "rules":{
         "no-console":2,
-        "eqeqeq":"error",
+        "eqeqeq":["error", "always"],
         "max-len": ["error",{ "code": 125}],
         "keyword-spacing": ["error", { "before": true, "after": true}],
         "@typescript-eslint/no-explicit-any": ["error"],
-        "no-extra-semi": "off",
-        "@typescript-eslint/no-extra-semi": ["error"]
+        "semi": ["error","never"],
+        "@typescript-eslint/no-extra-semi": ["error"],
+        "@typescript-eslint/no-var-requires": "off",
+        "camelcase": ["error",{ "properties": "always" }],
+        "no-trailing-spaces": ["error"],
+        "no-multiple-empty-lines": ["error", { "max": 1}],
+        "quotes": ["error", "single"],
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-non-null-assertion":"off"
+
     }
   }

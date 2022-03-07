@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { createLeave } from '../../common/mainTable';
-import { LambdaResponse } from '../../utility/responses';
+import { putCreateLeave } from '../../common/mainTable'
+import { LambdaResponse } from '../../utility/responses'
 import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
 
 /**
@@ -17,8 +17,8 @@ async function createUserLeave(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    event = JSON.parse(event.body);
-    const result = await createLeave(
+    event = JSON.parse(event.body)
+    const result = await putCreateLeave(
       event.userId,
       event.startEndDate,
       event.leaveType,
@@ -27,14 +27,14 @@ async function createUserLeave(event): Promise<LambdaResponse> {
       event.status
       )
     apiResponse.body = result.message
-    log2CloudWatch("createUserLeave.ts","createUserLeave",result.message)
+    log2CloudWatch('createUserLeave.ts','createUserLeave',result.message)
   }
   catch (err) {
-    apiResponse.statusCode = 500;
+    apiResponse.statusCode = 500
     apiResponse.body = err
-    error2CloudWatch("createUserLeave.ts","createUserLeave",err)
+    error2CloudWatch('createUserLeave.ts','createUserLeave',err)
   }
-  
-  return apiResponse;
+
+  return apiResponse
 }
-export const handler = createUserLeave;
+export const handler = createUserLeave
