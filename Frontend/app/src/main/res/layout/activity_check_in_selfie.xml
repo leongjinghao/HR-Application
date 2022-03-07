@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/ColorScheme5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +18,7 @@
 
     <View
         android:id="@+id/lineSeparatorCheckInSelfie"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="32dp"
         android:background="@color/ColorScheme1"
@@ -30,7 +31,8 @@
         android:id="@+id/textViewCheckInDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center_horizontal"
         android:text="Date, Day\nTime\nLocation"
         android:textSize="20dp"
@@ -41,25 +43,25 @@
         android:id="@+id/buttonCheckInConfirm"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
         android:text="Confirm"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/ColorScheme2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCheckInDetails" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonCheckInReset"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/ColorScheme3"
         android:text="Reset"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.769"
-        app:layout_constraintStart_toEndOf="@+id/buttonCheckInConfirm"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCheckInDetails" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/showPermissionMsg"
