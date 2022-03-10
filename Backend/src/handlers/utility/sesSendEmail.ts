@@ -31,7 +31,7 @@ async function sesSendEmail(event) : Promise<LambdaResponse> {
         },
         Source: 'weianngo@gmail.com',
       }
-      await ses.sendEmail(params)
+      await ses.sendEmail(params).promise()
       apiResponse.body = 'Email had been send successfully'
       log2CloudWatch('sesSendEmail.ts','sesSendEmail',apiResponse.body)
   }
