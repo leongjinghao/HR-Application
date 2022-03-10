@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
+    6FB3B8
     <style name="Theme.Frontend.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -25,6 +25,10 @@
 
     <style name="TabStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="buttonTheme" parent="ThemeOverlay.AppCompat">
+        <item name="colorPrimary">@color/ColorScheme2</item>
     </style>
 
 </resources>

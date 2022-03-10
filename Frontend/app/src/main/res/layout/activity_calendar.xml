@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CalendarView
+            android:id="@+id/leaveCalendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:elevation="10dp"/>
+
+        <TextView
+            android:id="@+id/leaveALTextView"
+            android:layout_below="@+id/leaveCalendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="ANNUAL LEAVE : 21 Total"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <RelativeLayout
+            android:id="@+id/leaveALIndicator"
+            android:layout_below="@+id/leaveALTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/leaveALIndicatorUnused"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="18  unused"
+                android:textAlignment="center"
+                android:background="@drawable/leave_indicator_border_limegreen"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/leaveALIndicatorUsed"
+                android:layout_alignTop="@+id/leaveALIndicatorUnused"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="18  unused"
+                android:background="@drawable/leave_indicator_border_white"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/leaveOILTextView"
+            android:layout_below="@+id/leaveALIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Off-In-Lieu: 4 Total"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <RelativeLayout
+            android:id="@+id/leaveOILIndicator"
+            android:layout_below="@+id/leaveOILTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="20dp">
+
+        <TextView
+                android:id="@+id/leaveOILIndicatorUnused"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4  unused"
+                android:textAlignment="center"
+                android:background="@drawable/leave_indicator_border_peach"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/leaveOILIndicatorUsed"
+                android:layout_alignTop="@+id/leaveOILIndicatorUnused"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="18  unused"
+                android:background="@drawable/leave_indicator_border_white"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/leaveMLTextView"
+            android:layout_below="@+id/leaveOILIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Medical Leave : 14 Total"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <RelativeLayout
+            android:id="@+id/leaveMLIndicator"
+            android:layout_below="@+id/leaveMLTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:id="@+id/leaveMLLIndicatorUnused"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4  unused"
+                android:textAlignment="center"
+                android:background="@drawable/leave_indicator_border_blue"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/leaveMLIndicatorUsed"
+                android:layout_alignTop="@+id/leaveMLLIndicatorUnused"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="18  unused"
+                android:background="@drawable/leave_indicator_border_white"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_below="@+id/leaveMLIndicator"
+            android:layout_width="match_parent"
+            android:layout_margin="30dp"
+            android:text="Back"
+            android:textStyle="bold"
+            android:theme="@style/buttonTheme"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
