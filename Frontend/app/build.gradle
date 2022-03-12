@@ -63,4 +63,7 @@ dependencies {
     // RecyclerView dependencies
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
 }
