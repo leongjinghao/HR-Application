@@ -14,19 +14,28 @@ provider:
 
 functions:
   createUserLeave:
-    handler: src/handlers/leave/create/createUserLeave.handler
+    handler: src/handlers/leaveInformation/create/createUserLeave.handler
     role: AdminRole
     events:
       - http:
          method: POST
          path: /create/createUserLeave
   retrieveUserLeaves:
-    handler: src/handlers/leave/retrieve/retrieveUserLeaves.handler
+    handler: src/handlers/leaveInformation/retrieve/retrieveUserLeaves.handler
     role: AdminRole
     events:
       - http:
          method: GET
          path: /retrieve/retrieveUserLeaves
+  retrieveUserInformation:
+    handler: src/handlers/userInformation/retrieve/retrieveUserInformation.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrieveUserInformation
+
+
   sesSendEmail:
     handler: src/handlers/utility/sesSendEmail.handler
     role: AdminRole

@@ -93,3 +93,57 @@ type createLeaveType = (
         return false
       }
     }
+
+    type queryUserInformation = (
+      userId : string,
+    ) => Promise<{
+      PK:string,
+      SK:string,
+      Name:string,
+      DOB:string,
+      Mobile:string,
+      Email:string,
+      Department:string,
+      Picture:string,
+      Al:string,
+      MC:string,
+      OIL:string} | false | {}>
+    /**
+     * Access the main Table and retrieve all User Information based on User Id
+     * @param {string} userId User ID
+     * @returns {Promise <{
+     * PK:string,
+     * SK:string,
+     * Name:string,
+     * DOB:string,
+     * Mobile:string,
+     * Email:string,
+     * Department:string,
+     * Picture:string,
+     * Al:string,
+     * MC:string,
+     * OIL:string}
+     * | false | {}> } User Information
+     */
+    export const queryUserInformation: queryUserInformation = async (userId) => {
+      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+      const params: AWS.DynamoDB.QueryInput = {
+        TableName: 'mainTable',
+        KeyConditionExpression: '#PK = :PK AND begins_with(#SK, :SK)',
+        ExpressionAttributeNames: {
+          '#PK': 'PK',
+          '#SK': 'SK'
+        },
+        ExpressionAttributeValues: {
+          ':PK': { S: `USER#${userId}` },
+          ':SK': { S: `PROFILE#${userId}` }
+        }
+      }
+      try {
+        const data = await dynamodb.query(params).promise()
+        return data
+      } catch (err) {
+        return false
+      }
+    }
+

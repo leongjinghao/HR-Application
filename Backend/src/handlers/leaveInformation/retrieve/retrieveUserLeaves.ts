@@ -22,12 +22,12 @@ async function retrieveUserLeaves(event): Promise<LambdaResponse> {
       userId
       )
     apiResponse.body = JSON.stringify(result)
-    log2CloudWatch('createUserLeave.ts','createUserLeave','User leave information successfully retrieve')
+    log2CloudWatch('retrieveUserLeaves.ts','retrieveUserLeaves','User leave information successfully retrieve')
   }
   catch (err) {
     apiResponse.statusCode = 500
     apiResponse.body = err
-    error2CloudWatch('createUserLeave.ts','createUserLeave',err)
+    error2CloudWatch('retrieveUserLeaves.ts','retrieveUserLeaves',err)
   }
 
   return apiResponse

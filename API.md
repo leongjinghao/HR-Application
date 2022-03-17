@@ -8,7 +8,7 @@
 404 Unable to find the requested resources<br>
 500 Server encounter unexpected condition<br>
 
-<h2>Account </h2>
+<h2>User Login </h2>
 <b>description : </b><br><br>
 
 <table >
@@ -28,23 +28,15 @@
  
 </table>
 
-<h2>Attendance </h2>
+<h2>User Information </h2>
 <b>description : </b>
 
-<h2>Calendar </h2>
+<h2>Leave Information </h2>
 <b>description : </b>
 
-<h2>Home </h2>
+<h2>Attendance Information </h2>
 <b>description : </b>
 
-<h2>Launch </h2>
+<h2>Utility </h2>
 <b>description : </b>
 
-<h2>Leave </h2>
-<b>description : </b>
-
-<h2>NFC </h2>
-<b>description : </b>
-
-<h2>Virtual Business Card </h2>
-<b>description : </b>
