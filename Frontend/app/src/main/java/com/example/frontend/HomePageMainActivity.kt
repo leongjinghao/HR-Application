@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import com.example.frontend.leaveModule.LeaveCalendarActivity
+import com.example.frontend.leaveModule.LeaveSummaryActivity
 
 
 class HomePageMainActivity : AppCompatActivity() {
@@ -68,10 +70,14 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         calendarButton.setOnClickListener {
+            val intent = Intent(this, LeaveCalendarActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Moving to Calendar Page", Toast.LENGTH_LONG).show()
         }
 
         leaveButton.setOnClickListener {
+            val intent = Intent(this, LeaveSummaryActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Moving to Leave Page", Toast.LENGTH_LONG).show()
         }
 

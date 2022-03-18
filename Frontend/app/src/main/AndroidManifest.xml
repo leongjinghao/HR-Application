@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".HRApplication"
@@ -59,6 +60,21 @@
             android:screenOrientation="sensorPortrait"
             android:stateNotNeeded="true"
             tools:ignore="LockedOrientationActivity">
+        </activity>
+
+        <activity
+            android:name=".leaveModule.LeaveAddActivity"
+            android:label="Add Leave">
+        </activity>
+
+        <activity
+            android:name=".leaveModule.LeaveCalendarActivity"
+            android:label="Leave Calendar">
+        </activity>
+
+        <activity
+            android:name=".leaveModule.LeaveSummaryActivity"
+            android:label="View Leave">
         </activity>
 
     </application>
