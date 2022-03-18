@@ -1,23 +1,23 @@
 package com.example.frontend.retroAPI.api.model
 
-data class userInformation(
-    val Items : List<field>?
+data class userInformationModel(
+    val Items : List<userInformationField>?
 )
 
-data class field(
-    val PK: innerObject,
-    val SK: innerObject,
-    val Name: innerObject,
-    val DOB: innerObject,
-    val Mobile: innerObject,
-    val Email: innerObject,
-    val Department: innerObject,
-    val Picture: innerObject,
-    val AL: innerObject,
-    val MC: innerObject,
-    val OIL: innerObject
+data class userInformationField(
+    val PK: userInformationInnerObject,
+    val SK: userInformationInnerObject,
+    val Name: userInformationInnerObject,
+    val DOB: userInformationInnerObject,
+    val Mobile: userInformationInnerObject,
+    val Email: userInformationInnerObject,
+    val Department: userInformationInnerObject,
+    val Picture: userInformationInnerObject,
+    val AL: userInformationInnerObject,
+    val MC: userInformationInnerObject,
+    val OIL: userInformationInnerObject
 )
 
-data class innerObject(
+data class userInformationInnerObject(
     val S : String
 )

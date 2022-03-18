@@ -3,11 +3,16 @@ package com.example.frontend.leaveModule
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend.databinding.ActivityLeavesSummaryBinding
-import com.example.frontend.retroAPI.api.model.userInformation
+import com.example.frontend.leaveModule.utilities.LeaveSummaryRecycler
+import com.example.frontend.retroAPI.api.model.leaveInformationModel
+import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
@@ -20,23 +25,34 @@ import com.github.mikephil.charting.data.PieEntry
 class LeaveSummaryActivity : AppCompatActivity()  {
 
     private lateinit var binding: ActivityLeavesSummaryBinding
-    private lateinit var viewModel : apiViewModel
-    private lateinit var data : userInformation
+    private lateinit var apiCall : apiViewModel
+    private lateinit var userInfoData : userInformationModel
+    private lateinit var leaveInfoData : leaveInformationModel
+    private var leaveAdapter : RecyclerView.Adapter<LeaveSummaryRecycler.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeavesSummaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        data = userInformation(null)
+        userInfoData = userInformationModel(null)
 
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
-        viewModel = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
-        viewModel.getUserInformation()
-        viewModel.myResponse.observe(this, Observer { response ->
-            data = response
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
+        apiCall.getUserInformation("Ali456")
+        apiCall.userInformationRes.observe(this, Observer { response ->
+            userInfoData = response
             initPieChart()
             setDataToPieChart()
+        })
+
+        apiCall.getUserLeaves("ali123")
+        apiCall.leaveInformationRes.observe(this, Observer { response ->
+            leaveInfoData = response
+            leaveAdapter = LeaveSummaryRecycler(leaveInfoData)
+            binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
+            binding.recyclerViewLeaveSummary.adapter = leaveAdapter
         })
 
         binding.calenderButton.setOnClickListener{
@@ -45,7 +61,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         }
     }
 
-        fun initPieChart() {
+    private fun initPieChart() {
             binding.pieChart.description.text = ""
             //Enable the char to be rotate
             binding.pieChart.setTouchEnabled(true)
@@ -71,19 +87,19 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             binding.pieChart.setHoleColor(Color.WHITE)
         }
 
-        private fun setDataToPieChart() {
+    private fun setDataToPieChart() {
 
-            var arrayOfPosition = data.Items?.get(0)?.AL?.S?.length?.let { checkPosition(it.toInt()) }
-            var availableAL = data.Items?.get(0)?.AL?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
-            var usedAL = data.Items?.get(0)?.AL?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableAL
+            var arrayOfPosition = userInfoData.Items?.get(0)?.AL?.S?.length?.let { checkPosition(it.toInt()) }
+            var availableAL = userInfoData.Items?.get(0)?.AL?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
+            var usedAL = userInfoData.Items?.get(0)?.AL?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableAL
 
-            arrayOfPosition = data.Items?.get(0)?.MC?.S?.length?.let { checkPosition(it.toInt()) }
-            var availableMC = data.Items?.get(0)?.MC?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
-            var usedMC = data.Items?.get(0)?.MC?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableMC
+            arrayOfPosition = userInfoData.Items?.get(0)?.MC?.S?.length?.let { checkPosition(it.toInt()) }
+            var availableMC = userInfoData.Items?.get(0)?.MC?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
+            var usedMC = userInfoData.Items?.get(0)?.MC?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableMC
 
-            arrayOfPosition = data.Items?.get(0)?.OIL?.S?.length?.let { checkPosition(it.toInt()) }
-            var availableOIL = data.Items?.get(0)?.OIL?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
-            var usedOIL = data.Items?.get(0)?.OIL?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableOIL
+            arrayOfPosition = userInfoData.Items?.get(0)?.OIL?.S?.length?.let { checkPosition(it.toInt()) }
+            var availableOIL = userInfoData.Items?.get(0)?.OIL?.S.toString().substring(0, arrayOfPosition!![0]).toFloat()
+            var usedOIL = userInfoData.Items?.get(0)?.OIL?.S.toString().substring(arrayOfPosition!![1],arrayOfPosition!![2]).toFloat() - availableOIL
 
             val dataEntries = ArrayList<PieEntry>()
             val colors: ArrayList<Int> = ArrayList()
@@ -120,7 +136,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
 
         }
 
-    fun checkPosition(size : Int): Array<Int> {
+    private fun checkPosition(size : Int): Array<Int> {
 
         var tempData = arrayOf(0,0,0)
         if (size == 3) {

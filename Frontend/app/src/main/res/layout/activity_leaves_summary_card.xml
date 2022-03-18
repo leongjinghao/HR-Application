@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/card_view"
-
+    android:layout_marginTop="10dp"
     >
 
     <LinearLayout
@@ -13,36 +13,44 @@
         android:background="@drawable/backgroud_border">
 
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingLeft="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/leaveTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"/>
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.3"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/leaveDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"/>
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.3"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/leaveStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"/>
+                android:layout_weight="0.3"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/leaveStatusButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:layout_marginLeft="144dp"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="35dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
