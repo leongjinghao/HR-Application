@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.example.frontend.R
 
 class CheckInOutFragment : Fragment() {
@@ -19,5 +20,13 @@ class CheckInOutFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_check_in_out, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val checkinButton = view.findViewById<Button>(R.id.buttonCheckInOut)
+        checkinButton.setOnClickListener{
+            
+        }
     }
 }

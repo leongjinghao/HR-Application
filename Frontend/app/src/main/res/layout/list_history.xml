@@ -25,6 +25,32 @@
         app:layout_constraintTop_toTopOf="@+id/textViewHistoryHeader"
         app:layout_constraintBottom_toBottomOf="@+id/textViewHistoryHeader"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandedLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHistoryHeader">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCheckInTiming"
+            android:text="Check In:"
+            android:textSize="15sp"
+            android:paddingLeft="10sp"
+            app:layout_constraintTop_toTopOf="@+id/expandedLayout"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCheckOutTiming"
+            android:text="Check Out:"
+            android:textSize="15sp"
+            android:paddingLeft="10sp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCheckInTiming"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
