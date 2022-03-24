@@ -31,6 +31,8 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
     private var surfaceHolder: SurfaceHolder? = null
     private var camera: Camera? = null
+    private var confirmFlag = false
+    private lateinit var tempSelfieByte: ByteArray
 
 
     private val neededPermissions = arrayOf(CAMERA, WRITE_EXTERNAL_STORAGE)
@@ -43,18 +45,23 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         val checkInResetButton = findViewById<Button>(R.id.buttonCheckInReset)
 
         checkInResetButton.setOnClickListener {
+            // Call function for resetting camera view
             resetCamera()
+
+            // Reset button text to "capture" mode and confirm flag back to false
+            binding.buttonCheckInConfirm.text = "Capture"
+            confirmFlag = false
         }
 
-        // check permissions required
+        // Check permissions required
         val permission = checkPermission()
-        // if all permissions granted display camera view on surface holder
+        // If all permissions granted display camera view on surface holder
         if (permission) {
             setupSurfaceHolder()
         }
     }
 
-    // function to check permissions required
+    // Function to check permissions required
     private fun checkPermission(): Boolean {
         val currentAPIVersion = Build.VERSION.SDK_INT
         if (currentAPIVersion >= Build.VERSION_CODES.M) {
@@ -88,7 +95,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         return true
     }
 
-    // function to display dialog box for requesting permissions
+    // Function to display dialog box for requesting permissions
     private fun showPermissionAlert(permissions: Array<String?>) {
         val alertBuilder = AlertDialog.Builder(this)
         alertBuilder.setCancelable(true)
@@ -99,12 +106,12 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         alert.show()
     }
 
-    // function to request all permissions from user
+    // Function to request all permissions from user
     private fun requestPermissions(permissions: Array<String?>) {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
     }
 
-    // function to check if all permissions are granted by user
+    // Function to check if all permissions are granted by user
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -130,6 +137,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    // Setting up the view for surface holder
     private fun setupSurfaceHolder() {
         binding.buttonCheckInConfirm.visibility = View.VISIBLE
         binding.surfaceViewCamera.visibility = View.VISIBLE
@@ -139,21 +147,40 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         setBtnClick()
     }
 
+    // Set on click listener to "capture" or "confirm" button
     private fun setBtnClick() {
         binding.buttonCheckInConfirm.setOnClickListener { captureImage() }
     }
 
+    /* Perform actions depending on the current mode (capture or confirm)
+        Capture mode: store the bytes of captured image in camera view in a temporary variable
+        Confirm mode: save/send the bytes of image store in the temporary variable
+     */
     private fun captureImage() {
-        if (camera != null) {
-            camera!!.takePicture(null, null, this)
+        // If in "capture" mode, not "confirm"
+        if (!confirmFlag) {
+            if (camera != null) {
+                camera!!.takePicture(null, null, this)
+                confirmFlag = true
+            }
         }
-        camera!!.stopPreview()
+        // Else in "confirm" mode
+        else {
+            saveImage(tempSelfieByte)
+            Toast.makeText(this, "to send the selfie here!", Toast.LENGTH_LONG).show()
+            confirmFlag = false
+
+            // Go back to previous page
+            finish()
+        }
     }
 
+    // Start the camera view on surface view created
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         startCamera()
     }
 
+    // Function to start the camera view
     private fun startCamera() {
         camera = Camera.open()
         camera!!.setDisplayOrientation(90)
@@ -166,10 +193,12 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
     }
 
+    // On surface view changed
     override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) {
         resetCamera()
     }
 
+    // Function to reset the camera view, i.e. on pause in "confirm" mode
     private fun resetCamera() {
         if (surfaceHolder!!.surface == null) {
             // Return if preview surface does not exist
@@ -185,29 +214,43 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             e.printStackTrace()
         }
 
-        // Start the camera preview...
+        // Start the camera preview
         camera!!.startPreview()
     }
 
+    // Release the camera view on surface view destruction
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
         releaseCamera()
     }
 
+    // Function for releasing the camera view
     private fun releaseCamera() {
         camera!!.stopPreview()
         camera!!.release()
         camera = null
     }
 
+    /* On picture taken in "capture" mode,
+        - Store the bytes of image captured in temporary variable
+        - Change the button text to "confirm" mode
+        - Pause the camera view
+     */
     override fun onPictureTaken(bytes: ByteArray, camera: Camera) {
-        saveImage(bytes)
-        resetCamera()
+        // Store bytes of picture in temporary variable
+        tempSelfieByte = bytes
+
+        // Set text of button to "confirm" mode
+        binding.buttonCheckInConfirm.text = "Confirm"
+
+        // Stop the camera view
+        camera!!.stopPreview()
     }
 
+    // Function to write out the image from a byte array
     private fun saveImage(bytes: ByteArray) {
         val outStream: FileOutputStream
         try {
-            val fileName = "TUTORIALWING_" + System.currentTimeMillis() + ".jpg"
+            val fileName = "CheckInSelfie_" + System.currentTimeMillis() + ".jpg"
             val file = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 fileName

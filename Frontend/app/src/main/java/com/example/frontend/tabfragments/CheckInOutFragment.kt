@@ -1,12 +1,15 @@
 package com.example.frontend.tabfragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.frontend.CheckInDetailActivity
 import com.example.frontend.R
+import com.example.frontend.leaveModule.LeaveSummaryActivity
 
 class CheckInOutFragment : Fragment() {
 
@@ -26,7 +29,8 @@ class CheckInOutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val checkinButton = view.findViewById<Button>(R.id.buttonCheckInOut)
         checkinButton.setOnClickListener{
-            
+            val intent = Intent (activity, CheckInDetailActivity::class.java)
+            activity?.startActivity(intent)
         }
     }
 }

@@ -27,5 +27,8 @@
     <string name="permission_required">Permission Required</string>
     <string name="permission_message">Gant permission to access camera.</string>
     <string name="permission_warning">All permissions are required.</string>
+    <string name="capture">Capture</string>
+    <string name="confirm">Confirm</string>
+    <string name="reset">Reset</string>
     <string name="yes">Yes</string>
 </resources>
