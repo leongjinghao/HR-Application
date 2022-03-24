@@ -170,7 +170,9 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             Toast.makeText(this, "to send the selfie here!", Toast.LENGTH_LONG).show()
             confirmFlag = false
 
-            // Go back to previous page
+            // TODO: send the selfie to DB and record check in details
+
+            // Go back to previous page on successful check in process
             finish()
         }
     }
