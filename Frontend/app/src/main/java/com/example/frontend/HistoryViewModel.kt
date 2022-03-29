@@ -9,6 +9,9 @@ class HistoryViewModel(private val repository: HistoryRepository) : ViewModel() 
     // use LiveData to cache all records of check in and out history
     val allHistory: LiveData<List<History>> = repository.allHistory.asLiveData()
 
+    // Cache for check in and out status
+    val checkInOutStatus: String = repository.checkInOutStatus
+
     // Launch new coroutine to insert data in a non-blocking way
     fun insert(history: History) = viewModelScope.launch {
         repository.insert(history)
