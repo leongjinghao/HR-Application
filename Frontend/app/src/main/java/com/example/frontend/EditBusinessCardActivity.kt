@@ -14,14 +14,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.qrcode.QRCodeWriter
+import kotlinx.coroutines.launch
 
 class EditBusinessCardActivity : AppCompatActivity() {
     //Set variables
-    private lateinit var QRCode : ImageView
+    private lateinit var qrCode : ImageView
     private lateinit var nameData : EditText
     private lateinit var departmentData : EditText
     private lateinit var phoneNumbData : EditText
@@ -31,13 +33,15 @@ class EditBusinessCardActivity : AppCompatActivity() {
     private lateinit var saveData : Button
     private lateinit var qrScan : Button
 
+    private lateinit var cardDetailsManager : CardDetailsManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.editbusinesscard_page)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //Disable night mode
 
         //Get input text and button IDs
-        QRCode = findViewById(R.id.qrCodeImageView)
+        qrCode = findViewById(R.id.qrCodeImageView)
         nameData = findViewById(R.id.editNameTextView)
         departmentData = findViewById(R.id.editDepartmentTextView)
         phoneNumbData = findViewById(R.id.editPhoneNumbTextView)
@@ -48,15 +52,15 @@ class EditBusinessCardActivity : AppCompatActivity() {
         qrScan = findViewById(R.id.scanQRButton)
 
         val bitmap : Bitmap? = ImageSaver(applicationContext).
-                                setFileName("myImage.png").
-                                setDirectoryName("images").
-                                load()
+        setFileName("QRImage.png").
+        setDirectoryName("images").
+        load()
         if (bitmap != null)
-            QRCode.setImageBitmap(bitmap)
+            qrCode.setImageBitmap(bitmap)
         else
-            QRCode.setImageResource(R.drawable.blueflushicon)
+            qrCode.setImageResource(R.drawable.qrcodeprompt)
 
-
+        cardDetailsManager = CardDetailsManager(this)
 
         //QR Code Scanner Button
         qrScan.setOnClickListener {
@@ -77,41 +81,19 @@ class EditBusinessCardActivity : AppCompatActivity() {
             val emailString = emailData.text.toString()
             val websiteString = websiteData.text.toString()
             //Combine text data into 1 string for encoding into QR Code
-            val encodeString = nameString + ":" +
-                                departmentString + ":" +
-                                phoneNumberString + ":" +
-                                officeNumberString + ":" +
-                                emailString + ":" +
-                                websiteString
-            //Remove white space
-            encodeString.trim()
+            val encodeString = cardDetailsEncodeString(nameString, departmentString,
+                                                        phoneNumberString, officeNumberString,
+                                                        emailString, websiteString)
             //Check if empty
             if (encodeString.isEmpty()){
                 Toast.makeText(this, "Input is empty", Toast.LENGTH_LONG).show()
             }
             else {
                 //Generate QR Code
-                val writer = QRCodeWriter()
-                try {
-                    val bitMatrix = writer.encode(encodeString, BarcodeFormat.QR_CODE, 512, 512)
-                    val width = bitMatrix.width
-                    val height = bitMatrix.height
-                    val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
-
-                    for (x in 0 until width) {
-                        for (y in 0 until height){
-                            bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
-                        }
-                    }
-                    QRCode.setImageBitmap(bmp)
-                    ImageSaver(applicationContext).
-                        setFileName("myImage.png").
-                        setDirectoryName("images").
-                        save(bmp)
-                }catch (e: WriterException){
-                    e.printStackTrace()
-                }
+                saveQRCode(encodeString)
             }
+            //Store details to user preference datastore
+            storeUser()
         }
     }
 
@@ -151,4 +133,64 @@ class EditBusinessCardActivity : AppCompatActivity() {
         }
     }
 
+    // Function to combine Card Details into 1 string
+    private fun cardDetailsEncodeString(
+        nameString: String, departmentString: String,
+        phoneNumberString: String, officeNumberString: String,
+        emailString: String, websiteString: String
+    ): String {
+        val delim = ":"
+        return (nameString + delim + departmentString + delim +
+                phoneNumberString + delim + officeNumberString + delim +
+                emailString + delim + websiteString).trim()
+    }
+
+    // Function to generate bitmap from card details
+    private fun generateQRCode(writer : QRCodeWriter, encodeString : String) : Bitmap {
+        val bitMatrix = writer.encode(encodeString, BarcodeFormat.QR_CODE, 512, 512)
+        val width = bitMatrix.width
+        val height = bitMatrix.height
+        val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+
+        for (x in 0 until width) {
+            for (y in 0 until height){
+                bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
+            }
+        }
+        return bmp
+    }
+
+    // Function to store card details to user preference datastore
+    private fun storeUser() {
+        val name = nameData.text.toString()
+        val department = departmentData.text.toString()
+        val phoneNumber = phoneNumbData.text.toString()
+        val officeNumber = officeNumbData.text.toString()
+        val email = emailData.text.toString()
+        val website = websiteData.text.toString()
+
+        lifecycleScope.launch {
+            cardDetailsManager.storeDetails(name, department, phoneNumber,
+                officeNumber, email, website)
+            Toast.makeText(
+                this@EditBusinessCardActivity,
+                "Details Saved",
+                Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // Save QR Code to app's local storage
+    private fun saveQRCode(encodeString : String) {
+        val writer = QRCodeWriter()
+        try {
+            val bmp = generateQRCode(writer, encodeString)
+            qrCode.setImageBitmap(bmp)
+            ImageSaver(applicationContext).
+            setFileName("QRImage.png").
+            setDirectoryName("images").
+            save(bmp)
+        }catch (e: WriterException){
+            e.printStackTrace()
+        }
+    }
 }

@@ -27,4 +27,5 @@
     <string name="smartPhoneIconDescr">smartPhoneIcon</string>
     <string name="officePhoneTextView">+65 6123 4567</string>
     <string name="officePhoneIconDescr">officePhoneIcon</string>
+    <string name="qrCode">QR Code</string>
 </resources>
