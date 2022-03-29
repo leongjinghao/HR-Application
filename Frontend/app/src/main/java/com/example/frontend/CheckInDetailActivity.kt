@@ -15,14 +15,20 @@ import android.view.TextureView
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.example.frontend.databinding.ActivityCheckInSelfieBinding
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.PictureCallback {
@@ -36,6 +42,11 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
 
     private val neededPermissions = arrayOf(CAMERA, WRITE_EXTERNAL_STORAGE)
+
+    // create the ViewModel
+    private val historyViewModel: HistoryViewModel by viewModels() {
+        HistoryViewModelFactory((application as HRApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,6 +167,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         Capture mode: store the bytes of captured image in camera view in a temporary variable
         Confirm mode: save/send the bytes of image store in the temporary variable
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun captureImage() {
         // If in "capture" mode, not "confirm"
         if (!confirmFlag) {
@@ -170,7 +182,15 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             Toast.makeText(this, "to send the selfie here!", Toast.LENGTH_LONG).show()
             confirmFlag = false
 
-            // TODO: send the selfie to DB and record check in details
+            // TODO: send the selfie & check in record to aws DB and record check in details
+
+            // Insert check in record on room DB
+            historyViewModel.insert(History(
+                LocalDate.now().toString(),
+                LocalDate.now().dayOfWeek.name,
+                "Clock In",
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+            ))
 
             // Go back to previous page on successful check in process
             finish()
