@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
@@ -95,6 +96,8 @@ class EditBusinessCardActivity : AppCompatActivity() {
             //Store details to user preference datastore
             storeUser()
         }
+        //Get card details to display on hints
+        observeData()
     }
 
     //QR Code Result Activity
@@ -191,6 +194,40 @@ class EditBusinessCardActivity : AppCompatActivity() {
             save(bmp)
         }catch (e: WriterException){
             e.printStackTrace()
+        }
+    }
+
+    //Retrieve Card Details Function using LiveData
+    private fun observeData() {
+        cardDetailsManager.nameFlow.asLiveData().observe(this){ name->
+            name?.let {
+                nameData.setText(name) //Set retrieved data to employee name edit text
+            }
+        }
+        cardDetailsManager.departmentFlow.asLiveData().observe(this){ department->
+            department?.let {
+                departmentData.setText(department) //Set retrieved data to department edit text
+            }
+        }
+        cardDetailsManager.phoneFlow.asLiveData().observe(this){ phoneNumber->
+            phoneNumber?.let {
+                phoneNumbData.setText(phoneNumber)  //Set retrieved data to office number edit text
+            }
+        }
+        cardDetailsManager.officeFlow.asLiveData().observe(this){ officeNumber->
+            officeNumber?.let {
+                officeNumbData.setText(officeNumber)
+            }
+        }
+        cardDetailsManager.emailFlow.asLiveData().observe(this){ email->
+            email?.let {
+                emailData.setText(email) //Set retrieved data to email edit text
+            }
+        }
+        cardDetailsManager.websiteFlow.asLiveData().observe(this){ website->
+            website?.let {
+                websiteData.setText(website) //Set retrieved data to website hint
+            }
         }
     }
 }
