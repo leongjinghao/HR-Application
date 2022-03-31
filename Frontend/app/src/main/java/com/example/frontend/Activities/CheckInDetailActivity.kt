@@ -3,6 +3,7 @@ package com.example.frontend.Activities
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.Camera
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -208,7 +209,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
     // Function to start the camera view
     private fun startCamera() {
-        camera = Camera.open()
+        camera = Camera.open(1)
         camera!!.setDisplayOrientation(90)
         try {
             camera!!.setPreviewDisplay(surfaceHolder)
@@ -267,6 +268,9 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
         // Set text of button to "confirm" mode
         binding.buttonCheckInConfirm.text = "Confirm"
+
+        // Configure different colour for "confirm" button
+        binding.buttonCheckInConfirm.setBackgroundColor(Color.parseColor("#388087"))
 
         // Stop the camera view
         camera!!.stopPreview()
