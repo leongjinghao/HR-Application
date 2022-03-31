@@ -25,7 +25,9 @@
     "ts-jest": "^27.1.3",
     "webpack": "^5.69.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "aws-lambda": "^1.0.7"
+  },
   "scripts": {
     "eslint": "eslint . --ext .ts",
     "jest": "jest"

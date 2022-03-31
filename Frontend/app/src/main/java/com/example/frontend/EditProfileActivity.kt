@@ -12,8 +12,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.example.frontend.retroAPI.api.model.returnRespondModel
+import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -28,16 +34,18 @@ class EditProfileActivity : AppCompatActivity() {
     private val CAMERAREQUESTCODE = 1
     private val GALLERYREQUESTCODE = 2
     private lateinit var profilePhoto : ImageView
+    private lateinit var apiCall : apiViewModel
+    private lateinit var respondModel : returnRespondModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_account_page)
 
         profilePhoto = findViewById(R.id.profilePhoto)
-        var editNameText = findViewById<EditText>(R.id.editNameText)
-        var editBirthdateText = findViewById<EditText>(R.id.editBirthdateText)
-        var editPhoneText = findViewById<EditText>(R.id.editPhoneText)
-        var editEmailText = findViewById<EditText>(R.id.editEmailText)
+        val editNameText = findViewById<EditText>(R.id.editNameText)
+        val editBirthdateText = findViewById<EditText>(R.id.editBirthdateText)
+        val editPhoneText = findViewById<EditText>(R.id.editPhoneText)
+        val editEmailText = findViewById<EditText>(R.id.editEmailText)
         val saveProfileButton = findViewById<Button>(R.id.saveProfileButton)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
 
@@ -50,6 +58,10 @@ class EditProfileActivity : AppCompatActivity() {
         else
             profilePhoto.setImageResource(R.drawable.nameinputicon)
 
+        val repository = Repository()
+        val apiModelFactory = apiViewModelFactory(repository)
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
         //Save Profile Button
         saveProfileButton.setOnClickListener {
             // Convert Imageview to bitmap
@@ -61,6 +73,10 @@ class EditProfileActivity : AppCompatActivity() {
                     save(profileBitmap) //Save Converted Bitmap to internal storage
             Toast.makeText(this@EditProfileActivity, "Profile Saved",
                 Toast.LENGTH_LONG).show()
+            apiCall.updateUserInformation("Ali456", editNameText.text.toString(),
+                                                            editBirthdateText.text.toString(),
+                                                            editPhoneText.text.toString(),
+                                                            editEmailText.text.toString())
         }
     }
 

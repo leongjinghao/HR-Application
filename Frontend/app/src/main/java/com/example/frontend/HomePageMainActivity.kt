@@ -3,6 +3,7 @@ package com.example.frontend
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -10,9 +11,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.frontend.leaveModule.LeaveCalendarActivity
 import com.example.frontend.leaveModule.LeaveSummaryActivity
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import androidx.lifecycle.Observer
+import com.example.frontend.retroAPI.api.model.userInformationModel
 
 class HomePageMainActivity : AppCompatActivity() {
     private lateinit var cardDetailsManager: CardDetailsManager
@@ -22,6 +29,8 @@ class HomePageMainActivity : AppCompatActivity() {
     private lateinit var officeNoTextView : TextView
     private lateinit var emailTextView : TextView
     private lateinit var websiteTextView : TextView
+    private lateinit var apiCall : apiViewModel
+    private lateinit var userInfoData : userInformationModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +57,32 @@ class HomePageMainActivity : AppCompatActivity() {
         val informationButton = findViewById<ImageButton>(R.id.informationButton)
         val qrCode = findViewById<ImageView>(R.id.qrCode)
 
+        val repository = Repository()
+        val apiModelFactory = apiViewModelFactory(repository)
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+        userInfoData = userInformationModel(null)
+
         informationText.text = ""
         var toggled = 0
 
         cardDetailsManager = CardDetailsManager(this)
+
+        apiCall.getUserInformation("Ali456")
+        apiCall.userInformationRes.observe(this, Observer { response ->
+            userInfoData = response
+            Log.i("Name:", response.toString())
+            val employeeName = userInfoData.Items?.get(0)?.Name?.S.toString()
+            employeeNameTextView.text = employeeName
+        })
+
+        //val departmentName = userInfoData.Items?.get(0)?.Department
+        //get employeeID from login page and retrieve details based on employeeID
+
+//        departmentNameTextView.text = ""
+//        officeNoTextView.text = ""
+//        smartPhoneTextView.text = ""
+//        emailTextView.text = ""
+//        websiteTextView.text = ""
 
 
         //Set on Click Long Listeners for name card button
@@ -103,7 +134,7 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         //Retrieve Card Details Data from User Preference Datastore
-        observeData()
+        //observeData()
     }
 
     //Retrieve Card Details Function using LiveData
