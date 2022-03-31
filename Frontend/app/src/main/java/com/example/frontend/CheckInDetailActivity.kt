@@ -186,6 +186,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
             // Insert check in record on room DB
             historyViewModel.insert(History(
+                0,
                 LocalDate.now().toString(),
                 LocalDate.now().dayOfWeek.name,
                 "Clock In",
