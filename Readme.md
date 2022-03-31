@@ -31,6 +31,7 @@ Duplciate env.sample to .env and rename DEVELOPER it with your name
 sls deploy  - to upload the code into AWS, it will create a stack in the AWS Cloudformation <br>
 sls info    - to view aws information <br>
 sls remove  - remove stack from AWS <br>
+serverless deploy function -f {NameOfTheFucntion} 
 
 <h3>Library used </h3>
     

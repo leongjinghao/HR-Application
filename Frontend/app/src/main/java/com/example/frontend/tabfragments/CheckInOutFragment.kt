@@ -1,21 +1,24 @@
 package com.example.frontend.tabfragments
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.frontend.*
-import com.example.frontend.leaveModule.LeaveSummaryActivity
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 class CheckInOutFragment : Fragment() {
 
@@ -26,6 +29,12 @@ class CheckInOutFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        view?.let { onViewCreated(it, savedInstanceState = null) }
     }
 
     override fun onCreateView(
@@ -40,6 +49,12 @@ class CheckInOutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val checkInButton = view.findViewById<Button>(R.id.buttonCheckInOut)
         val checkInButtonText = view.findViewById<TextView>(R.id.textViewCheckInOut)
+        val checkInButtonTimeText = view.findViewById<TextView>(R.id.textViewCheckInOutTime)
+
+        // Configure current time on button
+        var df = SimpleDateFormat("HH:mm a")
+        var formattedTime = df.format(Calendar.getInstance().time)
+        checkInButtonTimeText.text = formattedTime
 
         // Configure button text according to the check in and out status
         if (historyViewModel.checkInOutStatus == "Clock out") {
@@ -47,6 +62,9 @@ class CheckInOutFragment : Fragment() {
         }
         else {
             checkInButtonText.text = "Check Out"
+
+            // TODO: change colour of drawable button
+
         }
 
         checkInButton.setOnClickListener{
@@ -60,11 +78,15 @@ class CheckInOutFragment : Fragment() {
 
                 // Insert check out record on room DB
                 historyViewModel.insert(History(
+                    0,
                     LocalDate.now().toString(),
                     LocalDate.now().dayOfWeek.name,
                     "Clock out",
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
                 ))
+
+                // Go back to previous page on successful check in process
+                activity?.onBackPressed();
             }
         }
     }

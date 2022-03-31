@@ -1,16 +1,11 @@
 package com.example.frontend
 
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.example.frontend.adapters.HistoryAdapter
+import com.example.frontend.adapters.ViewPagerAdapter
 import com.example.frontend.databinding.ActivityCheckinoutBinding
 import com.example.frontend.tabfragments.CheckInOutFragment
 import com.example.frontend.tabfragments.HistoryFragment
-import com.example.frontend.adapters.ViewPagerAdapter
-import com.example.frontend.viewmodels.HistoryViewModel
 
 class CheckInOutActivity: AppCompatActivity() {
 
