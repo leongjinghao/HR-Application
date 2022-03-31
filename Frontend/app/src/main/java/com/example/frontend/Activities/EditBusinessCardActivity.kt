@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -16,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import com.example.frontend.R
+import com.example.frontend.Utilities.CaptureActivityPortrait
+import com.example.frontend.Utilities.CardDetailsManager
+import com.example.frontend.Utilities.ImageSaver
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.integration.android.IntentIntegrator

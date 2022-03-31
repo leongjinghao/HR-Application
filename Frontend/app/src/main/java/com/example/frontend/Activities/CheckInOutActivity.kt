@@ -1,7 +1,8 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.frontend.R
 import com.example.frontend.adapters.ViewPagerAdapter
 import com.example.frontend.databinding.ActivityCheckinoutBinding
 import com.example.frontend.tabfragments.CheckInOutFragment

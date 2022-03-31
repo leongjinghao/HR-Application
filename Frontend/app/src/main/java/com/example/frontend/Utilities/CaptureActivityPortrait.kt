@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Utilities
 
 import com.journeyapps.barcodescanner.CaptureActivity
 

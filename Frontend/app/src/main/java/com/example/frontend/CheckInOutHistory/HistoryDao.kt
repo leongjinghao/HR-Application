@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.CheckInOutHistory
 
 import androidx.room.Dao
 import androidx.room.Insert

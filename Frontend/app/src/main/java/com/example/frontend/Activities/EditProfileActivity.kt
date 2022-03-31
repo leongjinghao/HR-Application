@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -15,8 +15,9 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.example.frontend.R
+import com.example.frontend.Utilities.ImageSaver
 import com.example.frontend.retroAPI.api.model.returnRespondModel
-import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory

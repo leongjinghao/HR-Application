@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -8,10 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.os.PersistableBundle
 import android.view.SurfaceHolder
-import android.view.SurfaceView
-import android.view.TextureView
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -20,7 +17,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import com.example.frontend.CheckInOutHistory.History
+import com.example.frontend.CheckInOutHistory.HistoryViewModel
+import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
+import com.example.frontend.R
+import com.example.frontend.Utilities.HRApplication
 import com.example.frontend.databinding.ActivityCheckInSelfieBinding
 import java.io.File
 import java.io.FileNotFoundException
@@ -185,13 +186,15 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             // TODO: send the selfie & check in record to aws DB and record check in details
 
             // Insert check in record on room DB
-            historyViewModel.insert(History(
+            historyViewModel.insert(
+                History(
                 0,
                 LocalDate.now().toString(),
                 LocalDate.now().dayOfWeek.name,
                 "Clock In",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-            ))
+            )
+            )
 
             // Go back to previous page on successful check in process
             finish()

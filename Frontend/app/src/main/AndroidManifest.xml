@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".HRApplication"
+        android:name=".Utilities.HRApplication"
         android:allowBackup="true"
         android:icon="@mipmap/blueflush_launcher"
         android:label="@string/app_name"
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Frontend">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Frontend.NoActionBar">
@@ -30,35 +30,35 @@
         </activity>
 
         <activity
-            android:name=".HomePageMainActivity"
+            android:name=".Activities.HomePageMainActivity"
             android:label="Home Page">
         </activity>
 
         <activity
-            android:name=".ForgetPasswordActivity"
+            android:name=".Activities.ForgetPasswordActivity"
             android:label="Recover Password"
-            android:parentActivityName=".LoginActivity">
+            android:parentActivityName=".Activities.LoginActivity">
         </activity>
 
         <activity
-            android:name=".CheckInOutActivity"
+            android:name=".Activities.CheckInOutActivity"
             android:label="Check In/Out"
-            android:parentActivityName=".HomePageMainActivity">
+            android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
-            android:name=".CheckInDetailActivity"
+            android:name=".Activities.CheckInDetailActivity"
             android:label="Check In"
-            android:parentActivityName=".CheckInOutActivity">
+            android:parentActivityName=".Activities.CheckInOutActivity">
         </activity>
 
         <activity
-            android:name=".EditBusinessCardActivity"
+            android:name=".Activities.EditBusinessCardActivity"
             android:label="Edit Business Card">
         </activity>
 
         <activity
-            android:name=".CaptureActivityPortrait"
+            android:name=".Utilities.CaptureActivityPortrait"
             android:screenOrientation="sensorPortrait"
             android:stateNotNeeded="true"
             tools:ignore="LockedOrientationActivity">

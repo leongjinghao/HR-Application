@@ -1,7 +1,6 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +18,8 @@ import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import androidx.lifecycle.Observer
+import com.example.frontend.R
+import com.example.frontend.Utilities.CardDetailsManager
 import com.example.frontend.retroAPI.api.model.userInformationModel
 
 class HomePageMainActivity : AppCompatActivity() {

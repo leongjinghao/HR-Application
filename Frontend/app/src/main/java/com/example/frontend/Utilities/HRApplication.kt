@@ -1,6 +1,8 @@
-package com.example.frontend
+package com.example.frontend.Utilities
 
 import android.app.Application
+import com.example.frontend.CheckInOutHistory.HistoryRepository
+import com.example.frontend.CheckInOutHistory.HistoryRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

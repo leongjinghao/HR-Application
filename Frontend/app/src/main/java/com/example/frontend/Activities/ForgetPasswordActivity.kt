@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.os.Bundle
 import android.util.Patterns

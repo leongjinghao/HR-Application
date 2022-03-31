@@ -1,4 +1,4 @@
-package com.example.frontend
+package com.example.frontend.Activities
 
 import android.app.KeyguardManager
 import android.content.Context
@@ -9,7 +9,6 @@ import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
-import android.os.PersistableBundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -18,6 +17,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.frontend.R
 
 class LoginActivity : AppCompatActivity()  {
 

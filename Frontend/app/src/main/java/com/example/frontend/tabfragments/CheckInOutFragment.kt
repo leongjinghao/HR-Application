@@ -1,9 +1,6 @@
 package com.example.frontend.tabfragments
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +10,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.frontend.*
+import com.example.frontend.Activities.CheckInDetailActivity
+import com.example.frontend.CheckInOutHistory.History
+import com.example.frontend.CheckInOutHistory.HistoryViewModel
+import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
+import com.example.frontend.Utilities.HRApplication
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -77,13 +79,15 @@ class CheckInOutFragment : Fragment() {
                 // TODO: additional check out logic on aws db
 
                 // Insert check out record on room DB
-                historyViewModel.insert(History(
+                historyViewModel.insert(
+                    History(
                     0,
                     LocalDate.now().toString(),
                     LocalDate.now().dayOfWeek.name,
                     "Clock out",
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-                ))
+                )
+                )
 
                 // Go back to previous page on successful check in process
                 activity?.onBackPressed();
