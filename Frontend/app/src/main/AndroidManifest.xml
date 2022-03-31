@@ -5,13 +5,16 @@
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".HRApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/blueflush_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/blueflush_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Frontend">
         <activity
@@ -61,9 +64,21 @@
             tools:ignore="LockedOrientationActivity">
         </activity>
 
-    </application>
+        <activity
+            android:name=".leaveModule.LeaveAddActivity"
+            android:label="Add Leave">
+        </activity>
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <activity
+            android:name=".leaveModule.LeaveCalendarActivity"
+            android:label="Leave Calendar">
+        </activity>
+
+        <activity
+            android:name=".leaveModule.LeaveSummaryActivity"
+            android:label="View Leave">
+        </activity>
+
+    </application>
 
 </manifest>

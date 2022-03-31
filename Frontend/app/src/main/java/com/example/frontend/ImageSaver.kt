@@ -3,6 +3,7 @@ package com.example.frontend
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.util.Log
 import java.io.File
 import java.io.FileInputStream
@@ -24,7 +25,7 @@ class ImageSaver(private var context: Context) {
         return this
     }
 
-    fun save(bitmapImage : Bitmap) {
+    fun save(bitmapImage: Bitmap) {
         var fileOutputStream : FileOutputStream? = null
         try {
             fileOutputStream = FileOutputStream(createFile())

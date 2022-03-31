@@ -1,0 +1,15 @@
+<resources>
+    <string name="profileDescription">Profile Photo</string>
+    <string name="changeProfilePhotoButton">Change Profile Photo</string>
+    <string name="nameEditIcon">Name Edit Icon</string>
+    <string name="birthdateEditIcon">Birthdate Edit Icon</string>
+    <string name="phoneEditIcon">Phone Edit Icon</string>
+    <string name="emailEditIcon">Email Edit Icon</string>
+
+    <string name="editNameHint">Enter Name</string>
+    <string name="editBirthdayHint">Enter Date of Birth</string>
+    <string name="editPhoneHint">Enter Phone Number</string>
+    <string name="editEmailHint">Enter Email</string>
+
+    <string name="saveProfileButton">Save Profile</string>
+</resources>
