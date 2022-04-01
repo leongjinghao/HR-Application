@@ -243,6 +243,9 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
         // Start the camera preview
         camera!!.startPreview()
+
+        // Reset colour back to signify "capture" button
+        binding.buttonCheckInConfirm.setBackgroundColor(Color.parseColor("#6FB3B8"))
     }
 
     // Release the camera view on surface view destruction
