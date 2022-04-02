@@ -183,7 +183,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         // Else in "confirm" mode
         else {
             saveImage(tempSelfieByte)
-            Toast.makeText(this, "to send the selfie here!", Toast.LENGTH_LONG).show()
+            
             confirmFlag = false
 
             // TODO: send the selfie & check in record to aws DB and record check in details

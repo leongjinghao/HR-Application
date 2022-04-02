@@ -3,6 +3,7 @@ package com.example.frontend.tabfragments
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -107,13 +108,10 @@ class CheckInOutFragment : Fragment() {
         }
         else {
             checkInButtonText.text = "Check Out"
-
-            // TODO: change colour of drawable button
-
         }
 
         // Configure work schedule details
-        df = SimpleDateFormat("dd-MM-yyyy")
+        df = SimpleDateFormat("dd MMM yyyy, EEE")
         dateTextView.text = df.format(Calendar.getInstance().time)
         shiftTextView.text = "9am to 6pm"
         fusedLocationClient.lastLocation
