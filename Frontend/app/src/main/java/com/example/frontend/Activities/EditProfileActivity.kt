@@ -18,7 +18,6 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.frontend.R
 import com.example.frontend.Utilities.ImageSaver
-import com.example.frontend.retroAPI.api.model.returnRespondModel
 import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
@@ -38,14 +37,13 @@ class EditProfileActivity : AppCompatActivity() {
     private val GALLERYREQUESTCODE = 2
     private lateinit var profilePhoto : ImageView
     private lateinit var apiCall : apiViewModel
-    private lateinit var respondModel : returnRespondModel
     private lateinit var userInfoData : userInformationModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_account_page)
 
-        profilePhoto = findViewById(R.id.profilePhoto)
+        profilePhoto = findViewById(R.id.accountPhoto)
         val editNameText = findViewById<EditText>(R.id.editNameText)
         val editDepartmentText = findViewById<EditText>(R.id.editDepartmentText)
         val editBirthdateText = findViewById<EditText>(R.id.editBirthdateText)

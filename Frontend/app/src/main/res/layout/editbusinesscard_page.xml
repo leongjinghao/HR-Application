@@ -62,7 +62,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/nameIcon"
+                        android:id="@+id/nameAccIcon"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
@@ -82,7 +82,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textPersonName"
                         android:textColorHint="#78909C"
-                        app:layout_constraintStart_toEndOf="@+id/nameIcon"
+                        app:layout_constraintStart_toEndOf="@+id/nameAccIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

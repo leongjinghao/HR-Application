@@ -1,5 +1,6 @@
 package com.example.frontend.retroAPI.api.repository
 
+import android.util.Log
 import com.example.frontend.retroAPI.api.RetrofitInstance
 import com.example.frontend.retroAPI.api.model.leaveInformationModel
 import com.example.frontend.retroAPI.api.model.returnRespondModel
@@ -31,6 +32,7 @@ class Repository {
         val jsonObjectString = jsonObject.toString()
         // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        Log.i("requestBody", requestBody.toString())
         return RetrofitInstance.api.updateUserInformation(requestBody)
     }
 

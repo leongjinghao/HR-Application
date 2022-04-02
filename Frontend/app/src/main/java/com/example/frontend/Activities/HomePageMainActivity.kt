@@ -97,7 +97,8 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         accountButton.setOnClickListener {
-            Toast.makeText(this, "Moving to Account Page", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, AccountActivity::class.java)
+            startActivity(intent)
         }
 
         leaveApproveButton.setOnClickListener {
