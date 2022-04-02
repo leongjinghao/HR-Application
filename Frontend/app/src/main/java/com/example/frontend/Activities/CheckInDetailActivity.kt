@@ -2,6 +2,7 @@ package com.example.frontend.Activities
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.hardware.Camera
@@ -24,6 +25,7 @@ import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.R
 import com.example.frontend.Utilities.HRApplication
 import com.example.frontend.databinding.ActivityCheckInSelfieBinding
+import com.example.frontend.tabfragments.CheckInOutFragment
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -198,6 +200,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             )
 
             // Go back to previous page on successful check in process
+            finish()
             finish()
         }
     }

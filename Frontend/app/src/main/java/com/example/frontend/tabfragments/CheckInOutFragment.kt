@@ -68,6 +68,25 @@ class CheckInOutFragment : Fragment() {
             ContextCompat.checkSelfPermission( requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
 
+        // Check for permission to use location
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                } else -> {
+                // No location access granted.
+            }
+            }
+        }
+        locationPermissionRequest.launch(arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
+
         // Configure location details on location text view
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
@@ -111,6 +130,9 @@ class CheckInOutFragment : Fragment() {
             if (historyViewModel.checkInOutStatus == "Clock out") {
                 val intent = Intent(activity, CheckInDetailActivity::class.java)
                 activity?.startActivity(intent)
+
+                // Go back to previous page on successful check in process
+                activity?.onBackPressed()
             }
             else {
                 // TODO: additional check out logic on aws db
@@ -126,28 +148,9 @@ class CheckInOutFragment : Fragment() {
                 )
                 )
 
-                // Go back to previous page on successful check in process
-                activity?.onBackPressed();
+                // Go back to previous page on successful check out process
+                activity?.onBackPressed()
             }
         }
-
-        // Check for permission to user location
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
-            }
-        }
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
     }
 }
