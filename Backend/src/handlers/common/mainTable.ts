@@ -223,7 +223,7 @@ type createLeaveType = (
         const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
         const params: AWS.DynamoDB.QueryInput = {
           TableName: 'mainTable',
-          KeyConditionExpression: '#PK = :PK AND #SK= :SK)',
+          KeyConditionExpression: '#PK = :PK AND #SK = :SK',
           ExpressionAttributeNames: {
             '#PK': 'PK',
             '#SK': 'SK'
