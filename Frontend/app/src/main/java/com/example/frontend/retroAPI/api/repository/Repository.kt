@@ -18,11 +18,13 @@ class Repository {
         return RetrofitInstance.api.getUserLeaves(userId)
     }
 
-    suspend fun updateUserInformation(userId: String, name : String, dateofbirth : String,
-                                        phonenumber : String, email : String) : returnRespondModel {
+    suspend fun updateUserInformation(userId: String, name : String, department : String,
+                                      dateofbirth : String, phonenumber : String, email : String)
+    : returnRespondModel {
         val jsonObject = JSONObject()
         jsonObject.put("userId", userId)
         jsonObject.put("name", name)
+        jsonObject.put("department", department)
         jsonObject.put("dateofbirth", dateofbirth)
         jsonObject.put("phonenumber", phonenumber)
         jsonObject.put("email", email)

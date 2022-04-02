@@ -11,7 +11,7 @@
         android:id="@+id/photoCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:cardBackgroundColor="@color/ColorScheme5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,9 +23,9 @@
 
             <ImageView
                 android:id="@+id/profilePhoto"
-                android:layout_width="141dp"
-                android:layout_height="140dp"
-                android:layout_marginStart="135dp"
+                android:layout_width="111dp"
+                android:layout_height="106dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginEnd="135dp"
                 android:contentDescription="@string/profileDescription"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +34,10 @@
 
             <ImageButton
                 android:id="@+id/profilePhotoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="68dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="230dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="100dp"
                 android:backgroundTint="#00FFFFFF"
                 android:contentDescription="@string/changeProfilePhotoButton"
                 android:translationZ="1dp"
@@ -49,7 +49,7 @@
         android:id="@+id/nameCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:cardBackgroundColor="@color/ColorScheme5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/birthdateCardView"
+        android:id="@+id/departmentCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -97,6 +97,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/departmentIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/nameEditIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/departmentiputicon"
+                tools:ignore="ImageContrastCheck" />
+
+            <EditText
+                android:id="@+id/editDepartmentText"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:hint="@string/editDepartmentHint"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColorHint="#546E7A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/departmentIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/birthdateCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:cardBackgroundColor="@color/ColorScheme5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/departmentCardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

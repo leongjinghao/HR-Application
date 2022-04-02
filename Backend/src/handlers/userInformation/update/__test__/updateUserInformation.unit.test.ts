@@ -23,6 +23,7 @@ describe('/update/updateUserInformation updateUserInformation.ts test', () => {
             {body : JSON.stringify({
                 userId : 'abc',
                 name:'abc',
+                department:'abc',
                 dateofbirth:'1/1/2022',
                 phonenumber:'12345678',
                 email:'test@email.com'

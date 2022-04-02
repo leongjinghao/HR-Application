@@ -1,6 +1,7 @@
 package com.example.frontend.Activities
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import androidx.lifecycle.Observer
 import com.example.frontend.R
 import com.example.frontend.Utilities.CardDetailsManager
+import com.example.frontend.Utilities.ImageSaver
+import com.example.frontend.retroAPI.api.model.returnRespondModel
 import com.example.frontend.retroAPI.api.model.userInformationModel
 
 class HomePageMainActivity : AppCompatActivity() {
@@ -30,8 +33,7 @@ class HomePageMainActivity : AppCompatActivity() {
     private lateinit var officeNoTextView : TextView
     private lateinit var emailTextView : TextView
     private lateinit var websiteTextView : TextView
-    private lateinit var apiCall : apiViewModel
-    private lateinit var userInfoData : userInformationModel
+    private lateinit var qrCode : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,35 +58,15 @@ class HomePageMainActivity : AppCompatActivity() {
         val leaveApproveButton = findViewById<ImageButton>(R.id.leaveApprButton)
         val nameCardButton = findViewById<CardView>(R.id.nameCardView)
         val informationButton = findViewById<ImageButton>(R.id.informationButton)
-        val qrCode = findViewById<ImageView>(R.id.qrCode)
-
-        val repository = Repository()
-        val apiModelFactory = apiViewModelFactory(repository)
-        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
-        userInfoData = userInformationModel(null)
+        qrCode = findViewById(R.id.qrCode)
 
         informationText.text = ""
         var toggled = 0
 
         cardDetailsManager = CardDetailsManager(this)
 
-        apiCall.getUserInformation("Ali456")
-        apiCall.userInformationRes.observe(this, Observer { response ->
-            userInfoData = response
-            Log.i("Name:", response.toString())
-            val employeeName = userInfoData.Items?.get(0)?.Name?.S.toString()
-            employeeNameTextView.text = employeeName
-        })
-
-        //val departmentName = userInfoData.Items?.get(0)?.Department
-        //get employeeID from login page and retrieve details based on employeeID
-
-//        departmentNameTextView.text = ""
-//        officeNoTextView.text = ""
-//        smartPhoneTextView.text = ""
-//        emailTextView.text = ""
-//        websiteTextView.text = ""
-
+        //Retrieve Card Details Data from User Preference Datastore
+        observeData()
 
         //Set on Click Long Listeners for name card button
         nameCardButton.setOnLongClickListener {
@@ -133,9 +115,18 @@ class HomePageMainActivity : AppCompatActivity() {
                 toggled = 0
             }
         }
+    }
 
-        //Retrieve Card Details Data from User Preference Datastore
-        //observeData()
+    override fun onStart() {
+        super.onStart()
+        val bitmap : Bitmap? = ImageSaver(applicationContext).
+        setFileName("QRImage.png").
+        setDirectoryName("images").
+        load()
+        if (bitmap != null)
+            qrCode.setImageBitmap(bitmap)
+        else
+            qrCode.setImageResource(R.drawable.qrcodeprompt)
     }
 
     //Retrieve Card Details Function using LiveData
@@ -152,14 +143,13 @@ class HomePageMainActivity : AppCompatActivity() {
         }
         cardDetailsManager.phoneFlow.asLiveData().observe(this){ phoneNumber->
             phoneNumber?.let {
-                val numberString = "+65 $phoneNumber" //Add +65 at the front
-                smartPhoneTextView.text = numberString  //Set retrieved data to office number
+                smartPhoneTextView.text = phoneNumber  //Set retrieved data to office number
+
             }
         }
         cardDetailsManager.officeFlow.asLiveData().observe(this){ officeNumber->
             officeNumber?.let {
-                val numberString = "+65 $officeNumber" //Add +65 at the front
-                officeNoTextView.text = numberString  //Set retrieved data to phone number
+                officeNoTextView.text = officeNumber  //Set retrieved data to phone number
             }
         }
         cardDetailsManager.emailFlow.asLiveData().observe(this){ email->

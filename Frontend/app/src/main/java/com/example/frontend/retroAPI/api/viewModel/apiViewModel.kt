@@ -29,11 +29,12 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun updateUserInformation(userId : String, name : String, dateofbirth : String,
-                                phonenumber : String, email : String) {
+    fun updateUserInformation(userId : String, name : String, department : String,
+                              dateofbirth : String, phonenumber : String, email : String) {
         viewModelScope.launch {
             val response: returnRespondModel = repository.updateUserInformation(userId,
                                                                                 name,
+                                                                                department,
                                                                                 dateofbirth,
                                                                                 phonenumber,
                                                                                 email)

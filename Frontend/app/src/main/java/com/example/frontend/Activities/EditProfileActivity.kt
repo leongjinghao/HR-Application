@@ -12,12 +12,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.frontend.R
 import com.example.frontend.Utilities.ImageSaver
 import com.example.frontend.retroAPI.api.model.returnRespondModel
+import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
@@ -37,6 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var profilePhoto : ImageView
     private lateinit var apiCall : apiViewModel
     private lateinit var respondModel : returnRespondModel
+    private lateinit var userInfoData : userInformationModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         profilePhoto = findViewById(R.id.profilePhoto)
         val editNameText = findViewById<EditText>(R.id.editNameText)
+        val editDepartmentText = findViewById<EditText>(R.id.editDepartmentText)
         val editBirthdateText = findViewById<EditText>(R.id.editBirthdateText)
         val editPhoneText = findViewById<EditText>(R.id.editPhoneText)
         val editEmailText = findViewById<EditText>(R.id.editEmailText)
@@ -62,6 +66,22 @@ class EditProfileActivity : AppCompatActivity() {
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+        userInfoData = userInformationModel(null)
+
+        apiCall.getUserInformation("Ali456")
+        apiCall.userInformationRes.observe(this, Observer { response ->
+            userInfoData = response
+            val employeeName = userInfoData.Items?.get(0)?.EmployeeName?.S.toString()
+            val departmentName = userInfoData.Items?.get(0)?.Department?.S.toString()
+            val dateOfBirth = userInfoData.Items?.get(0)?.DOB?.S.toString()
+            val mobileNumber = userInfoData.Items?.get(0)?.Mobile?.S.toString()
+            val email = userInfoData.Items?.get(0)?.Email?.S.toString()
+            editNameText.setText(employeeName)
+            editDepartmentText.setText(departmentName)
+            editBirthdateText.setText(dateOfBirth)
+            editPhoneText.setText(mobileNumber)
+            editEmailText.setText(email)
+        })
 
         //Save Profile Button
         saveProfileButton.setOnClickListener {
@@ -72,12 +92,13 @@ class EditProfileActivity : AppCompatActivity() {
                     setFileName("ProfilePhoto.png").
                     setDirectoryName("images").
                     save(profileBitmap) //Save Converted Bitmap to internal storage
-            Toast.makeText(this@EditProfileActivity, "Profile Saved",
-                Toast.LENGTH_LONG).show()
             apiCall.updateUserInformation("Ali456", editNameText.text.toString(),
                                                             editBirthdateText.text.toString(),
+                                                            editDepartmentText.text.toString(),
                                                             editPhoneText.text.toString(),
                                                             editEmailText.text.toString())
+            Toast.makeText(this@EditProfileActivity, "Profile Details Saved",
+                Toast.LENGTH_LONG).show()
         }
     }
 

@@ -7,6 +7,7 @@
     <string name="emailEditIcon">Email Edit Icon</string>
 
     <string name="editNameHint">Enter Name</string>
+    <string name="editDepartmentHint">Enter Department</string>
     <string name="editBirthdayHint">Enter Date of Birth</string>
     <string name="editPhoneHint">Enter Phone Number</string>
     <string name="editEmailHint">Enter Email</string>

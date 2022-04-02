@@ -150,6 +150,7 @@ type createLeaveType = (
     type putUserInformationType = (
       userId : string,
       name : string,
+      department : string,
       dateofbirth : string,
       phonenumber : string,
       email : string
@@ -158,6 +159,7 @@ type createLeaveType = (
      * Update user information
      * @param userId - Employee ID
      * @param name - Employee Name
+     * @param department - Department Name
      * @param dateofbirth - Date of Birth
      * @param phonenumber - Handphone Number
      * @param email - Email Address
@@ -165,6 +167,7 @@ type createLeaveType = (
      */
     export const putUserInformation : putUserInformationType = async (
       userId,
+      department,
       name,
       dateofbirth,
       phonenumber,
@@ -177,9 +180,11 @@ type createLeaveType = (
             'SK': { S: `PROFILE#${userId}` },
           },
           TableName: 'mainTable',
-          UpdateExpression: 'set EmployeeName = :name, DOB = :dateofbirth, Mobile = :phonenumber, Email = :email',
+          UpdateExpression:
+          'set EmployeeName = :name, Department = :department, DOB = :dateofbirth, Mobile = :phonenumber, Email = :email',
           ExpressionAttributeValues: {
             ':name': { S: name },
+            ':department' : { S: department},
             ':dateofbirth': { S: dateofbirth },
             ':phonenumber': { S: phonenumber },
             ':email': { S: email }

@@ -7,7 +7,7 @@ data class userInformationModel(
 data class userInformationField(
     val PK: userInformationInnerObject,
     val SK: userInformationInnerObject,
-    val Name: userInformationInnerObject,
+    val EmployeeName: userInformationInnerObject,
     val DOB: userInformationInnerObject,
     val Mobile: userInformationInnerObject,
     val Email: userInformationInnerObject,
