@@ -19,15 +19,12 @@ async function authenticateUserLogin(event): Promise<LambdaResponse> {
   try {
     const { userEmail, userPassword } = event.queryStringParameters
     const result = await queryUserLogin(userEmail, userPassword)
-    const resulttest = {UserId: '', Result: false}
-    console.log(result)
-    // if (result[0]['UserID']['S'] !== '') {
-    //     resulttest.UserId = result[0]['UserID']['S']
-    //     resulttest.Result = true
-    // }
-    resulttest.UserId = 'jinghao'
-    resulttest.Result = true
-    apiResponse.body = JSON.stringify(resulttest)
+    const response = {UserId: '', Result: false}
+    if (result.length === 1) {
+      response.UserId = result[0].UserId.S!
+      response.Result = true
+    }
+    apiResponse.body = JSON.stringify(response)
     log2CloudWatch('retrieveUserInformation.ts','retrieveUserInformation','User information successfully retrieve')
   }
   catch (err) {
