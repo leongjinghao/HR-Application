@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ColorScheme5">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topBox"
+        android:layout_width="414dp"
+        android:layout_height="214dp"
+        android:background="#F3FBFD"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profilePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            android:contentDescription="@string/profilephoto"
+            android:paddingTop="25dp"
+            app:srcCompat="@drawable/profileicon" />
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="397dp"
+        android:layout_height="506dp"
+        android:background="#A4FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBox" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtAccName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/nameinputiconmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[name goes here]"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtAccDoB"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/dobmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[DoB goes here]"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtAccOffice"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/phoneiconmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[officen no. goes here]"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtAccMobile"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/handphoneiconmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[mobile no. goes here]"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtAccEmail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/emailiconmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[email goes here]"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtAccAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:lines="2"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/homeaddressmarginleft"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:text="[address  goes here]"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/btnChangePass"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_border"
+                android:drawableLeft="@drawable/padlockmarginleft"
+                android:drawableRight="@drawable/rightarrow"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:lines="2"
+                android:maxLines="2"
+                android:text="Change Password"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAccEdit"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginStart="93dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="93dp"
+                android:backgroundTint="@color/ColorScheme3"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Edit Profile"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
