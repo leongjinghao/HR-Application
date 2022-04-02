@@ -17,11 +17,16 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.frontend.R
+import com.example.frontend.login.UserIdRepo
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity()  {
 
     val TAG : String = "Login"
+    var userId : String = ""
 
     private var cancellationSignal: CancellationSignal? = null
 
@@ -37,8 +42,13 @@ class LoginActivity : AppCompatActivity()  {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
                     super.onAuthenticationSucceeded(result)
-                    authMsg("Authentication successful")
-                    startActivity(Intent(this@LoginActivity, HomePageMainActivity::class.java))
+                    if(userId == ""){
+                        authMsg("Use Username and Password for first login")
+                    }else{
+                        authMsg("Authentication successful")
+                        startActivity(Intent(this@LoginActivity, HomePageMainActivity::class.java))
+                    }
+
                 }
             }
         set(value) {}
@@ -83,7 +93,13 @@ class LoginActivity : AppCompatActivity()  {
         setContentView(R.layout.activity_login)
 
         checkBiometricSupport()
-
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(context = this@LoginActivity).userPreferencesFlow.collect { settings -> settings.id
+                if(settings.id != ""){
+                    userId = settings.id
+                }
+            }
+        }
         // findViewById for UI elements
         val usernameEditText = findViewById<EditText>(R.id.editTextUsernameLogin)
         val passwordEditText = findViewById<EditText>(R.id.editTextPasswordLogin)
@@ -101,7 +117,9 @@ class LoginActivity : AppCompatActivity()  {
             // place holder authentication, to be replaced by actual implementation
             if (usernameEditText.text.toString() == "admin" &&
                 passwordEditText.text.toString() == "password") {
-
+                lifecycleScope.launch {
+                    UserIdRepo.getInstance(context = this@LoginActivity).update("JJ")
+                }
                 // TODO create intent to Home page
                 val homeIntent = Intent(this, HomePageMainActivity::class.java)
                 startActivity(homeIntent)
