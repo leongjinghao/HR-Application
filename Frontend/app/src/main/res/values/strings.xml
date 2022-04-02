@@ -31,4 +31,8 @@
     <string name="confirm">Confirm</string>
     <string name="reset">Reset</string>
     <string name="yes">Yes</string>
+    <string name="profilephoto">test</string>
+    <string name="approve">test1</string>
+    <string name="change_password">test2</string>
+    <string name="authentication">test3</string>
 </resources>
