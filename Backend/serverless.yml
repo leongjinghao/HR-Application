@@ -55,6 +55,13 @@ functions:
       - http:
          method: GET
          path: /userLogin/authenticateUserLogin
+  createAttendanceInfo:
+    handler: src/handlers/attendanceInfo/create/createAttendanceInfo.handler
+    role: AdminRole
+    events:
+      - http:
+         method: POST
+         path: /attendanceInfo/createAttendanceInfo
 
 resources:
   Resources:
