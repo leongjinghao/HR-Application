@@ -209,3 +209,36 @@ type createLeaveType = (
         }
       }
 
+      type queryUserLoginType = (
+        userEmail : string, userPassword : string
+      ) => Promise<[{PK:string,SK:string,UserId:string}] | {} >
+      /**
+       * Access the main Table and retrieve all Users Leave
+       * @param {string} userEmail User Email
+       * @param {string} userPassword User Password
+       * @returns {Promise <[{PK:string,SK:string,UserId:string,}]
+       * | {} } User Leaves Informations
+       */
+      export const queryUserLogin = async (userEmail, userPassword) => {
+        const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+        const params: AWS.DynamoDB.QueryInput = {
+          TableName: 'mainTable',
+          KeyConditionExpression: '#PK = :PK AND begins_with(#SK, :SK)',
+          ExpressionAttributeNames: {
+            '#PK': 'PK',
+            '#SK': 'SK'
+          },
+          ExpressionAttributeValues: {
+            ':PK': { S: `LOGIN#${userEmail}` },
+            ':SK': { S: `PASSWORD#${userPassword}` }
+          }
+        }
+        try {
+          const data = await dynamodb.query(params).promise()
+          console.log(data)
+          return data
+        } catch (err) {
+          console.log(err)
+          return []
+        }
+      }

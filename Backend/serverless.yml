@@ -41,8 +41,6 @@ functions:
       - http:
          method: POST
          path: /update/updateUserInformation
-
-
   sesSendEmail:
     handler: src/handlers/utility/sesSendEmail.handler
     role: AdminRole
@@ -50,6 +48,13 @@ functions:
       - http:
          method: POST
          path: /utility/sesSendEmail
+  authenticationUserLogin:
+    handler: src/handlers/userLogin/retrieve/authenticateUserLogin.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /userLogin/authenticateUserLogin
 
 resources:
   Resources:
