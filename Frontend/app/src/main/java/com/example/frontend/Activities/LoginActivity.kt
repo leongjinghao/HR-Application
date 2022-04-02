@@ -17,9 +17,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.frontend.R
 import com.example.frontend.login.UserIdRepo
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -27,6 +32,7 @@ class LoginActivity : AppCompatActivity()  {
 
     val TAG : String = "Login"
     var userId : String = ""
+    private lateinit var apiCall : apiViewModel
 
     private var cancellationSignal: CancellationSignal? = null
 
@@ -92,6 +98,10 @@ class LoginActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val repository = Repository()
+        val apiModelFactory = apiViewModelFactory(repository)
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
         checkBiometricSupport()
         lifecycleScope.launch {
             UserIdRepo.getInstance(context = this@LoginActivity).userPreferencesFlow.collect { settings -> settings.id
@@ -101,7 +111,7 @@ class LoginActivity : AppCompatActivity()  {
             }
         }
         // findViewById for UI elements
-        val usernameEditText = findViewById<EditText>(R.id.editTextUsernameLogin)
+        val userEmailEditText = findViewById<EditText>(R.id.editTextUserEmailLogin)
         val passwordEditText = findViewById<EditText>(R.id.editTextPasswordLogin)
         val recoverClickableText = findViewById<TextView>(R.id.textViewRecoverLogin)
         val loginButton = findViewById<Button>(R.id.buttonLogin)
@@ -115,18 +125,19 @@ class LoginActivity : AppCompatActivity()  {
         loginButton.setOnClickListener {
             // TODO implement authentication logic
             // place holder authentication, to be replaced by actual implementation
-            if (usernameEditText.text.toString() == "admin" &&
-                passwordEditText.text.toString() == "password") {
-                lifecycleScope.launch {
-                    UserIdRepo.getInstance(context = this@LoginActivity).update("JJ")
+            apiCall.authenticateUserLogin(userEmailEditText.text.toString(), passwordEditText.text.toString())
+            apiCall.authenticateUserLoginRes.observe(this, Observer { response ->
+                if (response.Result) {
+                    lifecycleScope.launch {
+                        UserIdRepo.getInstance(context = this@LoginActivity).update(response.UserId)
+                    }
+                    val homeIntent = Intent(this, HomePageMainActivity::class.java)
+                    startActivity(homeIntent)
                 }
-                // TODO create intent to Home page
-                val homeIntent = Intent(this, HomePageMainActivity::class.java)
-                startActivity(homeIntent)
-            }
-            else {
-                authMsg("Invalid Credentials")
-            }
+                else {
+                    authMsg("Invalid Credentials")
+                }
+            })
         }
 
         //Note: Have to manually add a fingerprint to the emulator

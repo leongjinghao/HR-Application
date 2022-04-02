@@ -2,9 +2,7 @@ package com.example.frontend.retroAPI.api.repository
 
 import android.util.Log
 import com.example.frontend.retroAPI.api.RetrofitInstance
-import com.example.frontend.retroAPI.api.model.leaveInformationModel
-import com.example.frontend.retroAPI.api.model.returnRespondModel
-import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.retroAPI.api.model.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -36,4 +34,7 @@ class Repository {
         return RetrofitInstance.api.updateUserInformation(requestBody)
     }
 
+    suspend fun authenticateUserLogin(userEmail: String, userPassword: String): authenticateUserLoginModel {
+        return RetrofitInstance.api.authenticateUserLogin(userEmail, userPassword)
+    }
 }
