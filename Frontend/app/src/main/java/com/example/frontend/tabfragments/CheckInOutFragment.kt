@@ -3,7 +3,8 @@ package com.example.frontend.tabfragments
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -92,8 +93,11 @@ class CheckInOutFragment : Fragment() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location : Location? ->
                 if (location != null) {
-                    checkInLocationTextView.text = "Longitute: " + location.longitude.toString() +
-                            "\nLatitute: " +  location.latitude.toString()
+                    val geocoder = Geocoder(activity, Locale.getDefault())
+                    val addresses: List<Address> = geocoder.getFromLocation(location.latitude,
+                        location.longitude, 1)
+                    val cityName: String = addresses[0].getAddressLine(0)
+                    checkInLocationTextView.text = cityName
                 }
             }
 
