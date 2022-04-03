@@ -60,7 +60,8 @@ class AccountActivity : AppCompatActivity() {
         })
 
         btnChangePass.setOnClickListener {
-            Toast.makeText(this, "Moving to Change Password Page", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PasswordActivity::class.java)
+            startActivity(intent)
         }
 
         btnAccEdit.setOnClickListener {

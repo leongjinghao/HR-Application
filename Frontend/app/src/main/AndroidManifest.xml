@@ -92,6 +92,11 @@
             android:label="Edit Profile">
         </activity>
 
+        <activity
+            android:name=".Activities.PasswordActivity"
+            android:label="Change Password">
+        </activity>
+
     </application>
 
 </manifest>
