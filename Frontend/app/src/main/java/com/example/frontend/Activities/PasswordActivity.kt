@@ -34,8 +34,6 @@ class PasswordActivity : AppCompatActivity() {
         val txtConfirmPass = findViewById<EditText>(R.id.txtConfirmPass)
         val confirmPassButton = findViewById<Button>(R.id.confirmPassButton)
 
-        var currPasswordCorrect : Boolean = false
-
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val repository = Repository()
