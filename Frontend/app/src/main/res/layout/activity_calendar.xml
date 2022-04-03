@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="ANNUAL LEAVE : 21 Total"
             android:textStyle="bold"
             android:textSize="18dp"/>
 
@@ -37,7 +36,6 @@
                 android:id="@+id/leaveALIndicatorUnused"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="18  unused"
                 android:textAlignment="center"
                 android:background="@drawable/leave_indicator_border_limegreen"
                 android:textStyle="bold"/>
@@ -48,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="18  unused"
                 android:background="@drawable/leave_indicator_border_white"
                 android:textStyle="bold"/>
         </RelativeLayout>
@@ -59,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Off-In-Lieu: 4 Total"
             android:textStyle="bold"
             android:textSize="18dp"/>
 
@@ -76,7 +72,6 @@
                 android:id="@+id/leaveOILIndicatorUnused"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4  unused"
                 android:textAlignment="center"
                 android:background="@drawable/leave_indicator_border_peach"
                 android:textStyle="bold"/>
@@ -87,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="18  unused"
                 android:background="@drawable/leave_indicator_border_white"
                 android:textStyle="bold"/>
         </RelativeLayout>
@@ -98,7 +92,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Medical Leave : 14 Total"
             android:textStyle="bold"
             android:textSize="18dp"/>
 
@@ -111,35 +104,23 @@
             android:paddingRight="30dp">
 
             <TextView
-                android:id="@+id/leaveMLLIndicatorUnused"
+                android:id="@+id/leaveMLIndicatorUnused"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4  unused"
                 android:textAlignment="center"
                 android:background="@drawable/leave_indicator_border_blue"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/leaveMLIndicatorUsed"
-                android:layout_alignTop="@+id/leaveMLLIndicatorUnused"
+                android:layout_alignTop="@+id/leaveMLIndicatorUnused"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="18  unused"
                 android:background="@drawable/leave_indicator_border_white"
                 android:textStyle="bold"/>
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_below="@+id/leaveMLIndicator"
-            android:layout_width="match_parent"
-            android:layout_margin="30dp"
-            android:text="Back"
-            android:textStyle="bold"
-            android:theme="@style/buttonTheme"
-            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

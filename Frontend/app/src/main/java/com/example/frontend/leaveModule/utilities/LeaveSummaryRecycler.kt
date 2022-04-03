@@ -91,9 +91,7 @@ class LeaveSummaryRecycler(
                 if(holder.leaveStatusButton.text == "Remove") {
                     apiCall.updateUserLeavesStatus("Ali456", skDate, "Removed")
                     apiCall.returnRespondModelRes.observe(lifeCycleOwner, { response ->
-                        val toast =
-                            Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT)
-                        toast.show()
+                        Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
                         if (response.result == true) {
                             Timer().schedule(1500) { context.startActivity(intent) }
                         }
@@ -101,9 +99,7 @@ class LeaveSummaryRecycler(
                 } else if(holder.leaveStatusButton.text == "Cancel") {
                     apiCall.deleteUserLeaves("Ali456", skDate)
                     apiCall.returnRespondModelRes.observe(lifeCycleOwner, { response ->
-                        val toast =
-                            Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT)
-                        toast.show()
+                        Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
                         if (response.result == true) {
                             Timer().schedule(1500) { context.startActivity(intent) }
                         }

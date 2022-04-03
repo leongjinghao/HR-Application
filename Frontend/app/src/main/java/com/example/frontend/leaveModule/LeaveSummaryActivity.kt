@@ -58,6 +58,11 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             val intent = Intent(this, LeaveCalendarActivity::class.java)
             startActivity(intent)
         }
+
+        binding.addLeaveButton.setOnClickListener{
+            val intent = Intent(this,LeaveAddActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initPieChart() {
