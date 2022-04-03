@@ -3,9 +3,7 @@ package com.example.frontend.retroAPI.api.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.frontend.retroAPI.api.model.leaveInformationModel
-import com.example.frontend.retroAPI.api.model.returnRespondModel
-import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.retroAPI.api.model.*
 import com.example.frontend.retroAPI.api.repository.Repository
 import kotlinx.coroutines.launch
 
@@ -14,6 +12,7 @@ class apiViewModel(private val repository: Repository): ViewModel() {
     val userInformationRes: MutableLiveData<userInformationModel> = MutableLiveData()
     val leaveInformationRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
     val updateUserInfomationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
+    val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
 
     fun getUserInformation(userId : String){
         viewModelScope.launch {
@@ -39,6 +38,13 @@ class apiViewModel(private val repository: Repository): ViewModel() {
                                                                                 phonenumber,
                                                                                 email)
             updateUserInfomationRes.value = response
+        }
+    }
+
+    fun authenticateUserLogin(userEmail : String, userPassword : String) {
+        viewModelScope.launch {
+            val response: authenticateUserLoginModel = repository.authenticateUserLogin(userEmail, userPassword)
+            authenticateUserLoginRes.value = response
         }
     }
 }

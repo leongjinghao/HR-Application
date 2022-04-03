@@ -26,12 +26,12 @@ async function authenticateUserLogin(event): Promise<LambdaResponse> {
       response.Result = true
     }
     apiResponse.body = JSON.stringify(response)
-    log2CloudWatch('retrieveUserInformation.ts','retrieveUserInformation','User information successfully retrieve')
+    log2CloudWatch('authenticateUserLogin.ts','authenticateUserLogin','User authenticate successfully retrieve')
   }
   catch (err) {
     apiResponse.statusCode = 500
     apiResponse.body = err
-    error2CloudWatch('retrieveUserInformation.ts','retrieveUserInformation',err)
+    error2CloudWatch('authenticateUserLogin.ts','authenticateUserLogin',err)
   }
   return apiResponse
 }

@@ -17,16 +17,24 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.frontend.R
 import com.example.frontend.login.UserIdRepo
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.Thread.sleep
 
 class LoginActivity : AppCompatActivity()  {
 
     val TAG : String = "Login"
     var userId : String = ""
+    private lateinit var apiCall : apiViewModel
 
     private var cancellationSignal: CancellationSignal? = null
 
@@ -92,6 +100,10 @@ class LoginActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val repository = Repository()
+        val apiModelFactory = apiViewModelFactory(repository)
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
         checkBiometricSupport()
         lifecycleScope.launch {
             UserIdRepo.getInstance(context = this@LoginActivity).userPreferencesFlow.collect { settings -> settings.id
@@ -101,31 +113,49 @@ class LoginActivity : AppCompatActivity()  {
             }
         }
         // findViewById for UI elements
-        val usernameEditText = findViewById<EditText>(R.id.editTextUsernameLogin)
+        val userEmailEditText = findViewById<EditText>(R.id.editTextUserEmailLogin)
         val passwordEditText = findViewById<EditText>(R.id.editTextPasswordLogin)
         val recoverClickableText = findViewById<TextView>(R.id.textViewRecoverLogin)
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         val fingerprintLoginButton = findViewById<Button>(R.id.buttonFingerprintLogin)
+        var authenticateStatus: Boolean = false
+        var userId: String = ""
 
         recoverClickableText.setOnClickListener {
             val intent = Intent(this, ForgetPasswordActivity::class.java)
             startActivity(intent)
         }
 
+        // user authentication API call
         loginButton.setOnClickListener {
-            // TODO implement authentication logic
-            // place holder authentication, to be replaced by actual implementation
-            if (usernameEditText.text.toString() == "admin" &&
-                passwordEditText.text.toString() == "password") {
+            apiCall.authenticateUserLogin(userEmailEditText.text.toString(), passwordEditText.text.toString())
+            apiCall.authenticateUserLoginRes.observe(this, Observer  { response ->
+                authenticateStatus = response.Result
+                userId = response.UserId
+            })
+
+            // check if authentication successful
+            if (authenticateStatus) {
+                // store userId in preference store
                 lifecycleScope.launch {
-                    UserIdRepo.getInstance(context = this@LoginActivity).update("JJ")
+                    UserIdRepo.getInstance(context = this@LoginActivity)
+                        .update(userId)
                 }
-                // TODO create intent to Home page
+
+                // clear error message if visible
+                userEmailEditText.error = null
+                passwordEditText.error = null
+
+                // reset authenticate status flag
+                authenticateStatus = false
+
+                // start intent to home bage
                 val homeIntent = Intent(this, HomePageMainActivity::class.java)
                 startActivity(homeIntent)
-            }
-            else {
-                authMsg("Invalid Credentials")
+            } else {
+                // display error message to signify invalid credentials entered
+                userEmailEditText.error = "Invalid Credentials!"
+                passwordEditText.error = "Invalid Credentials!"
             }
         }
 

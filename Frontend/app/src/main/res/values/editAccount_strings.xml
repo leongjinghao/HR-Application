@@ -13,4 +13,18 @@
     <string name="editEmailHint">Enter Email</string>
 
     <string name="saveProfileButton">Save Profile</string>
+
+    <string name="accountDob">Employee Birthdate</string>
+    <string name="accountMobile">Employee Mobile Number</string>
+    <string name="accountEmail">Employee Email</string>
+    <string name="changePasswordButton">Change Password</string>
+    <string name="editProfileButton">Edit Profile</string>
+
+    <string name="currentPasswordHint">Current Password</string>
+    <string name="newPasswordHint">New Password</string>
+    <string name="confirmPasswordHint">Confirm Password</string>
+    <string name="confirmPasswordButton">Confirm</string>
+
+    <string name="departmentIconDescr">Department Icon</string>
+    <string name="dobIconDescr">DOB Icon</string>
 </resources>

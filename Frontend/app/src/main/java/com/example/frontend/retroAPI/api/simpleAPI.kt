@@ -1,8 +1,6 @@
 package com.example.frontend.retroAPI.api
 
-import com.example.frontend.retroAPI.api.model.leaveInformationModel
-import com.example.frontend.retroAPI.api.model.returnRespondModel
-import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.retroAPI.api.model.*
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,4 +23,10 @@ interface simpleAPI {
     suspend fun updateUserInformation(
         @Body requestBody: RequestBody
     ) : returnRespondModel
+
+    @GET("userLogin/authenticateUserLogin/")
+    suspend fun authenticateUserLogin(
+        @Query("userEmail") userEmail: String,
+        @Query("userPassword") userPassword: String
+    ) : authenticateUserLoginModel
 }

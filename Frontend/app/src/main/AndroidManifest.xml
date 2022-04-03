@@ -82,6 +82,16 @@
             android:label="View Leave">
         </activity>
 
+        <activity
+            android:name=".Activities.AccountActivity"
+            android:label="Profile">
+        </activity>
+
+        <activity
+            android:name=".Activities.EditProfileActivity"
+            android:label="Edit Profile">
+        </activity>
+
     </application>
 
 </manifest>
