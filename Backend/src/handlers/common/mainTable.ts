@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import AWS from 'aws-sdk'
+import { MessageChannel } from 'worker_threads'
 import { log2CloudWatch, error2CloudWatch } from '../utility/cloudWatch'
 import { resultMessageResponseTypeDatabase } from '../utility/dataType'
 
@@ -447,3 +448,47 @@ export const putUserInformation : putUserInformationType = async (
       }
     }
   }
+
+  type queryUserEmail = (
+    userEmail : string,
+  ) => Promise<resultMessageResponseTypeDatabase>
+  /**
+   * Access the main Table and retrieve User Email based on User Id
+   * @param {string} userEmail User Email
+   * @returns {Promise<resultMessageResponseTypeDatabase>} User Information
+   */
+  export const queryUserEmail: queryUserEmail = async (userEmail) => {
+    let result = false
+    let message = ''
+    const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+    const params: AWS.DynamoDB.QueryInput = {
+      TableName: 'mainTable',
+      KeyConditionExpression: '#PK = :PK',
+      ExpressionAttributeNames: {
+        '#PK': 'PK',
+      },
+      ExpressionAttributeValues: {
+        ':PK': { S: `LOGIN#${userEmail}` },
+      }
+    }
+    try {
+      console.log(params)
+      const data = await dynamodb.query(params).promise()
+      console.log(data)
+      if (data.Count === 1){
+        result = true
+        message = 'User Email Found'
+      }
+      return {
+        'result': result,
+        message : message
+      }
+    } catch (err) {
+      console.log(err)
+      message = 'User Not Found'
+      return {
+        'result': result,
+          message : message
+      }
+    }
+}
