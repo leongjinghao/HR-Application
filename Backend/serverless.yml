@@ -104,6 +104,13 @@ functions:
       - http:
          method: GET
          path: /retrieve/retrieveUserSchedule
+  retrieveUserEmails:
+    handler: src/handlers/userLogin/retrieve/retrieveUserEmails.handler
+    role: AdminRole
+    events:
+      - http:
+          method: GET
+          path: /retrieve/retrieveUserEmails
 
 resources:
   Resources:

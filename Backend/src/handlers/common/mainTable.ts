@@ -579,3 +579,44 @@ export const queryUserSchedule = async (userId, date) => {
     return []
   }
 }
+
+type queryUserEmail = (
+  userEmail: string,
+) => Promise<resultMessageResponseTypeDatabase>
+/**
+ * Access the main Table and retrieve all User Information based on User Id
+ * @param {string} userEmail User Email
+ * @returns {Promise <resultMessageResponseTypeDatabase>} User Email
+ */
+export const queryUserEmail: queryUserEmail = async (userEmail) => {
+  let result = false
+  let message = ''
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `LOGIN#${userEmail}` }
+    }
+  }
+  try {
+    const data = await dynamodb.query(params).promise()
+    if (data.Count === 1){
+      result = true
+      message = 'User Email Found'
+    }
+    return {
+      'result':result,
+      'message':message
+    }
+  } catch (err) {
+    message = 'User Not Found'
+    return {
+      'result':result,
+      'message':message
+    }
+  }
+}
