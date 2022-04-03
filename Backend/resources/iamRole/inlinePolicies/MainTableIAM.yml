@@ -9,6 +9,7 @@ MainTablePolicy:
           - dynamodb:PutItem
           - dynamodb:Scan
           - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
         Resource:
           - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.MainTableName}
           - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.MainTableName}/index/*

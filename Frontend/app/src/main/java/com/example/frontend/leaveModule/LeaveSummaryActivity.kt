@@ -3,7 +3,6 @@ package com.example.frontend.leaveModule
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,10 +46,10 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             setDataToPieChart()
         })
 
-        apiCall.getUserLeaves("ali123")
+        apiCall.getUserLeaves("Ali456")
         apiCall.leaveInformationRes.observe(this, Observer { response ->
             leaveInfoData = response
-            leaveAdapter = LeaveSummaryRecycler(leaveInfoData)
+            leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent)
             binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
             binding.recyclerViewLeaveSummary.adapter = leaveAdapter
         })
@@ -127,13 +126,11 @@ class LeaveSummaryActivity : AppCompatActivity()  {
                 dataEntries.add(PieEntry(usedOIL, "Unused OIL " + usedOIL))
                 colors.add(Color.parseColor("#FF5019"))
             }
-
             val dataSet = PieDataSet(dataEntries, "")
             val data = PieData(dataSet)
             data.setDrawValues(false)
             dataSet.colors = colors
             binding.pieChart.data = data
-
         }
 
     private fun checkPosition(size : Int): Array<Int> {
@@ -148,5 +145,4 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         }
         return tempData
     }
-
 }

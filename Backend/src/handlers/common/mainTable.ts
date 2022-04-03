@@ -112,20 +112,21 @@ export const putCreateLeave: createLeaveType = async (
       const params = {
         TableName: 'mainTable',
         Key: {
-          ':PK': { S: `USER#${userId}` },
-          ':SK': { S: `LEAVE#${date}` }
+          'PK': { S: `USER#${userId}`},
+          'SK': { S: `LEAVE#${date}`}
         }
       }
       try {
         await dynamodb.deleteItem(params).promise()
         return {
           'result': true,
-          message : `${userId} leave on ${date} successfully deleted from the database.`
+          message : `${userId} leave on ${date} had successfully cancel`
         }
       } catch (err) {
+        console.log(err)
         return {
           'result': false,
-          message: JSON.stringify(err)
+          message: `${userId} leave on ${date} fail to cancel`
         }
       }
     }
@@ -160,21 +161,18 @@ export const putCreateLeave: createLeaveType = async (
             ':status': { S: status }
       }
         }
-        let message = ''
         try {
           await dynamodb.updateItem(params).promise()
-          message = 'Leave status had been updated successfully.'
-          log2CloudWatch('mainTable.ts','updateUserInformation',message)
+          log2CloudWatch('mainTable.ts','updateUserInformation','Leave status had been updated successfully.')
           return {
             'result': true,
-            message
+            message : 'Leave status had been updated successfully.'
           }
         } catch (err) {
-          message = 'Leave Status failed to update.'
           error2CloudWatch('mainTable.ts','updateUserInformation',err)
           return {
             'result': false,
-            message
+            message : 'Leave Status failed to update.'
           }
         }
       }

@@ -11,7 +11,7 @@ class apiViewModel(private val repository: Repository): ViewModel() {
 
     val userInformationRes: MutableLiveData<userInformationModel> = MutableLiveData()
     val leaveInformationRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
-    val updateUserInfomationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
+    val returnRespondModelRes : MutableLiveData<returnRespondModel> = MutableLiveData()
     val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
 
     fun getUserInformation(userId : String){
@@ -37,7 +37,7 @@ class apiViewModel(private val repository: Repository): ViewModel() {
                                                                                 dateofbirth,
                                                                                 phonenumber,
                                                                                 email)
-            updateUserInfomationRes.value = response
+            returnRespondModelRes.value = response
         }
     }
 
@@ -45,6 +45,27 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response: authenticateUserLoginModel = repository.authenticateUserLogin(userEmail, userPassword)
             authenticateUserLoginRes.value = response
+        }
+    }
+
+    fun updateUserLeavesStatus(userId : String, date : String, status : String)
+    {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.updateUserLeavesStatus(
+                userId,
+                date,
+                status)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun deleteUserLeaves(userId : String, date : String)
+    {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.deleteUserLeaves(
+                userId,
+                date)
+            returnRespondModelRes.value = response
         }
     }
 }

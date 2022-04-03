@@ -30,11 +30,31 @@ class Repository {
         val jsonObjectString = jsonObject.toString()
         // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-        Log.i("requestBody", requestBody.toString())
         return RetrofitInstance.api.updateUserInformation(requestBody)
     }
 
     suspend fun authenticateUserLogin(userEmail: String, userPassword: String): authenticateUserLoginModel {
         return RetrofitInstance.api.authenticateUserLogin(userEmail, userPassword)
+    }
+
+    suspend fun updateUserLeavesStatus(userId: String, date: String, status: String)
+            : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userId", userId)
+        jsonObject.put("date", date)
+        jsonObject.put("status", status)
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.updateUserLeaveStatus(requestBody)
+    }
+
+    suspend fun deleteUserLeaves(userId: String, date : String)
+            : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userId", userId)
+        jsonObject.put("date", date)
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.deleteUserLeaves(requestBody)
     }
 }

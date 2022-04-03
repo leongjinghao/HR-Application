@@ -8,7 +8,7 @@ data class leaveInformationField(
     val PK: leaveInformationInnerObject,
     val SK: leaveInformationInnerObject,
     val LeaveType: leaveInformationInnerObject,
-    val Status: leaveInformationInnerObject,
+    val LeaveStatus: leaveInformationInnerObject,
     val Remarks: leaveInformationInnerObject,
     val Approver: leaveInformationInnerObject,
 )

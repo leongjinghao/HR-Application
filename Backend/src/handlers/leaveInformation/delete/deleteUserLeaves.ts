@@ -20,7 +20,7 @@ async function deleteUserLeaves(event): Promise<LambdaResponse> {
     event = JSON.parse(event.body)
     const result = await deleteUserLeaveInformation(event.userId,event.date)
     apiResponse.body = JSON.stringify(result)
-    log2CloudWatch('deleteUserLeaves.ts','deleteUserLeaves','User leave information successfully retrieve')
+    log2CloudWatch('deleteUserLeaves.ts','deleteUserLeaves','User leaves successfully deleted')
   }
   catch (err) {
     apiResponse.statusCode = 500

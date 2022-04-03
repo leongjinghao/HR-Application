@@ -29,4 +29,14 @@ interface simpleAPI {
         @Query("userEmail") userEmail: String,
         @Query("userPassword") userPassword: String
     ) : authenticateUserLoginModel
+
+    @POST("update/updateUserLeavesStatus/")
+    suspend fun updateUserLeaveStatus(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
+    @POST("delete/deleteUserLeaves/")
+    suspend fun deleteUserLeaves(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
 }
