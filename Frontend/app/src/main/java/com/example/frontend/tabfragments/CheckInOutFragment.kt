@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -140,14 +139,12 @@ class CheckInOutFragment : Fragment() {
         // Configure work schedule details
         df = SimpleDateFormat("ddMMyyyy")
         var formattedScheduleDate = df.format(Calendar.getInstance().time)
-        Toast.makeText(activity, formattedScheduleDate, Toast.LENGTH_LONG).show()
         apiCall.retrieveUserSchedule(
             userId,
-            "03042022"
+            formattedScheduleDate
         )
         df = SimpleDateFormat("dd MMM yyyy, EEE")
         apiCall.retrieveUserScheduleRes.observe(viewLifecycleOwner) { response ->
-            Toast.makeText(activity, response.Schedule + " , " + response.WorkLocation, Toast.LENGTH_LONG).show()
             dateTextView.text = df.format(Calendar.getInstance().time)
             shiftTextView.text = response.Schedule
             locationTextView.text = response.WorkLocation

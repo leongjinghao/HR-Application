@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -70,8 +71,11 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         binding = ActivityCheckInSelfieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // UI elements
+        val checkInDetailTextView = findViewById<TextView>(R.id.textViewCheckInDetails)
         val checkInResetButton = findViewById<Button>(R.id.buttonCheckInReset)
 
+        // retrieve userId from preference store
         var userId: String = ""
 
         lifecycleScope.launch {
@@ -79,6 +83,15 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
                 userId = settings.id
             }
         }
+
+        // configure fields in check in details text view
+        var df = SimpleDateFormat("dd MMM yyyy, EEE")
+        val currentDate = df.format(Calendar.getInstance().time)
+        df = SimpleDateFormat("HH:mm a")
+        val currentTime = df.format(Calendar.getInstance().time)
+        val location = intent.getStringExtra("locationName").toString()
+        checkInDetailTextView.text = currentDate + "\n\n" +  currentTime + "\n\n" + location
+
 
         checkInResetButton.setOnClickListener {
             // Call function for resetting camera view

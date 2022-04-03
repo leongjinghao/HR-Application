@@ -8,8 +8,8 @@
 
     <SurfaceView
         android:id="@+id/surfaceViewCamera"
-        android:layout_width="300dp"
-        android:layout_height="420dp"
+        android:layout_width="250dp"
+        android:layout_height="350dp"
         android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -36,8 +36,10 @@
         android:gravity="center_horizontal"
         android:text="Date, Day\nTime\nLocation"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCheckInConfirm"
         app:layout_constraintTop_toTopOf="@+id/lineSeparatorCheckInSelfie"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-16dp" />
 
     <Button
         android:id="@+id/buttonCheckInConfirm"
