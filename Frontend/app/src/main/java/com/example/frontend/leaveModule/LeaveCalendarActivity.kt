@@ -12,5 +12,7 @@ class LeaveCalendarActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }
