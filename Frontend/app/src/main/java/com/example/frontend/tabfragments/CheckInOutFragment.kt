@@ -39,6 +39,9 @@ import java.util.*
 class CheckInOutFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var apiCall : apiViewModel
+    val repository = Repository()
+    val apiModelFactory = apiViewModelFactory(repository)
 
     // create the ViewModel
     private val historyViewModel: HistoryViewModel by viewModels {
@@ -133,6 +136,8 @@ class CheckInOutFragment : Fragment() {
 
 
         checkInButton.setOnClickListener{
+            apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
             // if check in and out status is "Clock out", display check in button/option
             if (historyViewModel.checkInOutStatus == "Clock out") {
                 val intent = Intent(activity, CheckInDetailActivity::class.java)
@@ -143,7 +148,15 @@ class CheckInOutFragment : Fragment() {
                 activity?.onBackPressed()
             }
             else {
-                // TODO: additional check out logic on aws db
+                val dateFormat = SimpleDateFormat("ddMMyyyy")
+                val timeFomat = SimpleDateFormat("HHmm")
+
+                // Update check out timing to attendance record for the day
+                apiCall.updateAttendanceInformation(
+                    "jinghao",
+                    dateFormat.format(Calendar.getInstance().time),
+                    timeFomat.format(Calendar.getInstance().time)
+                )
 
                 // Insert check out record on room DB
                 historyViewModel.insert(

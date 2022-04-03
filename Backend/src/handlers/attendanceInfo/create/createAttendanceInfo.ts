@@ -17,7 +17,6 @@ async function createAttendanceInfo(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    // const { userId, date, clockIn, location } = event.queryStringParameters
     event = JSON.parse(event.body)
     const result = await putNewAttendanceInfo(
         event.userId,

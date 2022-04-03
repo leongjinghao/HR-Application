@@ -78,4 +78,11 @@ class apiViewModel(private val repository: Repository): ViewModel() {
             createAttendanceInformationRes.value = response
         }
     }
+
+    fun updateAttendanceInformation(userId : String, date : String, clockOut : String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.updateAttendanceInformation(userId, date, clockOut)
+            createAttendanceInformationRes.value = response
+        }
+    }
 }

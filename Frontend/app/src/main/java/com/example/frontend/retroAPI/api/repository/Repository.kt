@@ -69,4 +69,15 @@ class Repository {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
         return RetrofitInstance.api.createAttendanceInfomation(requestBody)
     }
+
+    suspend fun updateAttendanceInformation(userId: String, date: String, clockOut: String): returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userId", userId)
+        jsonObject.put("date", date)
+        jsonObject.put("clockOut", clockOut)
+        val jsonObjectString = jsonObject.toString()
+        // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.updateAttendanceInfomation(requestBody)
+    }
 }
