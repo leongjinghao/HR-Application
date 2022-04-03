@@ -32,6 +32,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Activities.HomePageMainActivity"
+            android:label="Home Page">
+        </activity>
 
         <activity
             android:name=".Activities.ForgetPasswordActivity"
