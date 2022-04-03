@@ -97,10 +97,24 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             }
             // Else in "confirm" mode
             else {
+                saveImage(tempSelfieByte)
+
                 confirmFlag = false
 
+                // TODO: send the selfie & check in record to aws DB and record check in details
                 val dateFormat = SimpleDateFormat("ddMMyyyy")
                 val timeFomat = SimpleDateFormat("HHmm")
+
+                // Insert check in record on room DB
+                historyViewModel.insert(
+                    History(
+                        0,
+                        LocalDate.now().toString(),
+                        LocalDate.now().dayOfWeek.name,
+                        "Clock In",
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    )
+                )
 
                 var responseResult: Boolean = true
                 var message: String = ""
@@ -132,20 +146,6 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
                             .show()
                     }
                     else {
-                        // Insert check in record on room DB
-                        historyViewModel.insert(
-                            History(
-                                0,
-                                LocalDate.now().toString(),
-                                LocalDate.now().dayOfWeek.name,
-                                "Clock In",
-                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-                            )
-                        )
-
-                        // save image to file
-                        saveImage(tempSelfieByte)
-
                         // Go back to previous page on successful check in process
                         finish()
                         finish()
