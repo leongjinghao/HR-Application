@@ -446,9 +446,6 @@ export const putUserInformation : putUserInformationType = async (
         message
       }
     }
-<<<<<<< HEAD
-  }
-=======
   }
 
   type queryPassword = (
@@ -527,4 +524,3 @@ export const putUserInformation : putUserInformationType = async (
         }
       }
     }
->>>>>>> eff405e04ec3ec74b97659d37900d91922aa3698
