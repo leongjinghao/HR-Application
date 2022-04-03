@@ -365,3 +365,65 @@ export const putExistingAttendanceInfo: updateAttendanceInfo = async (
     }
   }
 }
+
+type putUserInformationType = (
+  userId : string,
+  name : string,
+  department : string,
+  dateofbirth : string,
+  phonenumber : string,
+  email : string
+) => Promise <resultMessageResponseTypeDatabase>
+/**
+ * Update user information
+ * @param userId - Employee ID
+ * @param name - Employee Name
+ * @param department - Department Name
+ * @param dateofbirth - Date of Birth
+ * @param phonenumber - Handphone Number
+ * @param email - Email Address
+ * @returns resultMessageResponseType
+ */
+export const putUserInformation : putUserInformationType = async (
+  userId,
+  department,
+  name,
+  dateofbirth,
+  phonenumber,
+  email
+) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params = {
+      Key: {
+        'PK': { S: `USER#${userId}` },
+        'SK': { S: `PROFILE#${userId}` },
+      },
+      TableName: 'mainTable',
+      UpdateExpression:
+      'set EmployeeName = :name, Department = :department, DOB = :dateofbirth, Mobile = :phonenumber, Email = :email',
+      ExpressionAttributeValues: {
+        ':name': { S: name },
+        ':department' : { S: department},
+        ':dateofbirth': { S: dateofbirth },
+        ':phonenumber': { S: phonenumber },
+        ':email': { S: email }
+  }
+    }
+    let message = ''
+    try {
+      await dynamodb.updateItem(params).promise()
+      message = 'Updated user Information.'
+      log2CloudWatch('mainTable.ts','updateUserInformation',message)
+      return {
+        'result': true,
+        message
+      }
+    } catch (err) {
+      message = 'Failed to update user information.'
+      error2CloudWatch('mainTable.ts','updateUserInformation',err)
+      return {
+        'result': false,
+        message
+      }
+    }
+  }
