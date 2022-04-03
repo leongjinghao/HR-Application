@@ -18,6 +18,7 @@ async function retrievePassword(event): Promise<LambdaResponse> {
   }
   try {
     const { UserId } = event.queryStringParameters
+    console.log(UserId)
     const result = await queryPassword(UserId)
     apiResponse.body = JSON.stringify({password:result[0].SK.S?.substring(9)})
     log2CloudWatch('retrievePassword.ts','retrievePassword','User password successfully retrieve')

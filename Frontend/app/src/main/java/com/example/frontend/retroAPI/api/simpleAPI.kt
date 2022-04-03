@@ -55,4 +55,15 @@ interface simpleAPI {
         @Query("userId") userId: String,
         @Query("date") date: String
     ) : userScheduleModel
+
+    @GET("retrieve/retrievePassword/")
+    suspend fun getUserPassword(
+        @Query("UserId") userId: String
+    ) : currentPasswordModel
+
+    @POST("update/updatePassword/")
+    suspend fun updateUserPassword(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
 }

@@ -84,4 +84,17 @@ class Repository {
     suspend fun retrieveUserSchedule(userId: String, date: String): userScheduleModel {
         return RetrofitInstance.api.retrieveUserSchedule(userId, date)
     }
+
+    suspend fun getUserPassword(userId : String) : currentPasswordModel {
+        return RetrofitInstance.api.getUserPassword(userId)
+    }
+
+    suspend fun updateUserPassword(userId : String, newPass : String) : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("UserId", userId)
+        jsonObject.put("newPassword", newPass)
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.updateUserPassword(requestBody)
+    }
 }

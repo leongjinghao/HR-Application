@@ -3,19 +3,21 @@ package com.example.frontend.Activities
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.frontend.R
-import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.retroAPI.api.model.currentPasswordModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
-import androidx.lifecycle.Observer
 
 class PasswordActivity : AppCompatActivity() {
+
     private lateinit var apiCall : apiViewModel
-    private lateinit var userInfoData : userInformationModel
+    private lateinit var userPasswordData : currentPasswordModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,23 +30,30 @@ class PasswordActivity : AppCompatActivity() {
         val txtConfirmPass = findViewById<EditText>(R.id.txtConfirmPass)
         val confirmPassButton = findViewById<Button>(R.id.confirmPassButton)
 
+        var currPasswordCorrect : Boolean = false
+
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
-        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
-        userInfoData = userInformationModel(null)
+        apiCall = ViewModelProvider(this, apiModelFactory).get(apiViewModel::class.java)
 
-        val password : String
 
-        apiCall.getUserInformation("Ali456")
-        apiCall.userInformationRes.observe(this, Observer { response ->
-            userInfoData = response
-            //password = userInfoData.Items?.get(0)?.
-            val employeeName = userInfoData.Items?.get(0)?.EmployeeName?.S.toString()
-            val departmentName = userInfoData.Items?.get(0)?.Department?.S.toString()
-            val dateOfBirth = userInfoData.Items?.get(0)?.DOB?.S.toString()
-            val mobileNumber = userInfoData.Items?.get(0)?.Mobile?.S.toString()
-            val email = userInfoData.Items?.get(0)?.Email?.S.toString()
-            //txtAccName.text = employeeName
-        })
+        confirmPassButton.setOnClickListener {
+            apiCall.getUserPassword("kenzo")
+            apiCall.currentPasswordRes.observe(this, Observer { response ->
+                userPasswordData = response
+                if (txtCurrPass.text.toString() == response.password) {
+                    if (txtNewPass.text.toString() == txtConfirmPass.text.toString()) {
+                        apiCall.updateUserPassword("kenzo", txtNewPass.text.toString())
+                        Toast.makeText(this, "Password Changed", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(this, "Password does not match", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else {
+                    Toast.makeText(this, "Current Password is Wrong", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 }
