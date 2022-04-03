@@ -20,11 +20,12 @@ async function retrieveUserLeaves(event): Promise<LambdaResponse> {
     const { userId } = event.queryStringParameters
     const result = await queryUserLeaveInformation(userId)
     const returnResponse = {Items:[{}]}
+    console.log(result)
     if (result !== false){
       let count = 0
       let ItemsCount = 0
       while (count < result.length) {
-        if (result[count].Status.S !== 'Removed') {
+        if (result[count].LeaveStatus.S !== 'Removed') {
           returnResponse.Items[ItemsCount] = result[count]
           ItemsCount++
         }

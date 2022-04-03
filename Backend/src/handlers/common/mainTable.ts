@@ -64,11 +64,11 @@ export const putCreateLeave: createLeaveType = async (
     type queryUserLeaveInformationType = (
       userId : string,
     ) => Promise<[{PK:{S:string},SK:{S:string},LeaveType:{S:string},Approver:{S:string},Remarks:{S:string},
-      Status:{S:string}}] | false | []>
+      LeaveStatus:{S:string}}] | false | []>
     /**
      * Access the main Table and retrieve all Users Leave
      * @param {string} userId User ID
-     * @returns {Promise <{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,Status:string,}
+     * @returns {Promise <{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,LeaveStatus:string,}
      * | false | {}> } User Leaves Informations
      */
     export const queryUserLeaveInformation: queryUserLeaveInformationType = async (userId) => {
