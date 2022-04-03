@@ -108,4 +108,18 @@ class apiViewModel(private val repository: Repository): ViewModel() {
             returnRespondModelRes.value = response
         }
     }
+
+    fun retrieveUserEmails(userEmail: String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.retrieveUserEmails(userEmail)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun sendRecoverEmail(userEmail: String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.sendRecoverEmail(userEmail)
+            returnRespondModelRes.value = response
+        }
+    }
 }

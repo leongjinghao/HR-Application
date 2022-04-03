@@ -28,6 +28,8 @@ class LeaveCalendarActivity : AppCompatActivity()  {
 
         userInfoData = userInformationModel(null)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)

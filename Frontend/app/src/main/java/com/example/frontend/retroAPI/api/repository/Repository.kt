@@ -97,4 +97,16 @@ class Repository {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
         return RetrofitInstance.api.updateUserPassword(requestBody)
     }
+
+    suspend fun retrieveUserEmails(userEmail : String) : returnRespondModel {
+        return RetrofitInstance.api.retrieveUserEmails(userEmail)
+    }
+
+    suspend fun sendRecoverEmail(userEmail: String) : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userEmail", userEmail)
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.sendRecoverEmail(requestBody)
+    }
 }

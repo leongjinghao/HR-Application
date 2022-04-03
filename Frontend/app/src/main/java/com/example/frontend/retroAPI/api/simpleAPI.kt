@@ -66,4 +66,13 @@ interface simpleAPI {
         @Body requestBody: RequestBody
     ) : returnRespondModel
 
+    @GET("retrieve/retrieveUserEmails/")
+    suspend fun retrieveUserEmails(
+        @Query("userEmail") userEmail: String
+    ) : returnRespondModel
+
+    @POST("utility/sesSendEmail/")
+    suspend fun sendRecoverEmail(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
 }
