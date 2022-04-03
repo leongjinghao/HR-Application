@@ -93,7 +93,6 @@ class LoginActivity : AppCompatActivity()  {
     //Create toast with message
     private fun authMsg(message:String){
         val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }
 

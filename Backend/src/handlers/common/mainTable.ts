@@ -61,174 +61,177 @@ export const putCreateLeave: createLeaveType = async (
   }
 }
 
-    type queryUserLeaveInformationType = (
-      userId : string,
-    ) => Promise<[{PK:{S:string},SK:{S:string},LeaveType:{S:string},Approver:{S:string},Remarks:{S:string},
-      LeaveStatus:{S:string}}] | false | []>
-    /**
-     * Access the main Table and retrieve all Users Leave
-     * @param {string} userId User ID
-     * @returns {Promise <{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,LeaveStatus:string,}
-     * | false | {}> } User Leaves Informations
-     */
-    export const queryUserLeaveInformation: queryUserLeaveInformationType = async (userId) => {
-      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
-      const params: AWS.DynamoDB.QueryInput = {
-        TableName: 'mainTable',
-        KeyConditionExpression: '#PK = :PK AND begins_with(#SK, :SK)',
-        ExpressionAttributeNames: {
-          '#PK': 'PK',
-          '#SK': 'SK'
-        },
-        ExpressionAttributeValues: {
-          ':PK': { S: `USER#${userId}` },
-          ':SK': { S: 'LEAVE#' }
-        }
-      }
-      try {
-        const data = await dynamodb.query(params).promise()
-        let response
-        if (data.Count !== 0) {
-          response = data.Items!
-        }
-        return response
-      } catch (err) {
-        return false
-      }
+type queryUserLeaveInformationType = (
+  userId: string,
+) => Promise<[{
+  PK: { S: string }, SK: { S: string }, LeaveType: { S: string }, Approver: { S: string }, Remarks: { S: string },
+  LeaveStatus: { S: string }
+}] | false | []>
+/**
+ * Access the main Table and retrieve all Users Leave
+ * @param {string} userId User ID
+ * @returns {Promise <{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,LeaveStatus:string,}
+ * | false | {}> } User Leaves Informations
+ */
+export const queryUserLeaveInformation: queryUserLeaveInformationType = async (userId) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK AND begins_with(#SK, :SK)',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+      '#SK': 'SK'
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `USER#${userId}` },
+      ':SK': { S: 'LEAVE#' }
     }
-
-    type removeUserLeaveInformationType = (
-      userId : string,
-      date : string,
-    ) => Promise<resultMessageResponseTypeDatabase>
-    /**
-     * Access the main Table and remove the user Leave
-     * @param {string} userId User ID
-     * @param {string} date User Leave
-     * @returns {Promise <{resultMessageResponseTypeDatabase}
-     */
-    export const deleteUserLeaveInformation: removeUserLeaveInformationType = async (userId,date) => {
-      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
-      const params = {
-        TableName: 'mainTable',
-        Key: {
-          'PK': { S: `USER#${userId}`},
-          'SK': { S: `LEAVE#${date}`}
-        }
-      }
-      try {
-        await dynamodb.deleteItem(params).promise()
-        return {
-          'result': true,
-          message : `${userId} leave on ${date} had successfully cancel`
-        }
-      } catch (err) {
-        console.log(err)
-        return {
-          'result': false,
-          message: `${userId} leave on ${date} fail to cancel`
-        }
-      }
-    }
-
-    type updateLeaveStatusType = (
-      userId : string,
-      dob : string,
-      status : string,
-    ) => Promise <resultMessageResponseTypeDatabase>
-    /**
-     * Update user information
-     * @param userId - Employee ID
-     * @param dob - Leave Date
-     * @param status - Leave Status
-     * @returns resultMessageResponseType
-     */
-    export const updateLeaveStatus : updateLeaveStatusType = async (
-      userId,
-      dob,
-      status,
-    ) => {
-      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
-      const params = {
-          Key: {
-            'PK': { S: `USER#${userId}` },
-            'SK': { S: `LEAVE#${dob}` },
-          },
-          TableName: 'mainTable',
-          UpdateExpression:
-          'set LeaveStatus = :status',
-          ExpressionAttributeValues: {
-            ':status': { S: status }
-      }
-        }
-        try {
-          await dynamodb.updateItem(params).promise()
-          log2CloudWatch('mainTable.ts','updateUserInformation','Leave status had been updated successfully.')
-          return {
-            'result': true,
-            message : 'Leave status had been updated successfully.'
-          }
-        } catch (err) {
-          error2CloudWatch('mainTable.ts','updateUserInformation',err)
-          return {
-            'result': false,
-            message : 'Leave Status failed to update.'
-          }
-        }
-      }
-
-    type queryUserInformation = (
-      userId : string,
-    ) => Promise<{
-      PK:string,
-      SK:string,
-      Name:string,
-      DOB:string,
-      Mobile:string,
-      Email:string,
-      Department:string,
-      Picture:string,
-      Al:string,
-      MC:string,
-      OIL:string} | false | {}>
-    /**
-     * Access the main Table and retrieve all User Information based on User Id
-     * @param {string} userId User ID
-     * @returns {Promise <{
-     * PK:string,
-     * SK:string,
-     * EmployeeName:string,
-     * DOB:string,
-     * Mobile:string,
-     * Email:string,
-     * Department:string,
-     * Picture:string,
-     * Al:string,
-     * MC:string,
-     * OIL:string}
-     * | false | {}> } User Information
-     */
-    export const queryUserInformation: queryUserInformation = async (userId) => {
-      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
-      const params: AWS.DynamoDB.QueryInput = {
-        TableName: 'mainTable',
-        KeyConditionExpression: '#PK = :PK AND #SK = :SK',
-        ExpressionAttributeNames: {
-          '#PK': 'PK',
-          '#SK': 'SK'
-        },
-        ExpressionAttributeValues: {
-          ':PK': { S: `USER#${userId}` },
-          ':SK': { S: `PROFILE#${userId}` }
-        }
-      }
-      try {
-        const data = await dynamodb.query(params).promise()
-        return data
-      } catch (err) {
-        return false
-      }
   }
+  try {
+    const data = await dynamodb.query(params).promise()
+    let response
+    if (data.Count !== 0) {
+      response = data.Items!
+    }
+    return response
+  } catch (err) {
+    return false
+  }
+}
+
+type removeUserLeaveInformationType = (
+  userId: string,
+  date: string,
+) => Promise<resultMessageResponseTypeDatabase>
+/**
+ * Access the main Table and remove the user Leave
+ * @param {string} userId User ID
+ * @param {string} date User Leave
+ * @returns {Promise <{resultMessageResponseTypeDatabase}
+ */
+export const deleteUserLeaveInformation: removeUserLeaveInformationType = async (userId, date) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params = {
+    TableName: 'mainTable',
+    Key: {
+      'PK': { S: `USER#${userId}` },
+      'SK': { S: `LEAVE#${date}` }
+    }
+  }
+  try {
+    await dynamodb.deleteItem(params).promise()
+    return {
+      'result': true,
+      message: `${userId} leave on ${date} had successfully cancel`
+    }
+  } catch (err) {
+    console.log(err)
+    return {
+      'result': false,
+      message: `${userId} leave on ${date} fail to cancel`
+    }
+  }
+}
+
+type updateLeaveStatusType = (
+  userId: string,
+  dob: string,
+  status: string,
+) => Promise<resultMessageResponseTypeDatabase>
+/**
+ * Update user information
+ * @param userId - Employee ID
+ * @param dob - Leave Date
+ * @param status - Leave Status
+ * @returns resultMessageResponseType
+ */
+export const updateLeaveStatus: updateLeaveStatusType = async (
+  userId,
+  dob,
+  status,
+) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params = {
+    Key: {
+      'PK': { S: `USER#${userId}` },
+      'SK': { S: `LEAVE#${dob}` },
+    },
+    TableName: 'mainTable',
+    UpdateExpression:
+      'set LeaveStatus = :status',
+    ExpressionAttributeValues: {
+      ':status': { S: status }
+    }
+  }
+  try {
+    await dynamodb.updateItem(params).promise()
+    log2CloudWatch('mainTable.ts', 'updateUserInformation', 'Leave status had been updated successfully.')
+    return {
+      'result': true,
+      message: 'Leave status had been updated successfully.'
+    }
+  } catch (err) {
+    error2CloudWatch('mainTable.ts', 'updateUserInformation', err)
+    return {
+      'result': false,
+      message: 'Leave Status failed to update.'
+    }
+  }
+}
+
+type queryUserInformation = (
+  userId: string,
+) => Promise<{
+  PK: string,
+  SK: string,
+  Name: string,
+  DOB: string,
+  Mobile: string,
+  Email: string,
+  Department: string,
+  Picture: string,
+  Al: string,
+  MC: string,
+  OIL: string
+} | false | {}>
+/**
+ * Access the main Table and retrieve all User Information based on User Id
+ * @param {string} userId User ID
+ * @returns {Promise <{
+ * PK:string,
+ * SK:string,
+ * EmployeeName:string,
+ * DOB:string,
+ * Mobile:string,
+ * Email:string,
+ * Department:string,
+ * Picture:string,
+ * Al:string,
+ * MC:string,
+ * OIL:string}
+ * | false | {}> } User Information
+ */
+export const queryUserInformation: queryUserInformation = async (userId) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK AND #SK = :SK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+      '#SK': 'SK'
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `USER#${userId}` },
+      ':SK': { S: `PROFILE#${userId}` }
+    }
+  }
+  try {
+    const data = await dynamodb.query(params).promise()
+    return data
+  } catch (err) {
+    return false
+  }
+}
 
 type queryUserLoginType = (
   userEmail: string, userPassword: string
@@ -387,13 +390,13 @@ export const putExistingAttendanceInfo: updateAttendanceInfo = async (
 }
 
 type putUserInformationType = (
-  userId : string,
-  name : string,
-  department : string,
-  dateofbirth : string,
-  phonenumber : string,
-  email : string
-) => Promise <resultMessageResponseTypeDatabase>
+  userId: string,
+  name: string,
+  department: string,
+  dateofbirth: string,
+  phonenumber: string,
+  email: string
+) => Promise<resultMessageResponseTypeDatabase>
 /**
  * Update user information
  * @param userId - Employee ID
@@ -404,7 +407,7 @@ type putUserInformationType = (
  * @param email - Email Address
  * @returns resultMessageResponseType
  */
-export const putUserInformation : putUserInformationType = async (
+export const putUserInformation: putUserInformationType = async (
   userId,
   department,
   name,
@@ -414,70 +417,70 @@ export const putUserInformation : putUserInformationType = async (
 ) => {
   const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
   const params = {
-      Key: {
-        'PK': { S: `USER#${userId}` },
-        'SK': { S: `PROFILE#${userId}` },
-      },
-      TableName: 'mainTable',
-      UpdateExpression:
+    Key: {
+      'PK': { S: `USER#${userId}` },
+      'SK': { S: `PROFILE#${userId}` },
+    },
+    TableName: 'mainTable',
+    UpdateExpression:
       'set EmployeeName = :name, Department = :department, DOB = :dateofbirth, Mobile = :phonenumber, Email = :email',
-      ExpressionAttributeValues: {
-        ':name': { S: name },
-        ':department' : { S: department},
-        ':dateofbirth': { S: dateofbirth },
-        ':phonenumber': { S: phonenumber },
-        ':email': { S: email }
-  }
-    }
-    let message = ''
-    try {
-      await dynamodb.updateItem(params).promise()
-      message = 'Updated user Information.'
-      log2CloudWatch('mainTable.ts','updateUserInformation',message)
-      return {
-        'result': true,
-        message
-      }
-    } catch (err) {
-      message = 'Failed to update user information.'
-      error2CloudWatch('mainTable.ts','updateUserInformation',err)
-      return {
-        'result': false,
-        message
-      }
+    ExpressionAttributeValues: {
+      ':name': { S: name },
+      ':department': { S: department },
+      ':dateofbirth': { S: dateofbirth },
+      ':phonenumber': { S: phonenumber },
+      ':email': { S: email }
     }
   }
+  let message = ''
+  try {
+    await dynamodb.updateItem(params).promise()
+    message = 'Updated user Information.'
+    log2CloudWatch('mainTable.ts', 'updateUserInformation', message)
+    return {
+      'result': true,
+      message
+    }
+  } catch (err) {
+    message = 'Failed to update user information.'
+    error2CloudWatch('mainTable.ts', 'updateUserInformation', err)
+    return {
+      'result': false,
+      message
+    }
+  }
+}
 
-  type queryPassword = (
-    userId: string
-  ) => Promise<[{ PK: string, SK: string, UserId: string }] | false | [{}]>
-  /**
-   * Access the main Table and retrieve login details based on UserId
-   * @param {string} userId User Id
-   * @returns {Promise <[{PK:string,SK:string,UserId:string,}]
-   * | {} } User Password Informations
-   */
-  export const queryPassword = async (userId) => {
-    const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
-    const params: AWS.DynamoDB.QueryInput = {
-      TableName: 'mainTable',
-      IndexName: 'UserIdIndex',
-      KeyConditionExpression: '#UserId = :UserId',
-      ExpressionAttributeNames: {
-        '#UserId': 'UserId',
-      },
-      ExpressionAttributeValues: {
-        ':UserId': {S: `${userId}`}
-      }
-    }
-    try {
-      const data = await dynamodb.query(params).promise()
-      return data.Items!
-    } catch (err) {
-      console.log(err)
-      return []
+type queryPassword = (
+  userId: string
+) => Promise<[{ PK: string, SK: string, UserId: string }] | false | [{}]>
+/**
+ * Access the main Table and retrieve login details based on UserId
+ * @param {string} userId User Id
+ * @returns {Promise <[{PK:string,SK:string,UserId:string,}]
+ * | {} } User Password Informations
+ */
+export const queryPassword = async (userId) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    IndexName: 'UserIdIndex',
+    KeyConditionExpression: '#UserId = :UserId',
+    ExpressionAttributeNames: {
+      '#UserId': 'UserId',
+    },
+    ExpressionAttributeValues: {
+      ':UserId': { S: `${userId}` }
     }
   }
+  try {
+    const data = await dynamodb.query(params).promise()
+    return data.Items!
+  } catch (err) {
+    console.log(err)
+    return []
+  }
+}
 
   type putUserPasswordType = (
     currentPK : string,
@@ -534,3 +537,45 @@ export const putUserInformation : putUserInformationType = async (
         }
       }
     }
+
+type queryUserScheduleType = (
+  userId: string,
+  date: string
+) => Promise<{
+  PK: string,
+  SK: string,
+  schedule: string,
+  workLocation: string
+} | false | {}>
+/**
+ * Access the main Table and retrieve all User Information based on User Id
+ * @param {string} userId User ID
+ * @param {string} date Date
+ * @returns {Promise <{
+ * PK:string,
+ * SK:string,
+ * schedule:string,
+ * location:string}
+ * | false | {}> } User Information
+ */
+export const queryUserSchedule = async (userId, date) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK AND #SK = :SK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+      '#SK': 'SK'
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `USER#${userId}` },
+      ':SK': { S: `DATE#${date}` }
+    }
+  }
+  try {
+    const data = await dynamodb.query(params).promise()
+    return data.Items!
+  } catch (err) {
+    return []
+  }
+}

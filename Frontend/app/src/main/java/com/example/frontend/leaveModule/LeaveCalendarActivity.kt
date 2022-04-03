@@ -25,6 +25,7 @@ class LeaveCalendarActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         userInfoData = userInformationModel(null)
 
         val repository = Repository()
@@ -161,5 +162,9 @@ class LeaveCalendarActivity : AppCompatActivity()  {
             tempData = arrayOf(2, 3, 5)
         }
         return tempData
+=======
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+>>>>>>> fef2fcda65f83aabf005af2a53b829eb6b3a5af1
     }
 }

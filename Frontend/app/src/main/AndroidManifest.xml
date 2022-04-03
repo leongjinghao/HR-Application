@@ -34,7 +34,8 @@
 
         <activity
             android:name=".Activities.HomePageMainActivity"
-            android:label="Home Page">
+            android:label="Home Page"
+            android:parentActivityName=".Activities.LoginActivity">
         </activity>
 
         <activity
@@ -74,17 +75,20 @@
 
         <activity
             android:name=".leaveModule.LeaveCalendarActivity"
-            android:label="Leave Calendar">
+            android:label="Leave Calendar"
+            android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
             android:name=".leaveModule.LeaveSummaryActivity"
-            android:label="View Leave">
+            android:label="View Leave"
+            android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
             android:name=".Activities.AccountActivity"
-            android:label="Profile">
+            android:label="Profile"
+            android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
