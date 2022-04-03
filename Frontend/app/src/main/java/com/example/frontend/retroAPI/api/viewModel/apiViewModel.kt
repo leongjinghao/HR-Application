@@ -16,6 +16,7 @@ class apiViewModel(private val repository: Repository): ViewModel() {
     val returnRespondModelRes : MutableLiveData<returnRespondModel> = MutableLiveData()
     val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
     val createAttendanceInformationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
+    val retrieveUserScheduleRes : MutableLiveData<userScheduleModel> = MutableLiveData()
 
     fun getUserInformation(userId : String){
         viewModelScope.launch {
@@ -83,6 +84,13 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response: returnRespondModel = repository.updateAttendanceInformation(userId, date, clockOut)
             createAttendanceInformationRes.value = response
+        }
+    }
+
+    fun retrieveUserSchedule(userId: String, date: String) {
+        viewModelScope.launch {
+            val response: userScheduleModel = repository.retrieveUserSchedule(userId, date)
+            retrieveUserScheduleRes.value = response
         }
     }
 }

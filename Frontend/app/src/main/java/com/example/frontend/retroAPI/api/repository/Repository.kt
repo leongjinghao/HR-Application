@@ -80,4 +80,8 @@ class Repository {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
         return RetrofitInstance.api.updateAttendanceInfomation(requestBody)
     }
+
+    suspend fun retrieveUserSchedule(userId: String, date: String): userScheduleModel {
+        return RetrofitInstance.api.retrieveUserSchedule(userId, date)
+    }
 }

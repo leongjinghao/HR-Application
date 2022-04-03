@@ -49,4 +49,10 @@ interface simpleAPI {
     suspend fun updateAttendanceInfomation(
         @Body requestBody: RequestBody
     ) : returnRespondModel
+
+    @GET("retrieve/retrieveUserSchedule/")
+    suspend fun retrieveUserSchedule(
+        @Query("userId") userId: String,
+        @Query("date") date: String
+    ) : userScheduleModel
 }

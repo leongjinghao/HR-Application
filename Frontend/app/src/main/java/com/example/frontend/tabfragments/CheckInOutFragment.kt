@@ -13,22 +13,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.frontend.*
 import com.example.frontend.Activities.CheckInDetailActivity
 import com.example.frontend.CheckInOutHistory.History
 import com.example.frontend.CheckInOutHistory.HistoryViewModel
 import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.Utilities.HRApplication
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -40,8 +45,6 @@ class CheckInOutFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var apiCall : apiViewModel
-    val repository = Repository()
-    val apiModelFactory = apiViewModelFactory(repository)
 
     // create the ViewModel
     private val historyViewModel: HistoryViewModel by viewModels {
@@ -71,6 +74,18 @@ class CheckInOutFragment : Fragment() {
         val shiftTextView = view.findViewById<TextView>(R.id.textViewCheckInOutWorkShift)
         val locationTextView = view.findViewById<TextView>(R.id.textViewCheckInOutLocation)
         var locationName: String = ""
+        val repository = Repository()
+        val apiModelFactory = apiViewModelFactory(repository)
+        var userId: String = ""
+        apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
+        lifecycleScope.launch {
+            activity?.let {
+                UserIdRepo.getInstance(context = it).userPreferencesFlow.collect { settings ->
+                    userId = settings.id
+                }
+            }
+        }
 
         // Handle location permissions
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -123,17 +138,20 @@ class CheckInOutFragment : Fragment() {
         }
 
         // Configure work schedule details
+        df = SimpleDateFormat("ddMMyyyy")
+        var formattedScheduleDate = df.format(Calendar.getInstance().time)
+        Toast.makeText(activity, formattedScheduleDate, Toast.LENGTH_LONG).show()
+        apiCall.retrieveUserSchedule(
+            userId,
+            "03042022"
+        )
         df = SimpleDateFormat("dd MMM yyyy, EEE")
-        dateTextView.text = df.format(Calendar.getInstance().time)
-        shiftTextView.text = "9am to 6pm"
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                if (location != null) {
-                    locationTextView.text = "Long: " + location.longitude.toString() +
-                            " Lat: " +  location.latitude.toString()
-                }
-            }
-
+        apiCall.retrieveUserScheduleRes.observe(viewLifecycleOwner) { response ->
+            Toast.makeText(activity, response.Schedule + " , " + response.WorkLocation, Toast.LENGTH_LONG).show()
+            dateTextView.text = df.format(Calendar.getInstance().time)
+            shiftTextView.text = response.Schedule
+            locationTextView.text = response.WorkLocation
+        }
 
         checkInButton.setOnClickListener{
             apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
@@ -153,7 +171,7 @@ class CheckInOutFragment : Fragment() {
 
                 // Update check out timing to attendance record for the day
                 apiCall.updateAttendanceInformation(
-                    "jinghao",
+                    userId,
                     dateFormat.format(Calendar.getInstance().time),
                     timeFomat.format(Calendar.getInstance().time)
                 )

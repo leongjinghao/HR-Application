@@ -20,15 +20,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.frontend.CheckInOutHistory.History
 import com.example.frontend.CheckInOutHistory.HistoryViewModel
 import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.R
 import com.example.frontend.Utilities.HRApplication
 import com.example.frontend.databinding.ActivityCheckInSelfieBinding
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -68,6 +72,14 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
         val checkInResetButton = findViewById<Button>(R.id.buttonCheckInReset)
 
+        var userId: String = ""
+
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(this@CheckInDetailActivity).userPreferencesFlow.collect { settings ->
+                userId = settings.id
+            }
+        }
+
         checkInResetButton.setOnClickListener {
             // Call function for resetting camera view
             resetCamera()
@@ -106,7 +118,7 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
                 var message: String = ""
 
                 apiCall.createAttendanceInformation(
-                    "jinghao",
+                    userId,
                     dateFormat.format(Calendar.getInstance().time),
                     timeFomat.format(Calendar.getInstance().time),
                     intent.getStringExtra("locationName").toString()

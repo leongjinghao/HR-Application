@@ -26,6 +26,9 @@ async function retrieveUserSchedule(event): Promise<LambdaResponse> {
       response.Schedule = result[0].Schedule.S!
       response.WorkLocation = result[0].WorkLocation.S!
     }
+    console.log(userId)
+    console.log(date)
+    console.log(response)
     apiResponse.body = JSON.stringify(response)
     log2CloudWatch('retrieveUserSchedule.ts','retrieveUserSchedule','User schedule successfully retrieve')
   }
