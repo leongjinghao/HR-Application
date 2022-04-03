@@ -53,9 +53,7 @@ class HomePageMainActivity : AppCompatActivity() {
         val checkInButton = findViewById<ImageButton>(R.id.checkInButton)
         val calendarButton = findViewById<ImageButton>(R.id.calendarButton)
         val leaveButton = findViewById<ImageButton>(R.id.leaveButton)
-        val nfcScanButton = findViewById<ImageButton>(R.id.NFCButton)
         val accountButton = findViewById<ImageButton>(R.id.accountButton)
-        val leaveApproveButton = findViewById<ImageButton>(R.id.leaveApprButton)
         val nameCardButton = findViewById<CardView>(R.id.nameCardView)
         val informationButton = findViewById<ImageButton>(R.id.informationButton)
         qrCode = findViewById(R.id.qrCode)
@@ -92,17 +90,9 @@ class HomePageMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        nfcScanButton.setOnClickListener {
-            Toast.makeText(this, "Moving to NFC Scan Page", Toast.LENGTH_LONG).show()
-        }
-
         accountButton.setOnClickListener {
             val intent = Intent(this, AccountActivity::class.java)
             startActivity(intent)
-        }
-
-        leaveApproveButton.setOnClickListener {
-            Toast.makeText(this, "Moving to Leave Approve Page", Toast.LENGTH_LONG).show()
         }
 
         //Toggle Button for Card Details Info
