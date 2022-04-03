@@ -2,14 +2,13 @@ package com.example.frontend.Activities
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.hardware.Camera
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.Button
@@ -17,22 +16,28 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.frontend.CheckInOutHistory.History
 import com.example.frontend.CheckInOutHistory.HistoryViewModel
 import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.R
 import com.example.frontend.Utilities.HRApplication
 import com.example.frontend.databinding.ActivityCheckInSelfieBinding
-import com.example.frontend.tabfragments.CheckInOutFragment
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.PictureCallback {
@@ -43,6 +48,10 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
     private var camera: Camera? = null
     private var confirmFlag = false
     private lateinit var tempSelfieByte: ByteArray
+
+    private lateinit var apiCall : apiViewModel
+    val repository = Repository()
+    val apiModelFactory = apiViewModelFactory(repository)
 
 
     private val neededPermissions = arrayOf(CAMERA, WRITE_EXTERNAL_STORAGE)
@@ -73,6 +82,76 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         // If all permissions granted display camera view on surface holder
         if (permission) {
             setupSurfaceHolder()
+        }
+
+        /* Perform actions depending on the current mode (capture or confirm)
+        Capture mode: store the bytes of captured image in camera view in a temporary variable
+        Confirm mode: save/send the bytes of image store in the temporary variable
+        */
+        binding.buttonCheckInConfirm.setOnClickListener {
+            apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
+
+            // If in "capture" mode, not "confirm"
+            if (!confirmFlag) {
+                captureImage()
+            }
+            // Else in "confirm" mode
+            else {
+                saveImage(tempSelfieByte)
+
+                confirmFlag = false
+
+                // TODO: send the selfie & check in record to aws DB and record check in details
+                val dateFormat = SimpleDateFormat("ddMMyyyy")
+                val timeFomat = SimpleDateFormat("HHmm")
+
+                // Insert check in record on room DB
+                historyViewModel.insert(
+                    History(
+                        0,
+                        LocalDate.now().toString(),
+                        LocalDate.now().dayOfWeek.name,
+                        "Clock In",
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    )
+                )
+
+                var responseResult: Boolean = true
+                var message: String = ""
+
+                apiCall.createAttendanceInformation(
+                    "jinghao",
+                    dateFormat.format(Calendar.getInstance().time),
+                    timeFomat.format(Calendar.getInstance().time),
+                    intent.getStringExtra("locationName").toString()
+                )
+                apiCall.createAttendanceInformationRes.observe(this) { response ->
+                    responseResult = response.result
+                    message = response.message
+                    Log.d("message", response.message + ", " + message)
+
+                    // inform user if he/she has already checked in for the day
+                    if (!responseResult) {
+                        AlertDialog.Builder(this)
+                            .setTitle("Already Checked In!")
+                            .setMessage(message) // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(
+                                android.R.string.yes
+                            ) { dialog, which ->
+                                // Continue with delete operation
+                                finish()
+                                finish()
+                            }
+                            .show()
+                    }
+                    else {
+                        // Go back to previous page on successful check in process
+                        finish()
+                        finish()
+                    }
+                }
+            }
         }
     }
 
@@ -159,7 +238,6 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
 
         surfaceHolder = binding.surfaceViewCamera.holder
         binding.surfaceViewCamera.holder.addCallback(this)
-        setBtnClick()
     }
 
     // Set on click listener to "capture" or "confirm" button
@@ -167,41 +245,11 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
         binding.buttonCheckInConfirm.setOnClickListener { captureImage() }
     }
 
-    /* Perform actions depending on the current mode (capture or confirm)
-        Capture mode: store the bytes of captured image in camera view in a temporary variable
-        Confirm mode: save/send the bytes of image store in the temporary variable
-     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun captureImage() {
-        // If in "capture" mode, not "confirm"
-        if (!confirmFlag) {
-            if (camera != null) {
-                camera!!.takePicture(null, null, this)
-                confirmFlag = true
-            }
-        }
-        // Else in "confirm" mode
-        else {
-            saveImage(tempSelfieByte)
-            
-            confirmFlag = false
-
-            // TODO: send the selfie & check in record to aws DB and record check in details
-
-            // Insert check in record on room DB
-            historyViewModel.insert(
-                History(
-                0,
-                LocalDate.now().toString(),
-                LocalDate.now().dayOfWeek.name,
-                "Clock In",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-            )
-            )
-
-            // Go back to previous page on successful check in process
-            finish()
-            finish()
+        if (camera != null) {
+            camera!!.takePicture(null, null, this)
+            confirmFlag = true
         }
     }
 

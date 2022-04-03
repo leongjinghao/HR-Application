@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frontend.retroAPI.api.model.*
 import com.example.frontend.retroAPI.api.repository.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class apiViewModel(private val repository: Repository): ViewModel() {
 
@@ -13,6 +15,7 @@ class apiViewModel(private val repository: Repository): ViewModel() {
     val leaveInformationRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
     val returnRespondModelRes : MutableLiveData<returnRespondModel> = MutableLiveData()
     val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
+    val createAttendanceInformationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
 
     fun getUserInformation(userId : String){
         viewModelScope.launch {
@@ -59,13 +62,20 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun deleteUserLeaves(userId : String, date : String)
-    {
+    fun deleteUserLeaves(userId : String, date : String) {
         viewModelScope.launch {
             val response: returnRespondModel = repository.deleteUserLeaves(
                 userId,
-                date)
+                date
+            )
             returnRespondModelRes.value = response
+        }
+    }
+
+    fun createAttendanceInformation(userId : String, date : String, clockIn : String, location : String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.createAttendanceInformation(userId, date, clockIn, location)
+            createAttendanceInformationRes.value = response
         }
     }
 }

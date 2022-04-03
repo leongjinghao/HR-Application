@@ -39,4 +39,14 @@ interface simpleAPI {
     suspend fun deleteUserLeaves(
         @Body requestBody: RequestBody
     ) : returnRespondModel
+
+    @POST("create/createAttendanceInfo/")
+    suspend fun createAttendanceInfomation(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
+    @POST("update/updateAttendanceInfo/")
+    suspend fun updateAttendanceInfomation(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
 }

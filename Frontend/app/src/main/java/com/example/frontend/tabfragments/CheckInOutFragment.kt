@@ -17,12 +17,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.frontend.*
 import com.example.frontend.Activities.CheckInDetailActivity
 import com.example.frontend.CheckInOutHistory.History
 import com.example.frontend.CheckInOutHistory.HistoryViewModel
 import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.Utilities.HRApplication
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.text.SimpleDateFormat
@@ -63,6 +67,7 @@ class CheckInOutFragment : Fragment() {
         val dateTextView = view.findViewById<TextView>(R.id.textViewCheckInOutDate)
         val shiftTextView = view.findViewById<TextView>(R.id.textViewCheckInOutWorkShift)
         val locationTextView = view.findViewById<TextView>(R.id.textViewCheckInOutLocation)
+        var locationName: String = ""
 
         // Handle location permissions
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -96,8 +101,8 @@ class CheckInOutFragment : Fragment() {
                     val geocoder = Geocoder(activity, Locale.getDefault())
                     val addresses: List<Address> = geocoder.getFromLocation(location.latitude,
                         location.longitude, 1)
-                    val cityName: String = addresses[0].getAddressLine(0)
-                    checkInLocationTextView.text = cityName
+                    locationName = addresses[0].getAddressLine(0)
+                    checkInLocationTextView.text = locationName
                 }
             }
 
@@ -131,6 +136,7 @@ class CheckInOutFragment : Fragment() {
             // if check in and out status is "Clock out", display check in button/option
             if (historyViewModel.checkInOutStatus == "Clock out") {
                 val intent = Intent(activity, CheckInDetailActivity::class.java)
+                intent.putExtra("locationName", locationName)
                 activity?.startActivity(intent)
 
                 // Go back to previous page on successful check in process
