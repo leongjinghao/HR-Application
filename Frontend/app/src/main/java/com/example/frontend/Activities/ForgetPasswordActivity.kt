@@ -1,24 +1,16 @@
 package com.example.frontend.Activities
 
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.Gravity
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.frontend.databinding.ActivityForgetpasswordBinding
-import com.example.frontend.retroAPI.api.repository.Repository
-import com.example.frontend.retroAPI.api.viewModel.apiViewModel
-import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
-
-val TAG = "ForgetPassword"
 
 class ForgetPasswordActivity : AppCompatActivity()  {
 
     lateinit var binding: ActivityForgetpasswordBinding
-    lateinit var apiCall : apiViewModel
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -28,26 +20,10 @@ class ForgetPasswordActivity : AppCompatActivity()  {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val repository = Repository()
-        val apiModelFactory = apiViewModelFactory(repository)
-        apiCall = ViewModelProvider(this,apiModelFactory).get(com.example.frontend.retroAPI.api.viewModel.apiViewModel::class.java)
         binding.buttonRecover.setOnClickListener{
             if(validateEmail(binding.editTextEmail)){
                 //TODO Send password reset email logic
-                    val userEmail = binding.editTextEmail.text.toString()
-                apiCall.retrieveUserEmails(userEmail)
-                apiCall.returnRespondModelRes.observe(this,{response ->
-                    Log.d(TAG,"$response")
-                    if(response.result) {
-                        Toast.makeText(this,"${response.result}",Toast.LENGTH_SHORT).show()
-                        apiCall.sendRecoverEmail(userEmail)
-                        finish()
-                    }else{
-                        Toast.makeText(this,"Email Not Found", Toast.LENGTH_SHORT).show()
-                    }
-                })
-
-
+                finish()
             }
         }
     }
