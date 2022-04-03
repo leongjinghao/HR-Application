@@ -29,6 +29,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
+import java.util.*
+import kotlin.concurrent.schedule
 
 class LoginActivity : AppCompatActivity()  {
 
@@ -149,8 +151,8 @@ class LoginActivity : AppCompatActivity()  {
                 // reset authenticate status flag
                 authenticateStatus = false
 
-                // start intent to home bage
-                val homeIntent = Intent(this, HomePageMainActivity::class.java)
+                // start intent to home page
+                val homeIntent = Intent(this@LoginActivity, HomePageMainActivity::class.java)
                 startActivity(homeIntent)
             } else {
                 // display error message to signify invalid credentials entered

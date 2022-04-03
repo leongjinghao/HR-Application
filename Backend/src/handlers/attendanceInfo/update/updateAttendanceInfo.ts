@@ -17,13 +17,13 @@ async function updateAttendanceInfo(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    const { userId, date, clockOut } = event.queryStringParameters
+    event = JSON.parse(event.body)
     const result = await putExistingAttendanceInfo(
-      userId,
-      date,
-      clockOut
+      event.userId,
+      event.date,
+      event.clockOut
       )
-    apiResponse.body = result.message
+      apiResponse.body = JSON.stringify(result)
     log2CloudWatch('updateAttendanceInfo.ts','updateAttendanceInfo',result.message)
   }
   catch (err) {
