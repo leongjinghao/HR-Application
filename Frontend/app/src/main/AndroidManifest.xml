@@ -108,12 +108,14 @@
 
         <activity
             android:name=".Activities.EditProfileActivity"
-            android:label="Edit Profile">
+            android:label="Edit Profile"
+            android:parentActivityName=".Activities.AccountActivity">
         </activity>
 
         <activity
             android:name=".Activities.PasswordActivity"
-            android:label="Change Password">
+            android:label="Change Password"
+            android:parentActivityName=".Activities.AccountActivity">
         </activity>
 
     </application>

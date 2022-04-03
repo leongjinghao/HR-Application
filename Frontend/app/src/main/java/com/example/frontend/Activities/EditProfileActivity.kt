@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.frontend.R
 import com.example.frontend.Utilities.ImageSaver
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
@@ -30,6 +32,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -52,6 +56,8 @@ class EditProfileActivity : AppCompatActivity() {
         val saveProfileButton = findViewById<Button>(R.id.saveProfileButton)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         profilePhotoButton.setOnClickListener {
             loadImageDialogue()
         }
@@ -61,12 +67,21 @@ class EditProfileActivity : AppCompatActivity() {
         else
             profilePhoto.setImageResource(R.drawable.nameinputicon)
 
+        // retrieve userId from preference store
+        var userId: String = ""
+
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(this@EditProfileActivity).userPreferencesFlow.collect { settings ->
+                userId = settings.id
+            }
+        }
+
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
         userInfoData = userInformationModel(null)
 
-        apiCall.getUserInformation("Ali456")
+        apiCall.getUserInformation(userId)
         apiCall.userInformationRes.observe(this, Observer { response ->
             userInfoData = response
             val employeeName = userInfoData.Items?.get(0)?.EmployeeName?.S.toString()
@@ -90,7 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
                     setFileName("ProfilePhoto.png").
                     setDirectoryName("images").
                     save(profileBitmap) //Save Converted Bitmap to internal storage
-            apiCall.updateUserInformation("Ali456", editNameText.text.toString(),
+            apiCall.updateUserInformation(userId, editNameText.text.toString(),
                                                             editBirthdateText.text.toString(),
                                                             editDepartmentText.text.toString(),
                                                             editPhoneText.text.toString(),
