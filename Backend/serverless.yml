@@ -83,6 +83,20 @@ functions:
       - http:
          method: POST
          path: /update/updateAttendanceInfo
+  retrievePassword:
+    handler: src/handlers/userLogin/retrieve/retrievePassword.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrievePassword
+  updatePassword:
+    handler: src/handlers/userLogin/update/updatePassword.handler
+    role: AdminRole
+    events:
+      - http:
+         method: POST
+         path: /update/updatePassword
 
 resources:
   Resources:

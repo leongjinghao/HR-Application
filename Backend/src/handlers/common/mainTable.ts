@@ -447,3 +447,80 @@ export const putUserInformation : putUserInformationType = async (
       }
     }
   }
+
+  type queryPassword = (
+    userId: string
+  ) => Promise<[{ PK: string, SK: string, UserId: string }] | false | [{}]>
+  /**
+   * Access the main Table and retrieve login details based on UserId
+   * @param {string} userId User Id
+   * @returns {Promise <[{PK:string,SK:string,UserId:string,}]
+   * | {} } User Password Informations
+   */
+  export const queryPassword = async (userId) => {
+    const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+    const params: AWS.DynamoDB.QueryInput = {
+      TableName: 'mainTable',
+      IndexName: 'UserIdIndex',
+      KeyConditionExpression: '#UserId = :UserId',
+      ExpressionAttributeNames: {
+        '#UserId': ':UserId',
+      },
+      ExpressionAttributeValues: {
+        ':UserId': userId
+      }
+    }
+    try {
+      const data = await dynamodb.query(params).promise()
+      return data.Items!
+    } catch (err) {
+      console.log(err)
+      return []
+    }
+  }
+
+  type putUserPasswordType = (
+    userId : string,
+    newPassword : string
+  ) => Promise <resultMessageResponseTypeDatabase>
+  /**
+   * Update user password
+   * @param userId - Employee ID
+   * @param newPassword - New Password
+   * @returns resultMessageResponseType
+   */
+  export const putUserPassword : putUserPasswordType = async (
+    userId,
+    newPassword
+  ) => {
+    const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+    const params = {
+      IndexName: 'UserIdIndex',
+      Key: {
+        'UserId': { S: `${userId}` },
+      },
+      TableName: 'mainTable',
+      UpdateExpression:
+      'set SK = :sk',
+      ExpressionAttributeValues: {
+      ':sk': { S: `PASSWORD#${newPassword}` },
+  }
+    }
+      let message = ''
+      try {
+        await dynamodb.updateItem(params).promise()
+        message = 'Updated user password.'
+        log2CloudWatch('mainTable.ts','putUserPassword',message)
+        return {
+          'result': true,
+          message
+        }
+      } catch (err) {
+        message = 'Failed to update user password.'
+        error2CloudWatch('mainTable.ts','putUserPassword',err)
+        return {
+          'result': false,
+          message
+        }
+      }
+    }
