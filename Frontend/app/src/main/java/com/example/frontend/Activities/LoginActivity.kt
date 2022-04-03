@@ -133,31 +133,34 @@ class LoginActivity : AppCompatActivity()  {
             apiCall.authenticateUserLoginRes.observe(this, Observer  { response ->
                 authenticateStatus = response.Result
                 userId = response.UserId
+
+                // check if authentication successful
+                if (authenticateStatus) {
+                    // store userId in preference store
+                    lifecycleScope.launch {
+                        UserIdRepo.getInstance(context = this@LoginActivity)
+                            .update(userId)
+                    }
+
+                    // clear error message if visible
+                    userEmailEditText.error = null
+                    passwordEditText.error = null
+
+                    // reset authenticate status flag
+                    authenticateStatus = false
+
+                    // start intent to home page
+                    val homeIntent = Intent(this@LoginActivity, HomePageMainActivity::class.java)
+                    startActivity(homeIntent)
+                }
+                else {
+                    // display error message to signify invalid credentials entered
+                    userEmailEditText.error = "Invalid Credentials!"
+                    passwordEditText.error = "Invalid Credentials!"
+                }
             })
 
-            // check if authentication successful
-            if (authenticateStatus) {
-                // store userId in preference store
-                lifecycleScope.launch {
-                    UserIdRepo.getInstance(context = this@LoginActivity)
-                        .update(userId)
-                }
 
-                // clear error message if visible
-                userEmailEditText.error = null
-                passwordEditText.error = null
-
-                // reset authenticate status flag
-                authenticateStatus = false
-
-                // start intent to home page
-                val homeIntent = Intent(this@LoginActivity, HomePageMainActivity::class.java)
-                startActivity(homeIntent)
-            } else {
-                // display error message to signify invalid credentials entered
-                userEmailEditText.error = "Invalid Credentials!"
-                passwordEditText.error = "Invalid Credentials!"
-            }
         }
 
         //Note: Have to manually add a fingerprint to the emulator
