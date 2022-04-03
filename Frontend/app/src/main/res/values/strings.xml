@@ -35,4 +35,6 @@
     <string name="approve">test1</string>
     <string name="change_password">test2</string>
     <string name="authentication">test3</string>
+    <string name="aiddescription" />
+    <string name="servicedesc" />
 </resources>
