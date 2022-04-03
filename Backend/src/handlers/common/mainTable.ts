@@ -480,35 +480,45 @@ export const putUserInformation : putUserInformationType = async (
   }
 
   type putUserPasswordType = (
-    userId : string,
-    newPassword : string
+    currentPK : string,
+    currentSK : string,
+    newPassword : string,
+    userId : string
   ) => Promise <resultMessageResponseTypeDatabase>
   /**
    * Update user password
-   * @param userId - Employee ID
+   * @param currentPK - Login ID
+   * @param currentSK - Current Login Password
    * @param newPassword - New Password
+   * @param userId - User Id
    * @returns resultMessageResponseType
    */
   export const putUserPassword : putUserPasswordType = async (
-    userId,
-    newPassword
+    currentPK,
+    currentSK,
+    newPassword,
+    userId
   ) => {
     const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
     const params = {
-      IndexName: 'UserIdIndex',
-      Key: {
-        'UserId': { S: `${userId}` },
-      },
       TableName: 'mainTable',
-      UpdateExpression:
-      'set SK = :sk',
-      ExpressionAttributeValues: {
-      ':sk': { S: `PASSWORD#${newPassword}` },
-  }
-    }
-      let message = ''
+      Key: {
+        'PK': { S: `${currentPK}` },
+        'SK': { S: `${currentSK}` },
+      },
+   }
+   let message = ''
       try {
-        await dynamodb.updateItem(params).promise()
+        await dynamodb.deleteItem(params).promise()
+        const params2 = {
+          Item: {
+            'PK': { S: `${currentPK}` },
+            'SK': { S: `PASSWORD#${newPassword}` },
+            'UserId': { S: `${userId}` },
+          },
+          TableName: 'mainTable'
+        }
+        await dynamodb.putItem(params2).promise()
         message = 'Updated user password.'
         log2CloudWatch('mainTable.ts','putUserPassword',message)
         return {

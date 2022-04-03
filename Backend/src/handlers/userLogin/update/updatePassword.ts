@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { putUserPassword } from '../../common/mainTable'
+import { putUserPassword,queryPassword } from '../../common/mainTable'
 import { LambdaResponse } from '../../utility/responses'
 import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
 
@@ -18,7 +18,8 @@ async function updatePassword(event): Promise<LambdaResponse> {
   }
   try {
     event = JSON.parse(event.body)
-    const result = await putUserPassword(event.UserId, event.newPassword)
+    const loginInfo = await queryPassword(event.UserId)
+    const result = await putUserPassword(loginInfo[0].PK.S!,loginInfo[0].SK.S!, event.newPassword,event.UserId)
     apiResponse.body = JSON.stringify(result)
     log2CloudWatch('updatePassword.ts','updatePassword','User password successfully update')
   }
