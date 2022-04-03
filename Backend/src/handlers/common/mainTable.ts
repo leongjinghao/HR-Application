@@ -464,10 +464,10 @@ export const putUserInformation : putUserInformationType = async (
       IndexName: 'UserIdIndex',
       KeyConditionExpression: '#UserId = :UserId',
       ExpressionAttributeNames: {
-        '#UserId': ':UserId',
+        '#UserId': 'UserId',
       },
       ExpressionAttributeValues: {
-        ':UserId': userId
+        ':UserId': {S: `${userId}`}
       }
     }
     try {
