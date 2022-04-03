@@ -76,6 +76,13 @@ functions:
       - http:
          method: POST
          path: /attendanceInfo/createAttendanceInfo
+  updateAttendanceInfo:
+    handler: src/handlers/attendanceInfo/update/updateAttendanceInfo.handler
+    role: AdminRole
+    events:
+      - http:
+         method: POST
+         path: /attendanceInfo/updateAttendanceInfo
 
 resources:
   Resources:

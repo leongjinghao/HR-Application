@@ -297,18 +297,40 @@ export const putNewAttendanceInfo: createAttendanceInfo = async (
     },
     TableName: 'mainTable'
   }
+
+  const queryParams: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK AND #SK = :SK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+      '#SK': 'SK'
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `USER#${userId}` },
+      ':SK': { S: `ATTENDANCE#${date}` }
+    }
+  }
+
   let message = ''
   try {
-    await dynamodb.putItem(params).promise()
-    message = 'User attendance successfully created.'
-    log2CloudWatch('mainTable.ts', 'createLeave', message)
-    return {
-      'result': true,
-      message
+    const queryResult = await dynamodb.query(queryParams).promise()
+    if (queryResult.Items!.length !== 1) {
+      await dynamodb.putItem(params).promise()
+      message = 'User attendance successfully created.'
+      log2CloudWatch('mainTable.ts', 'createAttendance', message)
+      return {
+        'result': true,
+        message
+      }
+    } else {
+      return {
+        'result': false,
+        'message': 'Already checked in for the day'
+      }
     }
   } catch (err) {
     message = 'User attendance had failed to be created.'
-    error2CloudWatch('mainTable.ts', 'createLeave', err)
+    error2CloudWatch('mainTable.ts', 'createAttendance', err)
     return {
       'result': false,
       message
@@ -319,17 +341,13 @@ export const putNewAttendanceInfo: createAttendanceInfo = async (
 type updateAttendanceInfo = (
   userId: string,
   date: string,
-  clockIn: string,
   clockOut: string,
-  location: string,
 ) => Promise<resultMessageResponseTypeDatabase>
 /**
  * Accesses the main table and insert user leave.
  * @param userId - User id
  * @param date - Attendance date
- * @param clockIn - Clock in timing
  * @param clockOut - Clock out timing
- * @param location - location description
  * @returns resultMessageResponseType
  */
 export const putExistingAttendanceInfo: updateAttendanceInfo = async (
@@ -340,25 +358,29 @@ export const putExistingAttendanceInfo: updateAttendanceInfo = async (
   const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
 
   const params = {
-    Item: {
+    Key: {
       'PK': { S: `USER#${userId}` },
       'SK': { S: `ATTENDANCE#${date}` },
-      'ClockOut': { S: clockOut },
     },
-    TableName: 'mainTable'
+    TableName: 'mainTable',
+    UpdateExpression:
+      'set ClockOut = :clockOut',
+    ExpressionAttributeValues: {
+      ':clockOut': { S: clockOut }
+    }
   }
   let message = ''
   try {
-    await dynamodb.putItem(params).promise()
+    await dynamodb.updateItem(params).promise()
     message = 'User clock out attendance successfully updated.'
-    log2CloudWatch('mainTable.ts', 'createLeave', message)
+    log2CloudWatch('mainTable.ts', 'updateAttendance', message)
     return {
       'result': true,
       message
     }
   } catch (err) {
     message = 'User clock out attendance had failed to be updated.'
-    error2CloudWatch('mainTable.ts', 'createLeave', err)
+    error2CloudWatch('mainTable.ts', 'updateAttendance', err)
     return {
       'result': false,
       message

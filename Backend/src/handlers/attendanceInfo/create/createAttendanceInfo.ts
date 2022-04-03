@@ -4,8 +4,8 @@ import { LambdaResponse } from '../../utility/responses'
 import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
 
 /**
- * Create User Leave
- * @param event - User Leave Details
+ * Create User Attendace With Clock In Timing
+ * @param event - User Attendance Details
  * @returns APIGatewayProxyResult
  */
 async function createAttendanceInfo(event): Promise<LambdaResponse> {
@@ -17,12 +17,12 @@ async function createAttendanceInfo(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    event = JSON.parse(event.body)
+    const { userId, date, clockIn, location } = event.queryStringParameters
     const result = await putNewAttendanceInfo(
-        event.userId,
-        event.date,
-        event.clockIn,
-        event.location
+        userId,
+        date,
+        clockIn,
+        location
       )
     apiResponse.body = result.message
     log2CloudWatch('createAttendanceInfo.ts','createAttendanceInfo',result.message)
