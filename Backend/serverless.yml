@@ -41,6 +41,13 @@ functions:
       - http:
          method: POST
          path: /update/updateUserLeavesStatus
+  retrieveUserInformation:
+    handler: src/handlers/userInformation/retrieve/retrieveUserInformation.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrieveUserInformation
   updateUserInformation:
     handler: src/handlers/userInformation/update/updateUserInformation.handler
     role: AdminRole

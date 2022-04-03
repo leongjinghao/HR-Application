@@ -199,7 +199,7 @@ export const putCreateLeave: createLeaveType = async (
      * @returns {Promise <{
      * PK:string,
      * SK:string,
-     * Name:string,
+     * EmployeeName:string,
      * DOB:string,
      * Mobile:string,
      * Email:string,
@@ -214,7 +214,7 @@ export const putCreateLeave: createLeaveType = async (
       const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
       const params: AWS.DynamoDB.QueryInput = {
         TableName: 'mainTable',
-        KeyConditionExpression: '#PK = :PK AND begins_with(#SK, :SK)',
+        KeyConditionExpression: '#PK = :PK AND #SK = :SK',
         ExpressionAttributeNames: {
           '#PK': 'PK',
           '#SK': 'SK'
