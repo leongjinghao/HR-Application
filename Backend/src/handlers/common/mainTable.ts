@@ -61,16 +61,17 @@ type createLeaveType = (
       }
     }
 
-    type queryUserLeaveInformation = (
+    type queryUserLeaveInformationType = (
       userId : string,
-    ) => Promise<{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,Status:string,} | false | {}>
+    ) => Promise<[{PK:{S:string},SK:{S:string},LeaveType:{S:string},Approver:{S:string},Remarks:{S:string},
+      Status:{S:string}}] | false | []>
     /**
      * Access the main Table and retrieve all Users Leave
      * @param {string} userId User ID
      * @returns {Promise <{PK:string,SK:string,LeaveType:string,Approver:string,Remarks:string,Status:string,}
      * | false | {}> } User Leaves Informations
      */
-    export const queryUserLeaveInformation: queryUserLeaveInformation = async (userId) => {
+    export const queryUserLeaveInformation: queryUserLeaveInformationType = async (userId) => {
       const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
       const params: AWS.DynamoDB.QueryInput = {
         TableName: 'mainTable',
@@ -86,13 +87,97 @@ type createLeaveType = (
       }
       try {
         const data = await dynamodb.query(params).promise()
-        console.log(data)
-        return data
+        let response
+        if (data.Count !== 0) {
+          response = data.Items!
+        }
+        return response
       } catch (err) {
-        console.log(err)
         return false
       }
     }
+
+    type removeUserLeaveInformationType = (
+      userId : string,
+      date : string,
+    ) => Promise<resultMessageResponseTypeDatabase>
+    /**
+     * Access the main Table and remove the user Leave
+     * @param {string} userId User ID
+     * @param {string} date User Leave
+     * @returns {Promise <{resultMessageResponseTypeDatabase}
+     */
+    export const deleteUserLeaveInformation: removeUserLeaveInformationType = async (userId,date) => {
+      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+      const params = {
+        TableName: 'mainTable',
+        Key: {
+          ':PK': { S: `USER#${userId}` },
+          ':SK': { S: `LEAVE#${date}` }
+        }
+      }
+      try {
+        await dynamodb.deleteItem(params).promise()
+        return {
+          'result': true,
+          message : `${userId} leave on ${date} successfully deleted from the database.`
+        }
+      } catch (err) {
+        return {
+          'result': false,
+          message: JSON.stringify(err)
+        }
+      }
+    }
+
+    type updateLeaveStatusType = (
+      userId : string,
+      dob : string,
+      status : string,
+    ) => Promise <resultMessageResponseTypeDatabase>
+    /**
+     * Update user information
+     * @param userId - Employee ID
+     * @param dob - Leave Date
+     * @param status - Leave Status
+     * @returns resultMessageResponseType
+     */
+    export const updateLeaveStatus : updateLeaveStatusType = async (
+      userId,
+      dob,
+      status,
+    ) => {
+      const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+      const params = {
+          Key: {
+            'PK': { S: `USER#${userId}` },
+            'SK': { S: `LEAVE#${dob}` },
+          },
+          TableName: 'mainTable',
+          UpdateExpression:
+          'set LeaveStatus = :status',
+          ExpressionAttributeValues: {
+            ':status': { S: status }
+      }
+        }
+        let message = ''
+        try {
+          await dynamodb.updateItem(params).promise()
+          message = 'Leave status had been updated successfully.'
+          log2CloudWatch('mainTable.ts','updateUserInformation',message)
+          return {
+            'result': true,
+            message
+          }
+        } catch (err) {
+          message = 'Leave Status failed to update.'
+          error2CloudWatch('mainTable.ts','updateUserInformation',err)
+          return {
+            'result': false,
+            message
+          }
+        }
+      }
 
     type queryUserInformation = (
       userId : string,

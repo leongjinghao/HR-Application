@@ -27,13 +27,20 @@ functions:
       - http:
          method: GET
          path: /retrieve/retrieveUserLeaves
-  retrieveUserInformation:
-    handler: src/handlers/userInformation/retrieve/retrieveUserInformation.handler
+  deleteUserLeaves:
+    handler: src/handlers/leaveInformation/delete/deleteUserLeaves.handler
     role: AdminRole
     events:
       - http:
-         method: GET
-         path: /retrieve/retrieveUserInformation
+         method: POST
+         path: /delete/deleteUserLeaves
+  updateUserLeavesStatus:
+    handler: src/handlers/leaveInformation/update/updateUserLeavesStatus.handler
+    role: AdminRole
+    events:
+      - http:
+         method: POST
+         path: /update/updateUserLeavesStatus
   updateUserInformation:
     handler: src/handlers/userInformation/update/updateUserInformation.handler
     role: AdminRole
