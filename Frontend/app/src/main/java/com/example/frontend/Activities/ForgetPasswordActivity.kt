@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.frontend.databinding.ActivityForgetpasswordBinding
 import com.example.frontend.retroAPI.api.repository.Repository
@@ -22,7 +23,7 @@ class ForgetPasswordActivity : AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //Disable night mode
         binding = ActivityForgetpasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -41,6 +42,7 @@ class ForgetPasswordActivity : AppCompatActivity()  {
                     Log.d("TAG", "$response")
                     if (response.result) {
                         apiCall.sendRecoverEmail(userEmail)
+                        Toast.makeText(this, "Recovery request received\nPlease check your email", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
                         Toast.makeText(this, "Email Not Found", Toast.LENGTH_SHORT).show()

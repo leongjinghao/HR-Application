@@ -1,6 +1,7 @@
 package com.example.frontend.Utilities
 
 import android.app.Application
+import android.content.Context
 import com.example.frontend.CheckInOutHistory.HistoryRepository
 import com.example.frontend.CheckInOutHistory.HistoryRoomDatabase
 import kotlinx.coroutines.CoroutineScope

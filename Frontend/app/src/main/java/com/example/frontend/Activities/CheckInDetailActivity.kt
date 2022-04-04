@@ -2,6 +2,7 @@ package com.example.frontend.Activities
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.hardware.Camera
@@ -84,6 +85,13 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
             }
         }
 
+        // retrieve check in and out status preference store
+        val prefs = getSharedPreferences(
+            "com.example.frontend", Context.MODE_PRIVATE
+        )
+        val checkInOutStatusKey = "com.example.frontend.$userId.checkInOutStatus"
+        val checkInOutStatus = prefs.getString(checkInOutStatusKey, "Clock out")
+
         // configure fields in check in details text view
         var df = SimpleDateFormat("dd MMM yyyy, EEE")
         val currentDate = df.format(Calendar.getInstance().time)
@@ -163,10 +171,14 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
                                 0,
                                 LocalDate.now().toString(),
                                 LocalDate.now().dayOfWeek.name,
-                                "Clock In",
-                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+                                "Clock in",
+                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")),
+                                "Pending Check Out"
                             )
                         )
+
+                        // store check in status to preference store
+                        prefs.edit().putString(checkInOutStatusKey, "Clock in").apply()
 
                         // save image to file
                         saveImage(tempSelfieByte)

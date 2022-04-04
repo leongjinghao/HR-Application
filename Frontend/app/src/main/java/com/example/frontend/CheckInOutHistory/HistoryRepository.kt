@@ -27,4 +27,12 @@ class HistoryRepository(private val historyDao: HistoryDao) {
     suspend fun deleteAll() {
         historyDao.deleteAll()
     }
+
+    // Update Check Out Timing
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun update(checkOutTime:String, checkOutDate:String){
+        historyDao.update(checkOutTime, checkOutDate)
+    }
+
 }

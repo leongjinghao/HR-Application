@@ -21,6 +21,10 @@ class HistoryViewModel(private val repository: HistoryRepository) : ViewModel() 
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
     }
+
+    fun update(checkOutTime:String, checkOutDate:String) = viewModelScope.launch{
+        repository.update(checkOutTime,checkOutDate)
+    }
 }
 
 class HistoryViewModelFactory(private val repository: HistoryRepository) : ViewModelProvider.Factory {

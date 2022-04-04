@@ -1,5 +1,6 @@
 package com.example.frontend.Activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build

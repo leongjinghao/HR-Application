@@ -28,6 +28,7 @@ abstract class HistoryRoomDatabase : RoomDatabase() {
                     "history_database"
                 )
                     .addCallback(HistoryDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance
