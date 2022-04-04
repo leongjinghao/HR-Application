@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -50,7 +51,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
                 userId = settings.id
             }
         }
-
+        try {
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
@@ -62,13 +63,18 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             setDataToPieChart()
         })
         apiCall.getUserLeavesSummary(userId,"Display")
-
-        apiCall.leaveInformationSummaryRes.observe(this, Observer { response ->
-            leaveInfoData = response
-            leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent,userId)
-            binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
-            binding.recyclerViewLeaveSummary.adapter = leaveAdapter
-        })
+            apiCall.leaveInformationSummaryRes.observe(this, Observer { response ->
+                leaveInfoData = response
+                if(leaveInfoData.Items?.get(0)?.PK != null) {
+                    leaveAdapter =
+                        LeaveSummaryRecycler(leaveInfoData, this, this, apiCall, intent, userId)
+                    binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
+                    binding.recyclerViewLeaveSummary.adapter = leaveAdapter
+                }
+            })
+        } catch (err:Exception) {
+            Log.i("abc",err.toString())
+        }
 
         binding.calenderButton.setOnClickListener{
             beforeLeaveCalendar(this,this,this,userId)
