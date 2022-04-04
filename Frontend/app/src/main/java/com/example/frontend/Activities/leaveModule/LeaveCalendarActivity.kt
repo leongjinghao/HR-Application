@@ -30,7 +30,6 @@ class LeaveCalendarActivity : AppCompatActivity() {
             userInfoData = response
             setBarGraph();
         })
-        apiCall.getUserLeaves("Ali456", "Calendar")
     }
 
     private fun setBarGraph() {

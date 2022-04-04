@@ -12,7 +12,8 @@ import kotlinx.coroutines.withContext
 class apiViewModel(private val repository: Repository): ViewModel() {
 
     val userInformationRes: MutableLiveData<userInformationModel> = MutableLiveData()
-    val leaveInformationRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
+    val leaveInformationCalendarRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
+    val leaveInformationSummaryRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
     val returnRespondModelRes : MutableLiveData<returnRespondModel> = MutableLiveData()
     val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
     val createAttendanceInformationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
@@ -26,10 +27,17 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun getUserLeaves(userId : String, condition:String){
+    fun getUserLeavesSummary(userId : String, condition:String){
         viewModelScope.launch {
             val response: leaveInformationModel = repository.getUserLeaves(userId,condition)
-            leaveInformationRes.value = response
+            leaveInformationSummaryRes.value = response
+        }
+    }
+
+    fun getUserLeavesCalendar(userId : String, condition:String){
+        viewModelScope.launch {
+            val response: leaveInformationModel = repository.getUserLeaves(userId,condition)
+            leaveInformationCalendarRes.value = response
         }
     }
 

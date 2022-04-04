@@ -162,6 +162,8 @@ class LoginActivity : AppCompatActivity()  {
                     passwordEditText.error = "Invalid Credentials!"
                 }
             })
+
+
         }
 
         //Note: Have to manually add a fingerprint to the emulator

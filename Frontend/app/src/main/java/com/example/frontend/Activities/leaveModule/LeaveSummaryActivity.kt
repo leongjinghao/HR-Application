@@ -2,15 +2,19 @@ package com.example.frontend.Activities.leaveModule
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend.databinding.ActivityLeavesSummaryBinding
 import com.example.frontend.Activities.leaveModule.utilities.LeaveSummaryRecycler
 import com.example.frontend.Activities.leaveModule.utilities.beforeLeaveCalendar
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.model.leaveInformationModel
 import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
@@ -21,6 +25,8 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class LeaveSummaryActivity : AppCompatActivity()  {
 
@@ -29,12 +35,21 @@ class LeaveSummaryActivity : AppCompatActivity()  {
     private lateinit var userInfoData : userInformationModel
     private lateinit var leaveInfoData : leaveInformationModel
     private var leaveAdapter : RecyclerView.Adapter<LeaveSummaryRecycler.ViewHolder>? = null
+    // retrieve userId from preference store
+    var userId: String = ""
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeavesSummaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfoData = userInformationModel(null)
+
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(this@LeaveSummaryActivity).userPreferencesFlow.collect { settings ->
+                userId = settings.id
+            }
+        }
 
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
@@ -47,8 +62,8 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             setDataToPieChart()
         })
 
-        apiCall.getUserLeaves("Ali456","Display")
-        apiCall.leaveInformationRes.observe(this, Observer { response ->
+        apiCall.getUserLeavesSummary(userId,"Display")
+        apiCall.leaveInformationSummaryRes.observe(this, Observer { response ->
             leaveInfoData = response
             leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent)
             binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
@@ -56,7 +71,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         })
 
         binding.calenderButton.setOnClickListener{
-            beforeLeaveCalendar(this,this,this)
+            beforeLeaveCalendar(this,this,this,userId)
         }
 
         binding.addLeaveButton.setOnClickListener{

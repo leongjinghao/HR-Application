@@ -29,7 +29,7 @@ async function retrieveUserLeaves(event): Promise<LambdaResponse> {
             returnResponse.Items[ItemsCount] = result[count]
             ItemsCount++
           }
-        } else (condition === 'Calendar')
+        } else if (condition === 'Calendar')
           {
             if (result[count].LeaveStatus.S === 'Approved' || result[count].LeaveStatus.S === 'Removed') {
               returnResponse.Items[ItemsCount] = result[count]

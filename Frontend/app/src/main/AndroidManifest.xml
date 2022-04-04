@@ -85,7 +85,8 @@
 
         <activity
             android:name=".Activities.leaveModule.LeaveAddActivity"
-            android:label="Add Leave">
+            android:label="Add Leave"
+            android:parentActivityName=".Activities.leaveModule.LeaveSummaryActivity">
         </activity>
 
         <activity

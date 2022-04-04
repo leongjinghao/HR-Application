@@ -5,24 +5,28 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import androidx.lifecycle.LifecycleOwner
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.example.frontend.Activities.leaveModule.LeaveCalendarActivity
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.model.leaveInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import com.skyhope.eventcalenderlibrary.helper.TimeUtil
 import com.skyhope.eventcalenderlibrary.model.Event
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 
-
+@RequiresApi(Build.VERSION_CODES.P)
 fun beforeLeaveCalendar (
     context: Context,
     owner: ViewModelStoreOwner,
     lifeCycleOwner : LifecycleOwner,
+    userId : String,
 ) {
     var leaveInfoData: leaveInformationModel
     var apiCall: apiViewModel
@@ -31,9 +35,8 @@ fun beforeLeaveCalendar (
     val apiModelFactory = apiViewModelFactory(repository)
     apiCall = ViewModelProvider(owner, apiModelFactory).get(apiViewModel::class.java)
 
-    apiCall.getUserLeaves("Ali456", "Calendar")
-
-    apiCall.leaveInformationRes.observe(lifeCycleOwner, Observer { response ->
+    apiCall.getUserLeavesCalendar(userId, "Calendar")
+    apiCall.leaveInformationCalendarRes.observe(lifeCycleOwner, Observer { response ->
         leaveInfoData = response
         leaveInfoData.Items?.size.toString()
         var i = 0;

@@ -2,24 +2,30 @@ package com.example.frontend.Activities
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.example.frontend.Activities.leaveModule.LeaveCalendarActivity
 import com.example.frontend.Activities.leaveModule.LeaveSummaryActivity
 import com.example.frontend.Activities.leaveModule.utilities.beforeLeaveCalendar
 import com.example.frontend.R
 import com.example.frontend.Utilities.CardDetailsManager
 import com.example.frontend.Utilities.ImageSaver
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomePageMainActivity : AppCompatActivity() {
     private lateinit var cardDetailsManager: CardDetailsManager
@@ -31,6 +37,7 @@ class HomePageMainActivity : AppCompatActivity() {
     private lateinit var websiteTextView : TextView
     private lateinit var qrCode : ImageView
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage_layout)
@@ -77,7 +84,13 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         calendarButton.setOnClickListener {
-            beforeLeaveCalendar(this,this,this)
+            var userId = ""
+            lifecycleScope.launch {
+                UserIdRepo.getInstance(this@HomePageMainActivity).userPreferencesFlow.collect { settings ->
+                    userId = settings.id
+                }
+            }
+            beforeLeaveCalendar(this,this,this,userId)
         }
 
         leaveButton.setOnClickListener {
