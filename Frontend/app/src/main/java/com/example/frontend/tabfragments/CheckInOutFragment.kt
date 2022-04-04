@@ -185,16 +185,8 @@ class CheckInOutFragment : Fragment() {
                     timeFomat.format(Calendar.getInstance().time)
                 )
 
-                // Insert check out record on room DB
-                historyViewModel.insert(
-                    History(
-                    null,
-                    LocalDate.now().toString(),
-                    LocalDate.now().dayOfWeek.name,
-                    "Clock out",
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-                )
-                )
+                // Update check out record on room DB
+                historyViewModel.update(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")),LocalDate.now().toString())
                 Log.d("test","${historyViewModel.allHistory}")
 
                 // store check out status to preference store

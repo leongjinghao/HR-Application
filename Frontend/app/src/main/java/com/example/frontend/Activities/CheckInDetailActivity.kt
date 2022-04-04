@@ -172,7 +172,8 @@ class CheckInDetailActivity : AppCompatActivity(), SurfaceHolder.Callback, Camer
                                 LocalDate.now().toString(),
                                 LocalDate.now().dayOfWeek.name,
                                 "Clock in",
-                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")),
+                                "Pending Check Out"
                             )
                         )
 

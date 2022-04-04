@@ -47,6 +47,8 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_account_page)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         profilePhoto = findViewById(R.id.accountPhoto)
         val editNameText = findViewById<EditText>(R.id.editNameText)
         val editDepartmentText = findViewById<EditText>(R.id.editDepartmentText)
@@ -55,8 +57,6 @@ class EditProfileActivity : AppCompatActivity() {
         val editEmailText = findViewById<EditText>(R.id.editEmailText)
         val saveProfileButton = findViewById<Button>(R.id.saveProfileButton)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         profilePhotoButton.setOnClickListener {
             loadImageDialogue()

@@ -45,6 +45,8 @@ class EditBusinessCardActivity : AppCompatActivity() {
         setContentView(R.layout.editbusinesscard_page)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //Disable night mode
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         //Get input text and button IDs
         qrCode = findViewById(R.id.qrCodeImageView)
         nameData = findViewById(R.id.editNameTextView)

@@ -44,11 +44,8 @@ class HistoryAdapter(val historyList: List<History>): RecyclerView.Adapter<Histo
         val isToggled = historyItem.toggled
         holder.textViewHistoryHeader.text = historyItem.date.toString()
         if(isToggled) holder.imageViewArrow.setImageResource(R.drawable.dropdown_arrow_up) else holder.imageViewArrow.setImageResource(R.drawable.dropdown_arrow_down)
-        if(historyItem.type == "Clock In"){
-            holder.textViewCheckInTiming.text = "Check In: ${historyItem.time}"
-        }else{
-            holder.textViewCheckOutTiming.text = "Check Out: ${historyItem.time}"
-        }
+        holder.textViewCheckInTiming.text = "Check In: ${historyItem.checkInTime}"
+        holder.textViewCheckOutTiming.text = "Check Out: ${historyItem.checkOutTime}"
         holder.expandedLayout.visibility = if(isVisible) View.VISIBLE else View.GONE
         holder.textViewHistoryHeader.setOnClickListener{
             historyItem.visibility = !historyItem.visibility

@@ -11,7 +11,8 @@ data class History(
     @ColumnInfo(name = "Date") @NonNull val date: String,
     @ColumnInfo(name = "Day") @NonNull val day: String,
     @ColumnInfo(name = "Type") @NonNull val type: String,
-    @ColumnInfo(name = "Time") @NonNull val time: String,
+    @ColumnInfo(name = "InTime") @NonNull val checkInTime: String,
+    @ColumnInfo(name = "OutTime") @NonNull val checkOutTime: String,
     var visibility:Boolean=false,
     var toggled:Boolean=false
 )

@@ -1,7 +1,6 @@
 package com.example.frontend.CheckInOutHistory
 
 import androidx.lifecycle.*
-import com.example.frontend.dataclass.CheckInOutData
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -21,6 +20,10 @@ class HistoryViewModel(private val repository: HistoryRepository) : ViewModel() 
     // Delete all records of check in and out history
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
+    }
+
+    fun update(checkOutTime:String, checkOutDate:String) = viewModelScope.launch{
+        repository.update(checkOutTime,checkOutDate)
     }
 }
 
