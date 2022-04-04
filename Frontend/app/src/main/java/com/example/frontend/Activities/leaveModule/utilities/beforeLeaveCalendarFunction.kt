@@ -32,6 +32,7 @@ fun beforeLeaveCalendar(
     var leaveInfoData: leaveInformationModel
     var apiCall: apiViewModel
     try {
+        var check = 0;
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(owner, apiModelFactory).get(apiViewModel::class.java)
@@ -89,8 +90,11 @@ fun beforeLeaveCalendar(
                     i++;
                 }
             }
-            val intent = Intent(context, LeaveCalendarActivity::class.java)
-            context.startActivity(intent);
+            if(check == 0) {
+                val intent = Intent(context, LeaveCalendarActivity::class.java)
+                context.startActivity(intent);
+                check++
+            }
         })
     } catch (err: Exception) {
     }
