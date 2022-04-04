@@ -20,7 +20,6 @@ async function retrieveUserLeaves(event): Promise<LambdaResponse> {
     const { userId, condition } = event.queryStringParameters
     const result = await queryUserLeaveInformation(userId)
     const returnResponse = { Items: [{}] }
-    console.log(result)
     if (result !== false && result !== undefined) {
       let count = 0
       let ItemsCount = 0
