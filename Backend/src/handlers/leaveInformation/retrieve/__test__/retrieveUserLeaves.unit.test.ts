@@ -58,8 +58,6 @@ test('Retrieve User Leaves successfully based on condition Calendar', async () =
   expect(response.body).toStrictEqual(matchResponse.body)
 })
 
-
-
   test('Fail to Retrieve User Leaves, event data as undefined', async () => {
         matchResponse = { statusCode: 500, body: ' ' }
         const response = await retrieveUserLeaves(undefined)

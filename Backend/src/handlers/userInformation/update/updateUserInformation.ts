@@ -17,13 +17,10 @@ async function updateUserInformation(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    console.log(event)
     event = JSON.parse(event.body)
-    console.log(event)
     const result = await putUserInformation(event.userId, event.department, event.name,
                                             event.dateofbirth, event.phonenumber, event.email)
     apiResponse.body =  JSON.stringify(result)
-    //apiResponse.body = messa
     log2CloudWatch('updateUserInformation.ts','updateUserInformation','User information successfully Updated')
   }
   catch (err) {

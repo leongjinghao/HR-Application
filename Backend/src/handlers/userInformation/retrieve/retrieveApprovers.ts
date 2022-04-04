@@ -44,7 +44,6 @@ async function retrieveApprovers(event): Promise<LambdaResponse> {
     apiResponse.body = err
     error2CloudWatch('retrieveApprovers.ts', 'retrieveApprovers', err)
   }
-
   return apiResponse
 }
 export const handler = retrieveApprovers

@@ -7,7 +7,7 @@ console.error = jest.fn
 
 jest.mock('../../../common/mainTable', () => ({
     putUserInformation: jest.fn().mockResolvedValueOnce(
-    {result:200, message:'User Update Successfull.'}),
+    {result:true, message:'Updated user Information.'}),
 }))
 
 let matchResponse: LambdaResponse
@@ -18,15 +18,16 @@ beforeEach(() => {
 
 describe('/update/updateUserInformation updateUserInformation.ts test', () => {
     test('Update user successfully', async () => {
-        matchResponse = { statusCode: 200, body: 'User Update Successfull.' }
+        matchResponse = { statusCode: 200, body: JSON.stringify({
+            result:true,message:'Updated user Information.'})}
         const response = await updateUserInformation(
             {body : JSON.stringify({
-                userId : 'abc',
-                name:'abc',
-                department:'abc',
-                dateofbirth:'1/1/2022',
-                phonenumber:'12345678',
-                email:'test@email.com'
+                userId : 'mockUserId',
+                name:'mockUserId',
+                department:'mockDepartment',
+                dateofbirth:'mockDateOfBirth',
+                phonenumber:'mockPhoneNumber',
+                email:'mockEmail'
             })}
         )
         expect(response.statusCode).toStrictEqual(matchResponse.statusCode)
