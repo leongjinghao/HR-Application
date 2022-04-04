@@ -655,8 +655,8 @@ type queryUserScheduleType = (
 ) => Promise<{
   PK: string,
   SK: string,
-  schedule: string,
-  workLocation: string
+  Schedule: string,
+  WorkLocation: string
 } | false | {}>
 /**
  * Access the main Table and retrieve all User Information based on User Id
@@ -665,8 +665,8 @@ type queryUserScheduleType = (
  * @returns {Promise <{
  * PK:string,
  * SK:string,
- * schedule:string,
- * location:string}
+ * Schedule:string,
+ * Location:string}
  * | false | {}> } User Information
  */
 export const queryUserSchedule = async (userId, date) => {
