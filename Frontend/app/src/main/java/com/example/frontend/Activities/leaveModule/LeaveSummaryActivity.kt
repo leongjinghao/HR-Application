@@ -61,8 +61,8 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             initPieChart()
             setDataToPieChart()
         })
-
         apiCall.getUserLeavesSummary(userId,"Display")
+
         apiCall.leaveInformationSummaryRes.observe(this, Observer { response ->
             leaveInfoData = response
             leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent,userId)

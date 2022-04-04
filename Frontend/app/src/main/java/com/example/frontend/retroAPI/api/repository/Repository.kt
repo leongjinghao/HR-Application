@@ -109,4 +109,22 @@ class Repository {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
         return RetrofitInstance.api.sendRecoverEmail(requestBody)
     }
+
+    suspend fun retrieveApprovers(userId : String) : userInformationModel {
+        return RetrofitInstance.api.retrieveApprovers(userId)
+    }
+
+    suspend fun createUserLeave(userId:String,startEndDate:String,leaveType:String,approver:String,remarks:String) : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userId", userId)
+        jsonObject.put("startEndDate", startEndDate)
+        jsonObject.put("leaveType", leaveType)
+        jsonObject.put("approver", approver)
+        jsonObject.put("remarks", remarks)
+        jsonObject.put("status", "Pending")
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.createUserLeave(requestBody)
+    }
+
 }

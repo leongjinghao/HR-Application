@@ -90,7 +90,7 @@ class LeaveSummaryRecycler(
             eBuilder.setPositiveButton("Confirm",
             DialogInterface.OnClickListener({ dialog,id ->
                 if(holder.leaveStatusButton.text == "Remove") {
-                    apiCall.updateUserLeavesStatus("Ali456", skDate, "Removed")
+                    apiCall.updateUserLeavesStatus(userId, skDate, "Removed")
                     apiCall.returnRespondModelRes.observe(lifeCycleOwner, { response ->
                         Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
                         if (response.result == true) {

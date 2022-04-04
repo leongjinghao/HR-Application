@@ -8,6 +8,7 @@ import com.example.frontend.retroAPI.api.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class apiViewModel(private val repository: Repository): ViewModel() {
 
@@ -127,6 +128,20 @@ class apiViewModel(private val repository: Repository): ViewModel() {
     fun sendRecoverEmail(userEmail: String) {
         viewModelScope.launch {
             val response: returnRespondModel = repository.sendRecoverEmail(userEmail)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun retrieveApprovers(userId : String) {
+        viewModelScope.launch {
+            val response: userInformationModel = repository.retrieveApprovers(userId)
+            userInformationRes.value = response
+        }
+    }
+
+    fun createUserLeave(userId:String,startEndDate:String,leaveType:String,approver:String,remarks:String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.createUserLeave(userId,startEndDate,leaveType,approver,remarks)
             returnRespondModelRes.value = response
         }
     }

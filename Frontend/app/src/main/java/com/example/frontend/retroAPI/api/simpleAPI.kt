@@ -76,4 +76,15 @@ interface simpleAPI {
     suspend fun sendRecoverEmail(
         @Body requestBody: RequestBody
     ) : returnRespondModel
+
+    @GET("retrieve/retrieveApprovers/")
+    suspend fun retrieveApprovers(
+        @Query("userId") userId: String,
+        ) : userInformationModel
+
+    @POST("create/createUserLeave/")
+    suspend fun createUserLeave(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
 }
