@@ -8,6 +8,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ import com.example.frontend.CheckInOutHistory.History
 import com.example.frontend.CheckInOutHistory.HistoryViewModel
 import com.example.frontend.CheckInOutHistory.HistoryViewModelFactory
 import com.example.frontend.Utilities.HRApplication
+import com.example.frontend.adapters.TAG
 import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
@@ -176,14 +178,14 @@ class CheckInOutFragment : Fragment() {
                 // Insert check out record on room DB
                 historyViewModel.insert(
                     History(
-                    0,
+                    null,
                     LocalDate.now().toString(),
                     LocalDate.now().dayOfWeek.name,
                     "Clock out",
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
                 )
                 )
-
+                Log.d("test","${historyViewModel.allHistory}")
                 // Go back to previous page on successful check out process
                 activity?.onBackPressed()
             }

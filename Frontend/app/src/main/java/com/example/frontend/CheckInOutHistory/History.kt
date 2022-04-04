@@ -7,9 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "HistoryTable")
 data class History(
-    @PrimaryKey(autoGenerate = true) @NonNull val historyID: Int,
+    @PrimaryKey(autoGenerate = true) val historyID: Int?,
     @ColumnInfo(name = "Date") @NonNull val date: String,
     @ColumnInfo(name = "Day") @NonNull val day: String,
     @ColumnInfo(name = "Type") @NonNull val type: String,
-    @ColumnInfo(name = "Time") @NonNull val time: String
+    @ColumnInfo(name = "Time") @NonNull val time: String,
+    var visibility:Boolean=false,
+    var toggled:Boolean=false
 )

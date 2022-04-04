@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [History::class], version = 1, exportSchema = false)
+@Database(entities = [History::class], version = 2, exportSchema = false)
 abstract class HistoryRoomDatabase : RoomDatabase() {
 
     abstract fun HistoryDao(): HistoryDao
@@ -28,6 +28,7 @@ abstract class HistoryRoomDatabase : RoomDatabase() {
                     "history_database"
                 )
                     .addCallback(HistoryDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance

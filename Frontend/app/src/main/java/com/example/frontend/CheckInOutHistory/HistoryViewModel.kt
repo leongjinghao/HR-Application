@@ -1,6 +1,7 @@
 package com.example.frontend.CheckInOutHistory
 
 import androidx.lifecycle.*
+import com.example.frontend.dataclass.CheckInOutData
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
