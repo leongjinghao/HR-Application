@@ -96,7 +96,7 @@ functions:
     events:
       - http:
          method: POST
-         path: /update/updatePassword
+         path: /update/updatePassword 
   retrieveUserSchedule:
     handler: src/handlers/userSchedule/retrieve/retrieveUserSchedule.handler
     role: AdminRole
@@ -104,13 +104,13 @@ functions:
       - http:
          method: GET
          path: /retrieve/retrieveUserSchedule
-  retrieveUserEmails:
-    handler: src/handlers/userLogin/retrieve/retrieveUserEmails.handler
+  retrieveApprovers:
+    handler: src/handlers/userInformation/retrieve/retrieveApprovers.handler
     role: AdminRole
     events:
       - http:
           method: GET
-          path: /retrieve/retrieveUserEmails
+          path: /retrieve/retrieveApprovers
 
 resources:
   Resources:

@@ -19,7 +19,6 @@ async function retrieveUserInformation(event): Promise<LambdaResponse> {
   try {
     const { userId } = event.queryStringParameters
     const result = await queryUserInformation(userId)
-    console.log(result)
     apiResponse.body = JSON.stringify(result)
     log2CloudWatch('retrieveUserInformation.ts','retrieveUserInformation','User information successfully retrieve')
   }
