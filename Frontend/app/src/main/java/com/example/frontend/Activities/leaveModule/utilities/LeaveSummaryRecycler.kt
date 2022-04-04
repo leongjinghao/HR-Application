@@ -26,7 +26,8 @@ class LeaveSummaryRecycler(
     private val context: Context,
     private val lifeCycleOwner : LifecycleOwner,
     private val apiCall: apiViewModel,
-    private val intent : Intent
+    private val intent : Intent,
+    private val userId : String
 ) : RecyclerView.Adapter<LeaveSummaryRecycler.ViewHolder>() {
 
     var dateFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
@@ -97,7 +98,7 @@ class LeaveSummaryRecycler(
                         }
                     })
                 } else if(holder.leaveStatusButton.text == "Cancel") {
-                    apiCall.deleteUserLeaves("Ali456", skDate)
+                    apiCall.deleteUserLeaves(userId, skDate)
                     apiCall.returnRespondModelRes.observe(lifeCycleOwner, { response ->
                         Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
                         if (response.result == true) {

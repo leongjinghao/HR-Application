@@ -4,20 +4,32 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.frontend.databinding.ActivityCalendarBinding
+import com.example.frontend.login.UserIdRepo
 import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class LeaveCalendarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalendarBinding
     private lateinit var apiCall: apiViewModel
     private lateinit var userInfoData: userInformationModel
+    var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(this@LeaveCalendarActivity).userPreferencesFlow.collect { settings ->
+                userId = settings.id
+            }
+        }
+
         userInfoData = userInformationModel(null)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -25,7 +37,7 @@ class LeaveCalendarActivity : AppCompatActivity() {
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this, apiModelFactory).get(apiViewModel::class.java)
 
-        apiCall.getUserInformation("Ali456")
+        apiCall.getUserInformation(userId)
         apiCall.userInformationRes.observe(this, Observer { response ->
             userInfoData = response
             setBarGraph();

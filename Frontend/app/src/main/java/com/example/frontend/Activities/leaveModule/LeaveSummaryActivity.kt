@@ -55,7 +55,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
 
-        apiCall.getUserInformation("Ali456")
+        apiCall.getUserInformation(userId)
         apiCall.userInformationRes.observe(this, Observer { response ->
             userInfoData = response
             initPieChart()
@@ -65,7 +65,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         apiCall.getUserLeavesSummary(userId,"Display")
         apiCall.leaveInformationSummaryRes.observe(this, Observer { response ->
             leaveInfoData = response
-            leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent)
+            leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent,userId)
             binding.recyclerViewLeaveSummary.layoutManager = LinearLayoutManager(this)
             binding.recyclerViewLeaveSummary.adapter = leaveAdapter
         })
