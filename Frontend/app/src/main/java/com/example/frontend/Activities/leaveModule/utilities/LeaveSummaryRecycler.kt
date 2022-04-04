@@ -1,4 +1,4 @@
-package com.example.frontend.leaveModule.utilities
+package com.example.frontend.Activities.leaveModule.utilities
 
 import android.app.AlertDialog
 import android.content.Context

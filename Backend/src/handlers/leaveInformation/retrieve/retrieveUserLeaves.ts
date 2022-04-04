@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { queryUserLeaveInformation } from '../../common/mainTable'
 import { LambdaResponse } from '../../utility/responses'
-import { log2CloudWatch , error2CloudWatch } from '../../utility/cloudWatch'
+import { log2CloudWatch, error2CloudWatch } from '../../utility/cloudWatch'
 
 /**
  * Retrieve User Leaves
@@ -17,28 +17,35 @@ async function retrieveUserLeaves(event): Promise<LambdaResponse> {
     body: '',
   }
   try {
-    const { userId } = event.queryStringParameters
+    const { userId, condition } = event.queryStringParameters
     const result = await queryUserLeaveInformation(userId)
-    const returnResponse = {Items:[{}]}
-    console.log(result)
-    if (result !== false){
+    const returnResponse = { Items: [{}] }
+    if (result !== false) {
       let count = 0
       let ItemsCount = 0
       while (count < result.length) {
-        if (result[count].LeaveStatus.S !== 'Removed') {
-          returnResponse.Items[ItemsCount] = result[count]
-          ItemsCount++
-        }
+        if (condition === 'Display') {
+          if (result[count].LeaveStatus.S !== 'Removed') {
+            returnResponse.Items[ItemsCount] = result[count]
+            ItemsCount++
+          }
+        } else (condition === 'Calendar')
+          {
+            if (result[count].LeaveStatus.S === 'Approved' || result[count].LeaveStatus.S === 'Removed') {
+              returnResponse.Items[ItemsCount] = result[count]
+              ItemsCount++
+            }
+          }
         count++
       }
     }
     apiResponse.body = JSON.stringify(returnResponse)
-    log2CloudWatch('retrieveUserLeaves.ts','retrieveUserLeaves','User leave information successfully retrieve')
+    log2CloudWatch('retrieveUserLeaves.ts', 'retrieveUserLeaves', 'User leave information successfully retrieve')
   }
   catch (err) {
     apiResponse.statusCode = 500
     apiResponse.body = err
-    error2CloudWatch('retrieveUserLeaves.ts','retrieveUserLeaves',err)
+    error2CloudWatch('retrieveUserLeaves.ts', 'retrieveUserLeaves', err)
   }
 
   return apiResponse

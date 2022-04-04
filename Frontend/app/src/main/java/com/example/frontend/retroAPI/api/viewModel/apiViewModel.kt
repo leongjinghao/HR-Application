@@ -26,9 +26,9 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun getUserLeaves(userId : String){
+    fun getUserLeaves(userId : String, condition:String){
         viewModelScope.launch {
-            val response: leaveInformationModel = repository.getUserLeaves(userId)
+            val response: leaveInformationModel = repository.getUserLeaves(userId,condition)
             leaveInformationRes.value = response
         }
     }

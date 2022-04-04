@@ -16,7 +16,8 @@ interface simpleAPI {
 
     @GET("retrieve/retrieveUserLeaves/")
     suspend fun getUserLeaves(
-        @Query("userId") userId: String
+        @Query("userId") userId: String,
+        @Query("condition") condition: String
     ) : leaveInformationModel
 
     @POST("update/updateUserInformation/")

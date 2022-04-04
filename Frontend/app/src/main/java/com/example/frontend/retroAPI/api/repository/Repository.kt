@@ -13,8 +13,8 @@ class Repository {
         return RetrofitInstance.api.getUserInformation(userId)
     }
 
-    suspend fun getUserLeaves(userId : String): leaveInformationModel {
-        return RetrofitInstance.api.getUserLeaves(userId)
+    suspend fun getUserLeaves(userId : String,condition:String): leaveInformationModel {
+        return RetrofitInstance.api.getUserLeaves(userId,condition)
     }
 
     suspend fun updateUserInformation(userId: String, name : String, department : String,

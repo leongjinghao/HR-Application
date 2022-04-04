@@ -84,18 +84,18 @@
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveAddActivity"
+            android:name=".Activities.leaveModule.LeaveAddActivity"
             android:label="Add Leave">
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveCalendarActivity"
+            android:name=".Activities.leaveModule.LeaveCalendarActivity"
             android:label="Leave Calendar"
             android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveSummaryActivity"
+            android:name=".Activities.leaveModule.LeaveSummaryActivity"
             android:label="View Leave"
             android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>

@@ -136,12 +136,15 @@ class LoginActivity : AppCompatActivity()  {
 
                 // check if authentication successful
                 if (authenticateStatus) {
+
+                    //clear EventCalendar storedPerferences whenever user login
+                    getSharedPreferences("EventCalender", MODE_PRIVATE).edit().clear().apply()
+
                     // store userId in preference store
                     lifecycleScope.launch {
                         UserIdRepo.getInstance(context = this@LoginActivity)
                             .update(userId)
                     }
-
                     // clear error message if visible
                     userEmailEditText.error = null
                     passwordEditText.error = null
@@ -159,8 +162,6 @@ class LoginActivity : AppCompatActivity()  {
                     passwordEditText.error = "Invalid Credentials!"
                 }
             })
-
-
         }
 
         //Note: Have to manually add a fingerprint to the emulator

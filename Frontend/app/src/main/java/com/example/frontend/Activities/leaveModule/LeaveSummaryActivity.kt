@@ -1,4 +1,4 @@
-package com.example.frontend.leaveModule
+package com.example.frontend.Activities.leaveModule
 
 import android.content.Intent
 import android.graphics.Color
@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend.databinding.ActivityLeavesSummaryBinding
-import com.example.frontend.leaveModule.utilities.LeaveSummaryRecycler
+import com.example.frontend.Activities.leaveModule.utilities.LeaveSummaryRecycler
+import com.example.frontend.Activities.leaveModule.utilities.beforeLeaveCalendar
 import com.example.frontend.retroAPI.api.model.leaveInformationModel
 import com.example.frontend.retroAPI.api.model.userInformationModel
 import com.example.frontend.retroAPI.api.repository.Repository
@@ -46,7 +47,7 @@ class LeaveSummaryActivity : AppCompatActivity()  {
             setDataToPieChart()
         })
 
-        apiCall.getUserLeaves("Ali456")
+        apiCall.getUserLeaves("Ali456","Display")
         apiCall.leaveInformationRes.observe(this, Observer { response ->
             leaveInfoData = response
             leaveAdapter = LeaveSummaryRecycler(leaveInfoData,this,this,apiCall,intent)
@@ -55,12 +56,11 @@ class LeaveSummaryActivity : AppCompatActivity()  {
         })
 
         binding.calenderButton.setOnClickListener{
-            val intent = Intent(this, LeaveCalendarActivity::class.java)
-            startActivity(intent)
+            beforeLeaveCalendar(this,this,this)
         }
 
         binding.addLeaveButton.setOnClickListener{
-            val intent = Intent(this,LeaveAddActivity::class.java)
+            val intent = Intent(this, LeaveAddActivity::class.java)
             startActivity(intent)
         }
     }

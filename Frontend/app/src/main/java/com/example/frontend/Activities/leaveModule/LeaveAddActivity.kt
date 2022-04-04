@@ -1,4 +1,4 @@
-package com.example.frontend.leaveModule
+package com.example.frontend.Activities.leaveModule
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

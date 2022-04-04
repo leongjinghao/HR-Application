@@ -9,12 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.example.frontend.leaveModule.LeaveCalendarActivity
-import com.example.frontend.leaveModule.LeaveSummaryActivity
+import com.example.frontend.Activities.leaveModule.LeaveCalendarActivity
+import com.example.frontend.Activities.leaveModule.LeaveSummaryActivity
+import com.example.frontend.Activities.leaveModule.utilities.beforeLeaveCalendar
 import com.example.frontend.R
 import com.example.frontend.Utilities.CardDetailsManager
 import com.example.frontend.Utilities.ImageSaver
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 
 class HomePageMainActivity : AppCompatActivity() {
     private lateinit var cardDetailsManager: CardDetailsManager
@@ -72,8 +77,7 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         calendarButton.setOnClickListener {
-            val intent = Intent(this, LeaveCalendarActivity::class.java)
-            startActivity(intent)
+            beforeLeaveCalendar(this,this,this)
         }
 
         leaveButton.setOnClickListener {
