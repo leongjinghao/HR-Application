@@ -1,6 +1,7 @@
 package com.example.frontend.tabfragments
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -78,6 +79,8 @@ class CheckInOutFragment : Fragment() {
         val repository = Repository()
         val apiModelFactory = apiViewModelFactory(repository)
         var userId: String = ""
+
+        // initialise api caller object
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
 
         lifecycleScope.launch {
@@ -87,6 +90,13 @@ class CheckInOutFragment : Fragment() {
                 }
             }
         }
+
+        // retrieve check in and out status preference store
+        val prefs = activity?.getSharedPreferences(
+            "com.example.frontend", Context.MODE_PRIVATE
+        )
+        val checkInOutStatusKey = "com.example.frontend.$userId.checkInOutStatus"
+        val checkInOutStatus = prefs?.getString(checkInOutStatusKey, "Clock out")
 
         // Handle location permissions
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -131,7 +141,7 @@ class CheckInOutFragment : Fragment() {
         checkInButtonTimeText.text = formattedTime
 
         // Configure button text according to the check in and out status
-        if (historyViewModel.checkInOutStatus == "Clock out") {
+        if (checkInOutStatus == "Clock out") {
             checkInButtonText.text = "Check In"
         }
         else {
@@ -156,7 +166,7 @@ class CheckInOutFragment : Fragment() {
             apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
 
             // if check in and out status is "Clock out", display check in button/option
-            if (historyViewModel.checkInOutStatus == "Clock out") {
+            if (checkInOutStatus == "Clock out") {
                 val intent = Intent(activity, CheckInDetailActivity::class.java)
                 intent.putExtra("locationName", locationName)
                 activity?.startActivity(intent)
@@ -186,6 +196,10 @@ class CheckInOutFragment : Fragment() {
                 )
                 )
                 Log.d("test","${historyViewModel.allHistory}")
+
+                // store check out status to preference store
+                prefs?.edit()?.putString(checkInOutStatusKey, "Clock out")?.apply()
+
                 // Go back to previous page on successful check out process
                 activity?.onBackPressed()
             }
