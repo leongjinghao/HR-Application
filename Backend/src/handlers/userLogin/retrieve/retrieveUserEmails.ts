@@ -19,7 +19,6 @@ async function retrieveUserEmails(email): Promise<LambdaResponse> {
   try {
     const { userEmail } = email.queryStringParameters
     const result = await queryUserEmail(userEmail)
-    console.log(result)
     apiResponse.body = JSON.stringify(result)
     log2CloudWatch('retrieveUserEmails.ts','retrieveUserEmails','User Email Retrieved Successfully')
   }
