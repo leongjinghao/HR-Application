@@ -38,8 +38,9 @@ class ForgetPasswordActivity : AppCompatActivity()  {
                 //TODO Send password reset email logic
                 val userEmail = binding.editTextEmail.text.toString()
                 apiCall.retrieveUserEmails(userEmail)
+                Log.d(TAG,"Email Retrieved")
                 apiCall.returnRespondModelRes.observe(this) { response ->
-                    Log.d("TAG", "$response")
+                    Log.d(TAG, "$response")
                     if (response.result) {
                         apiCall.sendRecoverEmail(userEmail)
                         Toast.makeText(this, "Recovery request received\nPlease check your email", Toast.LENGTH_SHORT).show()

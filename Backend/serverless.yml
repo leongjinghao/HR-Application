@@ -55,6 +55,13 @@ functions:
       - http:
          method: POST
          path: /update/updateUserInformation
+  retrieveUserEmails:
+    handler: src/handlers/userLogin/retrieve/retrieveUserEmails.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrieveUserEmails
   sesSendEmail:
     handler: src/handlers/utility/sesSendEmail.handler
     role: AdminRole

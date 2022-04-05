@@ -255,6 +255,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:drawableLeftCompat="@drawable/padlockmarginleft"
                 app:drawableRightCompat="@drawable/rightarrow" />
 
