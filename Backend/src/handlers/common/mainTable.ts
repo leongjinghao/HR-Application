@@ -38,13 +38,13 @@ export const putCreateLeave: createLeaveType = async (
       'LeaveType': { S: leaveType },
       'Approver': { S: approver },
       'Remarks': { S: remarks },
-      'Status': { S: status },
+      'LeaveStatus': { S: status },
     },
     TableName: 'mainTable'
   }
   let message = ''
   try {
-    await dynamodb.putItem(params).promise()
+    const a = await dynamodb.putItem(params).promise()
     message = 'User leave successfully created.'
     log2CloudWatch('mainTable.ts', 'createLeave', message)
     return {
@@ -125,7 +125,6 @@ export const deleteUserLeaveInformation: removeUserLeaveInformationType = async 
       message: `${userId} leave on ${date} had successfully cancel`
     }
   } catch (err) {
-    console.log(err)
     return {
       'result': false,
       message: `${userId} leave on ${date} fail to cancel`
@@ -181,34 +180,37 @@ export const updateLeaveStatus: updateLeaveStatusType = async (
 
 type queryUserInformation = (
   userId: string,
-) => Promise<{
-  PK: string,
-  SK: string,
-  Name: string,
-  DOB: string,
-  Mobile: string,
-  Email: string,
-  Department: string,
-  Picture: string,
-  Al: string,
-  MC: string,
-  OIL: string
-} | false | {}>
+) => Promise<{Items:[{
+  PK:{S:string},
+  SK: {S:string},
+  EmployeeName: {S:string},
+  DOB: {S:string},
+  Mobile: {S:string},
+  Email: {S:string},
+  Department: {S:string},
+  Picture: {S:string},
+  Al: {S:string},
+  MC: {S:string},
+  OIL: {S:string},
+  Role: {S:string}
+}]} | false | {}>
 /**
  * Access the main Table and retrieve all User Information based on User Id
  * @param {string} userId User ID
- * @returns {Promise <{
- * PK:string,
- * SK:string,
- * EmployeeName:string,
- * DOB:string,
- * Mobile:string,
- * Email:string,
- * Department:string,
- * Picture:string,
- * Al:string,
- * MC:string,
- * OIL:string}
+ * @returns {Promise <{Items:[{
+ * PK:{S:string},
+ * SK:{S:string},
+ * EmployeeName:{S:string},
+ * DOB:{S:string},
+ * Mobile:{S:string},
+ * Email:{S:string},
+ * Department:{S:string},
+ * Picture:{S:string},
+ * Al:{S:string},
+ * MC:{S:string},
+ * OIL:{S:string},
+ * Role:{S:string}
+ * }]}
  * | false | {}> } User Information
  */
 export const queryUserInformation: queryUserInformation = async (userId) => {
@@ -233,15 +235,124 @@ export const queryUserInformation: queryUserInformation = async (userId) => {
   }
 }
 
+export const parseQueryUserDepartmentItems = (items: AWS.DynamoDB.ItemList) => {
+  return items.map(elem => ({
+    PK: elem.PK.S,
+    SK: elem.SK.S,
+    EmployeeName: elem.EmployeeName ? elem.EmployeeName.S : '',
+    DOB: elem.DOB.S,
+    Mobile: elem.Mobile ? elem.Mobile.S : '',
+    Email: elem.Email ? elem.Email.S : '',
+    Department: elem.Department ? elem.Department.S : '',
+    Picture: elem.Picture ? elem.Picture.S : '',
+    Al: elem.Al ? elem.Al.S : '',
+    MC: elem.MC ? elem.MC.S : '',
+    OIL: elem.OIL ? elem.OIL.S : '',
+    Role: elem.OIL ? elem.OIL.S : ''
+  }))
+}
+
+type queryUserDepartmentType = (
+  userId: string,
+) => Promise<string | false>
+/**
+ * Access the main Table and User Department
+ * @param {string} userId User ID
+ * @returns {Promise <{
+ * department:string }
+ */
+export const queryUserDepartment: queryUserDepartmentType = async (userId) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK AND #SK = :SK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+      '#SK': 'SK'
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `USER#${userId}` },
+      ':SK': { S: `PROFILE#${userId}` }
+    }
+  }
+  let resources = ''
+  try {
+    const data = await dynamodb.query(params).promise()
+    const parse = parseQueryUserDepartmentItems(data.Items!)
+    resources = parse[0].Department!
+    return resources
+  } catch (err) {
+    return false
+  }
+}
+
+type queryUserInformationByDepartmentType = (department: string) => Promise<[{
+  PK: {S:string},
+  SK: {S:string},
+  Name: {S:string},
+  DOB: {S:string},
+  Mobile: {S:string},
+  Email: {S:string},
+  Department: {S:string},
+  Picture: {S:string},
+  Al: {S:string},
+  MC: {S:string},
+  OIL: {S:string},
+  Role: {S:string},
+}] | false | []>
+/**
+ * Access the main Table and retrieve all User Information
+ * @param {string} department Department
+ * @returns {Promise <{
+ * PK:string,
+ * SK:string,
+ * EmployeeName:string,
+ * DOB:string,
+ * Mobile:string,
+ * Email:string,
+ * Department:string,
+ * Picture:string,
+ * Al:string,
+ * MC:string,
+ * OIL:string,
+ * Role: string }
+ * | false | {}> } User Information
+ */
+export const queryUserInformationByDepartment: queryUserInformationByDepartmentType = async (department) => {
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    IndexName: 'DepartmentIndex',
+    KeyConditionExpression: '#Department = :department',
+    ExpressionAttributeNames: {
+      '#Department': 'Department',
+    },
+    ExpressionAttributeValues: {
+      ':department': { S: `${department}` }
+    }
+  }
+  try {
+    const data = await dynamodb.query(params).promise()
+    let response
+    if (data.Count !== 0) {
+      response = data.Items!
+    }
+    return response
+  }
+  catch (err) {
+    return false
+  }
+}
+
 type queryUserLoginType = (
   userEmail: string, userPassword: string
 ) => Promise<[{ PK: string, SK: string, UserId: string }] | false | [{}]>
 /**
- * Access the main Table and retrieve all Users Leave
+ * Check if users exists in mainTable
  * @param {string} userEmail User Email
  * @param {string} userPassword User Password
  * @returns {Promise <[{PK:string,SK:string,UserId:string,}]
- * | {} } User Leaves Informations
+ * | {} }
  */
 export const queryUserLogin = async (userEmail, userPassword) => {
   const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
@@ -261,7 +372,6 @@ export const queryUserLogin = async (userEmail, userPassword) => {
     const data = await dynamodb.query(params).promise()
     return data.Items!
   } catch (err) {
-    console.log(err)
     return []
   }
 }
@@ -273,7 +383,7 @@ type createAttendanceInfo = (
   location: string,
 ) => Promise<resultMessageResponseTypeDatabase>
 /**
- * Accesses the main table and insert user leave.
+ * Insert new Attendance Info into mainTable
  * @param userId - User id
  * @param date - Attendance date
  * @param clockIn - Clock in timing
@@ -345,7 +455,7 @@ type updateAttendanceInfo = (
   clockOut: string,
 ) => Promise<resultMessageResponseTypeDatabase>
 /**
- * Accesses the main table and insert user leave.
+ * Accesses the main table and update user attendance Info.
  * @param userId - User id
  * @param date - Attendance date
  * @param clockOut - Clock out timing
@@ -477,8 +587,7 @@ export const queryPassword = async (userId) => {
     const data = await dynamodb.query(params).promise()
     return data.Items!
   } catch (err) {
-    console.log(err)
-    return []
+    return false
   }
 }
 
@@ -544,18 +653,18 @@ type queryUserScheduleType = (
 ) => Promise<{
   PK: string,
   SK: string,
-  schedule: string,
-  workLocation: string
+  Schedule: string,
+  WorkLocation: string
 } | false | {}>
 /**
- * Access the main Table and retrieve all User Information based on User Id
+ * Access the main Table and retrieve user schedule
  * @param {string} userId User ID
  * @param {string} date Date
  * @returns {Promise <{
  * PK:string,
  * SK:string,
- * schedule:string,
- * location:string}
+ * Schedule:string,
+ * Location:string}
  * | false | {}> } User Information
  */
 export const queryUserSchedule = async (userId, date) => {
@@ -577,5 +686,46 @@ export const queryUserSchedule = async (userId, date) => {
     return data.Items!
   } catch (err) {
     return []
+  }
+}
+
+type queryUserEmail = (
+  userEmail: string,
+) => Promise<resultMessageResponseTypeDatabase>
+/**
+ * Access the main Table and check if user exists based on email
+ * @param {string} userEmail User Email
+ * @returns {Promise <resultMessageResponseTypeDatabase>} User Email
+ */
+export const queryUserEmail: queryUserEmail = async (userEmail) => {
+  let result = false
+  let message = ''
+  const dynamodb = new AWS.DynamoDB({ region: 'ap-southeast-1', apiVersion: '2012-08-10' })
+  const params: AWS.DynamoDB.QueryInput = {
+    TableName: 'mainTable',
+    KeyConditionExpression: '#PK = :PK',
+    ExpressionAttributeNames: {
+      '#PK': 'PK',
+    },
+    ExpressionAttributeValues: {
+      ':PK': { S: `LOGIN#${userEmail}` }
+    }
+  }
+  try {
+    const data = await dynamodb.query(params).promise()
+    if (data.Count === 1){
+      result = true
+      message = 'User Email Found'
+    }
+    return {
+      'result':result,
+      'message':message
+    }
+  } catch (err) {
+    message = 'User Not Found'
+    return {
+      'result':result,
+      'message':message
+    }
   }
 }

@@ -81,7 +81,7 @@
                         android:hint="@string/nameHintPlaceholder"
                         android:importantForAutofill="no"
                         android:inputType="textPersonName"
-                        android:textColorHint="#78909C"
+                        android:textColorHint="#757575"
                         app:layout_constraintStart_toEndOf="@+id/nameAccIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,7 +157,7 @@
                         android:hint="@string/officeNoHint"
                         android:importantForAutofill="no"
                         android:inputType="phone"
-                        android:textColorHint="#78909C"
+                        android:textColorHint="#757575"
                         app:layout_constraintStart_toEndOf="@+id/officeNoIcon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -235,7 +235,8 @@
                         android:inputType="textEmailAddress"
                         app:layout_constraintStart_toEndOf="@+id/emaiIAddrIcon"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="TextContrastCheck" />
+                        tools:ignore="TextContrastCheck"
+                        android:textColorHint="#757575"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -271,7 +272,7 @@
                         android:hint="@string/websiteHint"
                         android:importantForAutofill="no"
                         android:inputType="textWebEditText"
-                        android:textColorHint="#78909C"
+                        android:textColorHint="#757575"
                         app:layout_constraintStart_toEndOf="@+id/websiteIconView"
                         app:layout_constraintTop_toTopOf="parent" />
 

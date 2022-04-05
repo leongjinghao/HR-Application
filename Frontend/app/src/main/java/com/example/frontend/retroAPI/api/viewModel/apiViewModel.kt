@@ -8,11 +8,13 @@ import com.example.frontend.retroAPI.api.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class apiViewModel(private val repository: Repository): ViewModel() {
 
     val userInformationRes: MutableLiveData<userInformationModel> = MutableLiveData()
-    val leaveInformationRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
+    val leaveInformationCalendarRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
+    val leaveInformationSummaryRes: MutableLiveData<leaveInformationModel> = MutableLiveData()
     val returnRespondModelRes : MutableLiveData<returnRespondModel> = MutableLiveData()
     val authenticateUserLoginRes : MutableLiveData<authenticateUserLoginModel> = MutableLiveData()
     val createAttendanceInformationRes : MutableLiveData<returnRespondModel> = MutableLiveData()
@@ -26,10 +28,17 @@ class apiViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun getUserLeaves(userId : String){
+    fun getUserLeavesSummary(userId : String, condition:String){
         viewModelScope.launch {
-            val response: leaveInformationModel = repository.getUserLeaves(userId)
-            leaveInformationRes.value = response
+            val response: leaveInformationModel = repository.getUserLeaves(userId,condition)
+            leaveInformationSummaryRes.value = response
+        }
+    }
+
+    fun getUserLeavesCalendar(userId : String, condition:String){
+        viewModelScope.launch {
+            val response: leaveInformationModel = repository.getUserLeaves(userId,condition)
+            leaveInformationCalendarRes.value = response
         }
     }
 
@@ -105,6 +114,34 @@ class apiViewModel(private val repository: Repository): ViewModel() {
     fun updateUserPassword(userId: String, newPass : String) {
         viewModelScope.launch {
             val response: returnRespondModel = repository.updateUserPassword(userId, newPass)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun retrieveUserEmails(userEmail: String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.retrieveUserEmails(userEmail)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun sendRecoverEmail(userEmail: String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.sendRecoverEmail(userEmail)
+            returnRespondModelRes.value = response
+        }
+    }
+
+    fun retrieveApprovers(userId : String) {
+        viewModelScope.launch {
+            val response: userInformationModel = repository.retrieveApprovers(userId)
+            userInformationRes.value = response
+        }
+    }
+
+    fun createUserLeave(userId:String,startEndDate:String,leaveType:String,approver:String,remarks:String) {
+        viewModelScope.launch {
+            val response: returnRespondModel = repository.createUserLeave(userId,startEndDate,leaveType,approver,remarks)
             returnRespondModelRes.value = response
         }
     }

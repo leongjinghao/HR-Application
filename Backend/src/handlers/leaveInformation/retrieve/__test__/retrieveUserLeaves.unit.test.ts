@@ -1,34 +1,30 @@
 /* eslint-disable no-console */
 import { handler as retrieveUserLeaves } from '../retrieveUserLeaves'
 import { LambdaResponse } from '../../../utility/responses'
-import { mockResult } from './mockData'
+import { mockResultDisplay,mockResultCalendar } from './mockData'
 
 console.log = jest.fn
 console.error = jest.fn
 
 jest.mock('../../../common/mainTable', () => ({
-    queryUserLeaveInformation: jest.fn().mockResolvedValueOnce(
-        {Items: [
-            {
-              LeaveType: [Object],
-              Approver: [Object],
-              Remarks: [Object],
-              SK: [Object],
-              Status: [Object],
-              PK: [Object]
+    queryUserLeaveInformation: jest.fn().mockResolvedValue(
+            [{
+              LeaveType: {S:'mockLeaveType'},
+              Approver: {S:'mockApprover'},
+              Remarks: {S:'mockRemarks'},
+              SK: {S:'mockSK'},
+              LeaveStatus: {S:'Removed'},
+              PK: {S:'mockPK'}
             },
             {
-              LeaveType: [Object],
-              Approver: [Object],
-              Remarks: [Object],
-              SK: [Object],
-              Status: [Object],
-              PK: [Object]
-            }
-          ],
-          Count: 2,
-          ScannedCount: 2
-        }),
+              LeaveType: {S:'mockLeaveType'},
+              Approver: {S:'mockApprover'},
+              Remarks: {S:'mockRemarks'},
+              SK: {S:'mockSK'},
+              LeaveStatus: {S:'Approved'},
+              PK: {S:'mockPK'}
+            }]
+        ),
 }))
 
 let matchResponse: LambdaResponse
@@ -38,15 +34,28 @@ beforeEach(() => {
   })
 
 describe('/retrieve/retrieveUserLeaves retrieveUserLeaves.ts test', () => {
-    test('Retrieve User Leaves successfully', async () => {
-        matchResponse = { statusCode: 200, body: JSON.stringify(mockResult)}
+    test('Retrieve User Leaves successfully based on condition Display', async () => {
+        matchResponse = { statusCode: 200, body: JSON.stringify(mockResultDisplay)}
         const response = await retrieveUserLeaves(
             {queryStringParameters: {
-                userId: 'ali123',
+                userId: 'mockUserId',
+                condition: 'Display'
             }}
         )
         expect(response.statusCode).toStrictEqual(matchResponse.statusCode)
         expect(response.body).toStrictEqual(matchResponse.body)
+})
+
+test('Retrieve User Leaves successfully based on condition Calendar', async () => {
+  matchResponse = { statusCode: 200, body: JSON.stringify(mockResultCalendar)}
+  const response = await retrieveUserLeaves(
+      {queryStringParameters: {
+          userId: 'mockUserId',
+          condition: 'Calendar'
+      }}
+  )
+  expect(response.statusCode).toStrictEqual(matchResponse.statusCode)
+  expect(response.body).toStrictEqual(matchResponse.body)
 })
 
   test('Fail to Retrieve User Leaves, event data as undefined', async () => {

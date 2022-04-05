@@ -1,23 +1,33 @@
-export const mockResult = {Items: [
+export const mockResultDisplay = {Items: [
     {
-      LeaveType: [Object],
-      Approver: [Object],
-      Remarks: [Object],
-      SK: [Object],
-      Status: [Object],
-      PK: [Object]
+      LeaveType: {S:'mockLeaveType'},
+      Approver: {S:'mockApprover'},
+      Remarks: {S:'mockRemarks'},
+      SK: {S:'mockSK'},
+      LeaveStatus: {S:'Approved'},
+      PK: {S:'mockPK'}
     },
-    {
-      LeaveType: [Object],
-      Approver: [Object],
-      Remarks: [Object],
-      SK: [Object],
-      Status: [Object],
-      PK: [Object]
-    }
   ],
-  Count: 2,
-  ScannedCount: 2
 }
 
-module.exports = { mockResult }
+export const mockResultCalendar = {Items: [
+  {
+    LeaveType: {S:'mockLeaveType'},
+    Approver: {S:'mockApprover'},
+    Remarks: {S:'mockRemarks'},
+    SK: {S:'mockSK'},
+    LeaveStatus: {S:'Removed'},
+    PK: {S:'mockPK'}
+  },
+  {
+    LeaveType: {S:'mockLeaveType'},
+    Approver: {S:'mockApprover'},
+    Remarks: {S:'mockRemarks'},
+    SK: {S:'mockSK'},
+    LeaveStatus: {S:'Approved'},
+    PK: {S:'mockPK'}
+  },
+],
+}
+
+module.exports = { mockResultDisplay,mockResultCalendar }

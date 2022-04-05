@@ -21,23 +21,23 @@ async function sesSendEmail(event) : Promise<LambdaResponse> {
     event = JSON.parse(event.body)
     const params = {
         Destination: {
-          ToAddresses: [event.recipientEmail],
+          ToAddresses: [event.userEmail],
         },
         Message: {
           Body: {
-            Text: { Data: 'Test' },
+            Text: { Data: 'Hello,\nPlease click on the link below to reset your BlueFlush password.' },
           },
-          Subject: { Data: 'Test Email' },
+          Subject: { Data: 'Password Recovery' },
         },
-        Source: 'weianngo@gmail.com',
+        Source: 'blueflushmad@gmail.com',
       }
       await ses.sendEmail(params).promise()
-      apiResponse.body = 'Email had been send successfully'
+      apiResponse.body = JSON.stringify({result:true,message:'Email Sent Successfully'})
       log2CloudWatch('sesSendEmail.ts','sesSendEmail',apiResponse.body)
   }
   catch (err) {
     apiResponse.statusCode = 500
-    apiResponse.body = err
+    apiResponse.body = JSON.stringify({result:false,message:'Email Not Found'})
     error2CloudWatch('sesSendEmail.ts','sesSendEmail',err)
   }
 

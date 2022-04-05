@@ -55,6 +55,13 @@ functions:
       - http:
          method: POST
          path: /update/updateUserInformation
+  retrieveUserEmails:
+    handler: src/handlers/userLogin/retrieve/retrieveUserEmails.handler
+    role: AdminRole
+    events:
+      - http:
+         method: GET
+         path: /retrieve/retrieveUserEmails
   sesSendEmail:
     handler: src/handlers/utility/sesSendEmail.handler
     role: AdminRole
@@ -96,7 +103,7 @@ functions:
     events:
       - http:
          method: POST
-         path: /update/updatePassword
+         path: /update/updatePassword 
   retrieveUserSchedule:
     handler: src/handlers/userSchedule/retrieve/retrieveUserSchedule.handler
     role: AdminRole
@@ -104,6 +111,13 @@ functions:
       - http:
          method: GET
          path: /retrieve/retrieveUserSchedule
+  retrieveApprovers:
+    handler: src/handlers/userInformation/retrieve/retrieveApprovers.handler
+    role: AdminRole
+    events:
+      - http:
+          method: GET
+          path: /retrieve/retrieveApprovers
 
 resources:
   Resources:

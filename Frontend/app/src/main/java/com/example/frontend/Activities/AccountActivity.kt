@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +16,10 @@ import com.example.frontend.retroAPI.api.repository.Repository
 import com.example.frontend.retroAPI.api.viewModel.apiViewModel
 import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import com.example.frontend.login.UserIdRepo
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class AccountActivity : AppCompatActivity() {
 
@@ -44,7 +47,16 @@ class AccountActivity : AppCompatActivity() {
         apiCall = ViewModelProvider(this,apiModelFactory).get(apiViewModel::class.java)
         userInfoData = userInformationModel(null)
 
-        apiCall.getUserInformation("Ali456")
+        // retrieve userId from preference store
+        var userId: String = ""
+
+        lifecycleScope.launch {
+            UserIdRepo.getInstance(this@AccountActivity).userPreferencesFlow.collect { settings ->
+                userId = settings.id
+            }
+        }
+
+        apiCall.getUserInformation(userId)
         apiCall.userInformationRes.observe(this, Observer { response ->
             userInfoData = response
             val employeeName = userInfoData.Items?.get(0)?.EmployeeName?.S.toString()

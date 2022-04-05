@@ -49,7 +49,8 @@
         <activity
             android:name=".Activities.HomePageMainActivity"
             android:label="Home Page"
-            android:parentActivityName=".Activities.LoginActivity">
+            android:parentActivityName=".Activities.LoginActivity"
+            android:launchMode="singleTask">
         </activity>
 
         <activity
@@ -72,7 +73,8 @@
 
         <activity
             android:name=".Activities.EditBusinessCardActivity"
-            android:label="Edit Business Card">
+            android:label="Edit Business Card"
+            android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
@@ -83,18 +85,19 @@
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveAddActivity"
-            android:label="Add Leave">
+            android:name=".Activities.leaveModule.LeaveAddActivity"
+            android:label="Add Leave"
+            android:parentActivityName=".Activities.leaveModule.LeaveSummaryActivity">
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveCalendarActivity"
+            android:name=".Activities.leaveModule.LeaveCalendarActivity"
             android:label="Leave Calendar"
             android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
 
         <activity
-            android:name=".leaveModule.LeaveSummaryActivity"
+            android:name=".Activities.leaveModule.LeaveSummaryActivity"
             android:label="View Leave"
             android:parentActivityName=".Activities.HomePageMainActivity">
         </activity>
@@ -107,12 +110,14 @@
 
         <activity
             android:name=".Activities.EditProfileActivity"
-            android:label="Edit Profile">
+            android:label="Edit Profile"
+            android:parentActivityName=".Activities.AccountActivity">
         </activity>
 
         <activity
             android:name=".Activities.PasswordActivity"
-            android:label="Change Password">
+            android:label="Change Password"
+            android:parentActivityName=".Activities.AccountActivity">
         </activity>
 
     </application>

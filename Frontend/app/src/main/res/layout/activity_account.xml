@@ -67,7 +67,7 @@
                         android:drawablePadding="15dp"
                         android:gravity="center_vertical"
                         android:text="@string/employeeNameTextView"
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -109,7 +109,7 @@
                         android:drawablePadding="15dp"
                         android:gravity="center_vertical"
                         android:text="@string/departmentNameTextView"
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -255,6 +255,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:drawableLeftCompat="@drawable/padlockmarginleft"
                 app:drawableRightCompat="@drawable/rightarrow" />
 

@@ -15,7 +15,8 @@ data class userInformationField(
     val Picture: userInformationInnerObject,
     val AL: userInformationInnerObject,
     val MC: userInformationInnerObject,
-    val OIL: userInformationInnerObject
+    val OIL: userInformationInnerObject,
+    val Role: userInformationInnerObject
 )
 
 data class userInformationInnerObject(

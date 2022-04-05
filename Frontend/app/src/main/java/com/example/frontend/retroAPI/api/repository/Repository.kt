@@ -13,8 +13,8 @@ class Repository {
         return RetrofitInstance.api.getUserInformation(userId)
     }
 
-    suspend fun getUserLeaves(userId : String): leaveInformationModel {
-        return RetrofitInstance.api.getUserLeaves(userId)
+    suspend fun getUserLeaves(userId : String,condition:String): leaveInformationModel {
+        return RetrofitInstance.api.getUserLeaves(userId,condition)
     }
 
     suspend fun updateUserInformation(userId: String, name : String, department : String,
@@ -97,4 +97,34 @@ class Repository {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
         return RetrofitInstance.api.updateUserPassword(requestBody)
     }
+
+    suspend fun retrieveUserEmails(userEmail : String) : returnRespondModel {
+        return RetrofitInstance.api.retrieveUserEmails(userEmail)
+    }
+
+    suspend fun sendRecoverEmail(userEmail: String) : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userEmail", userEmail)
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.sendRecoverEmail(requestBody)
+    }
+
+    suspend fun retrieveApprovers(userId : String) : userInformationModel {
+        return RetrofitInstance.api.retrieveApprovers(userId)
+    }
+
+    suspend fun createUserLeave(userId:String,startEndDate:String,leaveType:String,approver:String,remarks:String) : returnRespondModel {
+        val jsonObject = JSONObject()
+        jsonObject.put("userId", userId)
+        jsonObject.put("startEndDate", startEndDate)
+        jsonObject.put("leaveType", leaveType)
+        jsonObject.put("approver", approver)
+        jsonObject.put("remarks", remarks)
+        jsonObject.put("status", "Pending")
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        return RetrofitInstance.api.createUserLeave(requestBody)
+    }
+
 }

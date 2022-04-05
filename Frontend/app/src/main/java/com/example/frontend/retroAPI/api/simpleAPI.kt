@@ -16,7 +16,8 @@ interface simpleAPI {
 
     @GET("retrieve/retrieveUserLeaves/")
     suspend fun getUserLeaves(
-        @Query("userId") userId: String
+        @Query("userId") userId: String,
+        @Query("condition") condition: String
     ) : leaveInformationModel
 
     @POST("update/updateUserInformation/")
@@ -63,6 +64,26 @@ interface simpleAPI {
 
     @POST("update/updatePassword/")
     suspend fun updateUserPassword(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
+    @GET("retrieve/retrieveUserEmails/")
+    suspend fun retrieveUserEmails(
+        @Query("userEmail") userEmail: String
+    ) : returnRespondModel
+
+    @POST("utility/sesSendEmail/")
+    suspend fun sendRecoverEmail(
+        @Body requestBody: RequestBody
+    ) : returnRespondModel
+
+    @GET("retrieve/retrieveApprovers/")
+    suspend fun retrieveApprovers(
+        @Query("userId") userId: String,
+        ) : userInformationModel
+
+    @POST("create/createUserLeave/")
+    suspend fun createUserLeave(
         @Body requestBody: RequestBody
     ) : returnRespondModel
 

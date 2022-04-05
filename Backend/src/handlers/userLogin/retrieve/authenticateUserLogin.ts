@@ -20,7 +20,6 @@ async function authenticateUserLogin(event): Promise<LambdaResponse> {
     const { userEmail, userPassword } = event.queryStringParameters
     const result = await queryUserLogin(userEmail, userPassword)
     const response = {UserId: '', Result: false}
-    console.log(result)
     if (result.length === 1) {
       response.UserId = result[0].UserId.S!
       response.Result = true

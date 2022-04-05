@@ -26,12 +26,12 @@ async function createUserLeave(event): Promise<LambdaResponse> {
       event.remarks,
       event.status
       )
-    apiResponse.body = result.message
+    apiResponse.body = JSON.stringify(result)
     log2CloudWatch('createUserLeave.ts','createUserLeave',result.message)
   }
   catch (err) {
     apiResponse.statusCode = 500
-    apiResponse.body = err
+    apiResponse.body = JSON.stringify({result:false,message:err})
     error2CloudWatch('createUserLeave.ts','createUserLeave',err)
   }
 

@@ -1,29 +1,32 @@
 package com.example.frontend.Activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.example.frontend.leaveModule.LeaveCalendarActivity
-import com.example.frontend.leaveModule.LeaveSummaryActivity
-import com.example.frontend.retroAPI.api.repository.Repository
-import com.example.frontend.retroAPI.api.viewModel.apiViewModel
-import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import com.example.frontend.Activities.leaveModule.LeaveCalendarActivity
+import com.example.frontend.Activities.leaveModule.LeaveSummaryActivity
+import com.example.frontend.Activities.leaveModule.utilities.beforeLeaveCalendar
 import com.example.frontend.R
 import com.example.frontend.Utilities.CardDetailsManager
 import com.example.frontend.Utilities.ImageSaver
-import com.example.frontend.retroAPI.api.model.returnRespondModel
-import com.example.frontend.retroAPI.api.model.userInformationModel
+import com.example.frontend.login.UserIdRepo
+import com.example.frontend.retroAPI.api.repository.Repository
+import com.example.frontend.retroAPI.api.viewModel.apiViewModel
+import com.example.frontend.retroAPI.api.viewModel.apiViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomePageMainActivity : AppCompatActivity() {
     private lateinit var cardDetailsManager: CardDetailsManager
@@ -35,6 +38,7 @@ class HomePageMainActivity : AppCompatActivity() {
     private lateinit var websiteTextView : TextView
     private lateinit var qrCode : ImageView
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage_layout)
@@ -53,9 +57,7 @@ class HomePageMainActivity : AppCompatActivity() {
         val checkInButton = findViewById<ImageButton>(R.id.checkInButton)
         val calendarButton = findViewById<ImageButton>(R.id.calendarButton)
         val leaveButton = findViewById<ImageButton>(R.id.leaveButton)
-        val nfcScanButton = findViewById<ImageButton>(R.id.NFCButton)
         val accountButton = findViewById<ImageButton>(R.id.accountButton)
-        val leaveApproveButton = findViewById<ImageButton>(R.id.leaveApprButton)
         val nameCardButton = findViewById<CardView>(R.id.nameCardView)
         val informationButton = findViewById<ImageButton>(R.id.informationButton)
         qrCode = findViewById(R.id.qrCode)
@@ -83,8 +85,14 @@ class HomePageMainActivity : AppCompatActivity() {
         }
 
         calendarButton.setOnClickListener {
-            val intent = Intent(this, LeaveCalendarActivity::class.java)
-            startActivity(intent)
+            var userId = ""
+            lifecycleScope.launch {
+                UserIdRepo.getInstance(this@HomePageMainActivity).userPreferencesFlow.collect { settings ->
+                    userId = settings.id
+                }
+            }
+
+            beforeLeaveCalendar(this,this,this,userId)
         }
 
         leaveButton.setOnClickListener {
@@ -92,17 +100,9 @@ class HomePageMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        nfcScanButton.setOnClickListener {
-            Toast.makeText(this, "Moving to NFC Scan Page", Toast.LENGTH_LONG).show()
-        }
-
         accountButton.setOnClickListener {
             val intent = Intent(this, AccountActivity::class.java)
             startActivity(intent)
-        }
-
-        leaveApproveButton.setOnClickListener {
-            Toast.makeText(this, "Moving to Leave Approve Page", Toast.LENGTH_LONG).show()
         }
 
         //Toggle Button for Card Details Info

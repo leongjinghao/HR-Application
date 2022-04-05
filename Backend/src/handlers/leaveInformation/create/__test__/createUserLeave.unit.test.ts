@@ -7,7 +7,7 @@ console.error = jest.fn
 
 jest.mock('../../../common/mainTable', () => ({
     putCreateLeave: jest.fn().mockResolvedValueOnce(
-    {result:200, message:'User leave successfully created.'}),
+    {result:true, message:'User leave successfully created.'}),
 }))
 
 let matchResponse: LambdaResponse
@@ -18,7 +18,7 @@ beforeEach(() => {
 
 describe('/create/createUserLeave createUserLeave.ts test', () => {
     test('Create User Leave successfully', async () => {
-        matchResponse = { statusCode: 200, body: 'User leave successfully created.' }
+        matchResponse = { statusCode: 200, body: JSON.stringify({result:true, message: 'User leave successfully created.'})}
         const response = await createUserLeave(
             {body : JSON.stringify({
                 userId : 'abc',
