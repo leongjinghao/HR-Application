@@ -91,6 +91,7 @@ class HomePageMainActivity : AppCompatActivity() {
                     userId = settings.id
                 }
             }
+
             beforeLeaveCalendar(this,this,this,userId)
         }
 
