@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { handler as sesSendEmail } from '../sesSendEmail'
 import { LambdaResponse } from '../responses'
+import AWSMock from 'aws-sdk-mock'
+import AWS from 'aws-sdk'
 
 console.log = jest.fn
 console.error = jest.fn
@@ -13,6 +15,8 @@ beforeEach(() => {
 
 describe('/utility/sesSendEmail sesSendEmail.ts test', () => {
     test('Send email successfully', async () => {
+        AWSMock.setSDKInstance(AWS)
+        AWSMock.mock('SES',sesSendEmail,)
         matchResponse = { statusCode: 200, body: 'Email Sent Successfully' }
         const response = await sesSendEmail(
             {body : JSON.stringify({
