@@ -12,8 +12,8 @@ beforeEach(() => {
   })
 
 describe('/utility/sesSendEmail sesSendEmail.ts test', () => {
-    test('Create User Leave successfully', async () => {
-        matchResponse = { statusCode: 200, body: 'Email had been send successfully' }
+    test('Send email successfully', async () => {
+        matchResponse = { statusCode: 200, body: 'Email Sent Successfully' }
         const response = await sesSendEmail(
             {body : JSON.stringify({
                 recipientEmail : 'test@gmail.com',
@@ -23,7 +23,7 @@ describe('/utility/sesSendEmail sesSendEmail.ts test', () => {
         expect(response.body).toStrictEqual(matchResponse.body)
     })
 
-  test('Create User Leave unsuccessfully, event data as undefined', async () => {
+  test('Fail to send email, event data as undefined', async () => {
         matchResponse = { statusCode: 500, body: ' ' }
         const response = await sesSendEmail(undefined)
         expect(response.statusCode).toStrictEqual(matchResponse.statusCode)

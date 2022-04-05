@@ -41,6 +41,7 @@ class LeaveAddActivity : AppCompatActivity() {
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(this, apiModelFactory).get(apiViewModel::class.java)
 
+        // Set the Value for Leave Type Spinner
         val arrayList: ArrayList<String> = ArrayList()
         arrayList.add("Annual Leave")
         arrayList.add("Medical Leave")
@@ -51,6 +52,7 @@ class LeaveAddActivity : AppCompatActivity() {
 
         val myCalendar = Calendar.getInstance()
 
+        //Set the Date Picker
         val datePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonht ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
@@ -78,6 +80,7 @@ class LeaveAddActivity : AppCompatActivity() {
             ).show()
         }
 
+        //Retrieve User Id
         lifecycleScope.launch {
             UserIdRepo.getInstance(this@LeaveAddActivity).userPreferencesFlow.collect { settings ->
                 userId = settings.id
@@ -104,6 +107,7 @@ class LeaveAddActivity : AppCompatActivity() {
             var startDate = binding.startDateTextView.text.toString()
             var endDate = binding.endDateTextView.text.toString()
 
+            //Check if the required field is filled in
             if (startDate == "Start Date") {
                 errorMsg += "Please chose Start Date \n"
             }
@@ -143,6 +147,8 @@ class LeaveAddActivity : AppCompatActivity() {
                 } else if (leaveType == "Off In Lieu") {
                     leaveType = "OIL"
                 }
+
+                //Create User Leave
                 apiCall.createUserLeave(
                     userId,
                     SK,
@@ -153,6 +159,7 @@ class LeaveAddActivity : AppCompatActivity() {
                 apiCall.returnRespondModelRes.observe(this, Observer { response ->
                     Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                     if (response.result == true) {
+                        //Redirect back to Leave Summary Page
                         val intent = Intent(this, LeaveSummaryActivity::class.java)
                         Timer().schedule(1500) {
                             startActivity(intent)
@@ -160,12 +167,14 @@ class LeaveAddActivity : AppCompatActivity() {
                     }
                 })
             } else {
+                //Display Error Message
                 errorMsg = errorMsg.substring(0, errorMsg.length - 2)
                 Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    // Update the textView based on the Calendar picker
     private fun updateLabel(myCalendar: Calendar) {
         val myFormat = "dd-MM-yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)

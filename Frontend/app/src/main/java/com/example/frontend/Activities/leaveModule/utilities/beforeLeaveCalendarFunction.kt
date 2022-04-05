@@ -37,6 +37,7 @@ fun beforeLeaveCalendar(
         val apiModelFactory = apiViewModelFactory(repository)
         apiCall = ViewModelProvider(owner, apiModelFactory).get(apiViewModel::class.java)
         apiCall.getUserLeavesCalendar(userId, "Calendar")
+        //Retrieve user leave information and stored into the shared Preference of EventCalendar
         apiCall.leaveInformationCalendarRes.observe(lifeCycleOwner, Observer { response ->
             leaveInfoData = response
             if (leaveInfoData.Items?.get(0)?.PK != null) {
@@ -100,7 +101,7 @@ fun beforeLeaveCalendar(
     }
 }
 
-
+//Store Date Label Text into EventCalender SharedPreferences
 fun write(key: String?, value: String?, context: Context) {
     var mSharedPreferences: SharedPreferences? = null
     mSharedPreferences = context.getSharedPreferences("EventCalender", MODE_PRIVATE)
@@ -109,6 +110,7 @@ fun write(key: String?, value: String?, context: Context) {
     mEditor.apply()
 }
 
+//Store Date Label Text color EventCalender SharedPreferences
 fun write(key: String?, value: Int, context: Context) {
     var mSharedPreferences: SharedPreferences? = null
     mSharedPreferences = context.getSharedPreferences("EventCalender", MODE_PRIVATE)
@@ -117,6 +119,7 @@ fun write(key: String?, value: Int, context: Context) {
     mEditor.apply()
 }
 
+//Remove 0 from the start of the date
 fun checkRemoveZeroFromDate(dayOrMonth: String): Int {
     if (dayOrMonth.substring(0, 1) == "0") {
         return dayOrMonth.substring(1).toInt()
