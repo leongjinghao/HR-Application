@@ -203,7 +203,7 @@ describe('/common/mainTable mainTable.unit.ts', () => {
     test('Error checking if user exists in mainTable, function queryUserLogin', async () => {
         (dynamodb.query().promise as jest.Mock).mockRejectedValueOnce(mockUserLoginInformation)
         const response = await queryUserLogin('mockEmail','mockPassword')
-        expect(response).toStrictEqual(false)
+        expect(response).toStrictEqual([])
     })
 
     test('Successfully create user attendance, function putNewAttendanceInfo', async () => {
@@ -327,7 +327,7 @@ describe('/common/mainTable mainTable.unit.ts', () => {
     test('Error retrieving user schedule, function queryUserSchedule', async () => {
         (dynamodb.query().promise as jest.Mock).mockRejectedValueOnce(false)
         const response = await queryUserSchedule('mockPK','mockDate')
-        expect(response).toStrictEqual(false)
+        expect(response).toStrictEqual([])
     })
 
     test('Check if user exists based on email, Exist , function queryUserEmail', async () => {

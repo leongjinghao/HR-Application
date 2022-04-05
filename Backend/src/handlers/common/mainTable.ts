@@ -372,7 +372,7 @@ export const queryUserLogin = async (userEmail, userPassword) => {
     const data = await dynamodb.query(params).promise()
     return data.Items!
   } catch (err) {
-    return false
+    return []
   }
 }
 
@@ -685,7 +685,7 @@ export const queryUserSchedule = async (userId, date) => {
     const data = await dynamodb.query(params).promise()
     return data.Items!
   } catch (err) {
-    return false
+    return []
   }
 }
 
