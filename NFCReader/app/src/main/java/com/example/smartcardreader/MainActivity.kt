@@ -38,9 +38,13 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         val response = isoDep.transceive(Utils.hexStringToByteArray("00A4040007A0000002471001"))
         runOnUiThread {
             //txtView.text = ("\nCard Response: " + Utils.toHex(response))
-            if(Utils.toHex(response) == "9000"){
+            if(Utils.toHex(response) == "9000") {
                 txtView.text = "Success!"
                 txtView.setTextColor(Color.GREEN)
+            }
+            else{
+                txtView.text = "Fail!"
+                txtView.setTextColor(Color.RED)
             }
 
         }
