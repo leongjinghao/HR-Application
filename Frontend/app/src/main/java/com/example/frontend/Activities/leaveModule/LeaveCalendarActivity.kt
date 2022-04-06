@@ -31,7 +31,7 @@ class LeaveCalendarActivity : AppCompatActivity() {
                 userId = settings.id
             }
         }
-
+    try {
         userInfoData = userInformationModel(null)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,6 +45,8 @@ class LeaveCalendarActivity : AppCompatActivity() {
             userInfoData = response
             setBarGraph();
         })
+        }
+    catch (err:Exception){}
     }
 
     private fun setBarGraph() {
