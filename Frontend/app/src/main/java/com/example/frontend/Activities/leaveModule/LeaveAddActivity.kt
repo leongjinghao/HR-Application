@@ -86,19 +86,22 @@ class LeaveAddActivity : AppCompatActivity() {
                 userId = settings.id
             }
         }
-        apiCall.retrieveApprovers(userId)
-        apiCall.userInformationRes.observe(this, Observer { response ->
-            var count = 0
-            while (count < response.Items?.size!!) {
-                tempName.add(response.Items[count].EmployeeName.S)
-                tempUserId.add(response.Items[count].PK.S.substring(5))
-                count++
-            }
+        try {
+            apiCall.retrieveApprovers(userId)
+            apiCall.userInformationRes.observe(this, Observer { response ->
+                var count = 0
+                while (count < response.Items?.size!!) {
+                    tempName.add(response.Items[count].EmployeeName.S)
+                    tempUserId.add(response.Items[count].PK.S.substring(5))
+                    count++
+                }
 
-            val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, tempName)
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-            binding.approverSpinner.adapter = arrayAdapter
-        })
+                val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, tempName)
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                binding.approverSpinner.adapter = arrayAdapter
+            })
+        }
+        catch (err: Exception){}
 
         binding.submitButton.setOnClickListener {
 
