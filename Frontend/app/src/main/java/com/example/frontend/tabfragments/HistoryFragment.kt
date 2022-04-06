@@ -41,10 +41,9 @@ class HistoryFragment : Fragment() {
         val recyclerViewHistory = view.findViewById<RecyclerView>(R.id.recyclerViewHistory).apply{
             layoutManager = LinearLayoutManager(activity)
             historyViewModel.allHistory.observe(viewLifecycleOwner,{
-                val historyList = historyViewModel.allHistory
-                val test = historyList.value
-                Log.d("test","$test")
-                adapter = historyList.let { HistoryAdapter(it.value!!) }
+                val historyList = historyViewModel.allHistory.value
+                Log.d("test","$historyList")
+                adapter = historyList?.let { HistoryAdapter(it) }
             })
         }
         recyclerViewHistory.addItemDecoration(//DIVIDER
