@@ -77,7 +77,6 @@ class LeaveSummaryActivity : AppCompatActivity() {
                 }
             })
         } catch (err: Exception) {
-            Log.i("abc", err.toString())
         }
 
         binding.calenderButton.setOnClickListener {
