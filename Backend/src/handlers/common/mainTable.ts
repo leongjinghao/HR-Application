@@ -239,16 +239,16 @@ export const parseQueryUserDepartmentItems = (items: AWS.DynamoDB.ItemList) => {
   return items.map(elem => ({
     PK: elem.PK.S,
     SK: elem.SK.S,
-    EmployeeName: elem.EmployeeName ? elem.EmployeeName.S : '',
+    EmployeeName: elem.EmployeeName.S,
     DOB: elem.DOB.S,
-    Mobile: elem.Mobile ? elem.Mobile.S : '',
-    Email: elem.Email ? elem.Email.S : '',
-    Department: elem.Department ? elem.Department.S : '',
-    Picture: elem.Picture ? elem.Picture.S : '',
-    Al: elem.Al ? elem.Al.S : '',
-    MC: elem.MC ? elem.MC.S : '',
-    OIL: elem.OIL ? elem.OIL.S : '',
-    Role: elem.OIL ? elem.OIL.S : ''
+    Mobile: elem.Mobile.S,
+    Email: elem.Email.S,
+    Department: elem.Department.S,
+    Picture: elem.Picture.S,
+    Al:elem.Al.S,
+    MC:elem.MC.S,
+    OIL:elem.OIL.S,
+    Role:elem.OIL.S
   }))
 }
 
