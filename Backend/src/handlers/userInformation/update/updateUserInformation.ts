@@ -18,7 +18,7 @@ async function updateUserInformation(event): Promise<LambdaResponse> {
   }
   try {
     event = JSON.parse(event.body)
-    const result = await putUserInformation(event.userId, event.department, event.name,
+    const result = await putUserInformation(event.userId, event.name, event.department,
                                             event.dateofbirth, event.phonenumber, event.email)
     apiResponse.body =  JSON.stringify(result)
     log2CloudWatch('updateUserInformation.ts','updateUserInformation','User information successfully Updated')

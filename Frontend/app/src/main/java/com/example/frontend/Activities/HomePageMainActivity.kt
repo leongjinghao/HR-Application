@@ -62,8 +62,8 @@ class HomePageMainActivity : AppCompatActivity() {
         val informationButton = findViewById<ImageButton>(R.id.informationButton)
         qrCode = findViewById(R.id.qrCode)
 
-        informationText.text = ""
-        var toggled = 0
+        informationText.text = getString(R.string.cardButtonHint)
+        var toggled = 1
 
         cardDetailsManager = CardDetailsManager(this)
 
@@ -107,13 +107,13 @@ class HomePageMainActivity : AppCompatActivity() {
 
         //Toggle Button for Card Details Info
         informationButton.setOnClickListener {
-            if (toggled == 0){
+            if (toggled == 1){
                 informationText.text = getString(R.string.cardButtonHint)
-                toggled = 1
-            }
-            else if (toggled == 1) {
-                informationText.text = ""
                 toggled = 0
+            }
+            else if (toggled == 0) {
+                informationText.text = ""
+                toggled = 1
             }
         }
     }

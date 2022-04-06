@@ -42,6 +42,7 @@
         android:maxLines="1"
         android:paddingStart="15dp"
         android:background="@drawable/edit_text_border"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCompanyNameLogin" />
